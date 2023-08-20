@@ -62,4 +62,17 @@ int menuOpcionesGenerales() {
   return seleccionOpcion();
 }
 
+int menuGestionCatalogo(){
+  printf("*********************\n");
+  printf("*Gestion de Catalogo*\n");
+  printf("*********************\n");
+  printf("1. Agregar libro.\n");
+  printf("2. Modificar libro.\n");
+  printf("3. Eliminar libro.\n");
+  printf("4. ver Libros.\n");
+  printf("5. Volver.\n");
+  printf("Ingrese una opcion: ");
+  return seleccionOpcion();
+}
+
 #endif

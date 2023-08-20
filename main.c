@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <json-c/json.h>
 
 #include "./encabezados/menus.h"
 #include "./encabezados/estructuras.h"
@@ -19,7 +20,7 @@ int main()
     switch (opcion)
     {
       case 1:
-        opcionesOperativas();
+        opcion = opcionesOperativas();
         break;
       case 2:
         opcionesGenerales();

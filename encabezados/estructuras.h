@@ -13,7 +13,7 @@ typedef struct {
   char autor[50];
   int anio;
   char genero[50];
-  char resumen[100];
+  char resumen[500];
   int cantidad;
 } Libro;
 
