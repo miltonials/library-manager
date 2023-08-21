@@ -128,15 +128,15 @@ int contarLibros(Libro *libros){
   return cantidadLibros;
 }
 
-int mostrarLibros(){
+void mostrarLibros(){
   // cargar archivo en lista de struct libro
-  Libro *libros = cargarLibros("catalogo.json");
+  Libro *libros = cargarLibros("data/catalogo.json");
+  
   // se calcula la cantidad de libros
   int cantidadLibros = contarLibros(libros);
-  printf("cantidadLibros: %d\n", cantidadLibros);
   imprimirLibros(libros, cantidadLibros);
+  printf("Cantidad total de libros: %d\n", cantidadLibros);
   free(libros);
-  return 5;
 }
 
 void opcionesGestionCatalogo() {
@@ -144,12 +144,10 @@ void opcionesGestionCatalogo() {
   printf("opcion: %d\n", opcion);
 
   while (opcion != 5){
-    int temp =  opcion;
     switch (opcion){
       case 1:
         printf("Agregar libro.\n");
         agregarLibro();
-        opcion = temp;
         break;
       case 2:
         printf("Modificar libro.\n");
@@ -158,9 +156,7 @@ void opcionesGestionCatalogo() {
         printf("Eliminar libro.\n");
         break;
       case 4:
-        printf("Buscar libro.\n");
         mostrarLibros();
-        opcion = temp;
         break;
       case 5:
         printf("Volver.\n");
@@ -169,6 +165,7 @@ void opcionesGestionCatalogo() {
         printf("Opcion invalida.\n");
         break;
     }
+    opcion = menuGestionCatalogo();
   }
 }
 
