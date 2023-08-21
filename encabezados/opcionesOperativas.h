@@ -34,7 +34,7 @@ void imprimirLibros(Libro *libros, int cantidadLibros){
   printf("Libros:\n");
   for (int i = 0; i < cantidadLibros-1; i++){
     printf("Libro %d:\n", i);
-    printf("id: %d\n", libros[i].id);
+    // printf("id: %d\n", libros[i].id);
     printf("titulo: %s\n", libros[i].titulo);
     printf("autor: %s\n", libros[i].autor);
     printf("anio: %d\n", libros[i].anio);
@@ -65,9 +65,9 @@ Libro *cargarLibros(char *rutaArchivo){
   for (i = 0; i < n; i++){
     struct json_object *obj = json_object_array_get_idx(parsed_json, i);
 
-    struct json_object *id_obj, *titulo_obj, *autor_obj, *anio_obj, *genero_obj, *resumen_obj, *cantidad_obj;
+    struct json_object *titulo_obj, *autor_obj, *anio_obj, *genero_obj, *resumen_obj, *cantidad_obj;
 
-    json_object_object_get_ex(obj, "id", &id_obj);
+    // json_object_object_get_ex(obj, "id", &id_obj);
     json_object_object_get_ex(obj, "titulo", &titulo_obj);
     json_object_object_get_ex(obj, "autor", &autor_obj);
     json_object_object_get_ex(obj, "anio", &anio_obj);
@@ -75,7 +75,7 @@ Libro *cargarLibros(char *rutaArchivo){
     json_object_object_get_ex(obj, "resumen", &resumen_obj);
     json_object_object_get_ex(obj, "cantidad", &cantidad_obj);
 
-    int id = json_object_get_int(id_obj);
+    // int id = json_object_get_int(id_obj);
     const char *titulo = json_object_get_string(titulo_obj);
     const char *autor = json_object_get_string(autor_obj);
     int anio = json_object_get_int(anio_obj);
@@ -83,7 +83,7 @@ Libro *cargarLibros(char *rutaArchivo){
     const char *resumen = json_object_get_string(resumen_obj);
     int cantidad = json_object_get_int(cantidad_obj);
 
-    libros[i].id = id;
+    // libros[i].id = id;
     strcpy(libros[i].titulo, titulo);
     strcpy(libros[i].autor, autor);
     libros[i].anio = anio;
@@ -179,7 +179,8 @@ int opcionesOperativas() {
         opcion = temp;
         break;
       case 2:
-        printf("Gestion de usuarios.\n");
+        // printf("Gestion de usuarios.\n");
+        opcionGestionUsuarios();
         break;
       case 3:
         printf("Historial de prestamos.\n");
@@ -197,6 +198,7 @@ int opcionesOperativas() {
         printf("Opcion invalida.\n");
         break;
     }
+    opcion = menuOpcionesOperativas();
   }
   return 0;
 }

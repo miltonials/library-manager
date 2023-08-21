@@ -1,0 +1,14 @@
+[{
+    "cedula": 123456789,
+    "nombre": "Juan",
+    "direccion": "Calle 123"
+},
+{
+    "cedula": 987654321,
+    "nombre": "Pedro",
+    "direccion": "Calle 321"
+},{
+    "cedula": 741852963,
+    "nombre": "Maria",
+    "direccion": "Calle 456"
+}]

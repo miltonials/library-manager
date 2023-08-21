@@ -75,4 +75,16 @@ int menuGestionCatalogo(){
   return seleccionOpcion();
 }
 
+int menuGestionUsuarios(){
+  printf("**********************\n");
+  printf("*Gestion de Usuarios*\n");
+  printf("**********************\n");
+  printf("1. Agregar usuario.\n");
+  printf("2. Eliminar usuario.\n");
+  printf("3. Ver usuarios.\n");
+  printf("4. Volver.\n");
+  printf("Ingrese una opcion: ");
+  return seleccionOpcion();
+}
+
 #endif
