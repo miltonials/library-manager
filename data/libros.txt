@@ -1,0 +1,20 @@
+Cien años de soledad|Gabriel García Márquez|1967|Realismo mágico|Esta novela cuenta la historia|4
+1984|George Orwell|1949|Distopía|En un futuro totalitario, el protagonista lucha contra el régimen|3
+Orgullo y prejuicio|Jane Austen|1813|Novela romántica|La historia sigue Elizabeth Bennet mientras|2
+Don Quijote de la Mancha|Miguel de Cervantes|1605|Novela de aventuras|La historia narra las locuras y|5
+Harry Potter y la piedra filosofal|J.K. Rowling|1997|Fantasía|El joven mago Harry Potter descubre su|6
+El Señor de los Anillos|J.R.R. Tolkien|1954|Fantasía épica|Un grupo de héroes emprende una peligrosa|4
+Crónica de una muerte anunciada|Gabriel García Márquez|1981|Realismo mágico|La historia gira en torno al asesinato|3
+Matar un ruiseñor|Harper Lee|1960|Novela de aprendizaje|La novela aborda temas de raza e injusticia|2
+La sombra del viento|Carlos Ruiz Zafón|2001|Novela gótica|El protagonista descubre un libro misterioso|4
+Fahrenheit 451|Ray Bradbury|1953|Distopía|En una sociedad donde los libros están prohibidos|3
+Los juegos del hambre|Suzanne Collins|2008|Ciencia ficción|En un futuro distópico, adolescentes son forzados|5
+Moby-Dick|Herman Melville|1851|Novela de aventuras|Un capitán obsesionado busca vengarse de una|2
+En busca del tiempo perdido|Marcel Proust|1913|Novela psicológica|La novela explora los recuerdos y experiencias|7
+Crimen y castigo|Fyodor Dostoevsky|1866|Novela filosófica|Un estudiante comete un asesinato y enfrenta|4
+Drácula|Bram Stoker|1897|Novela gótica|El conde Drácula intenta mudarse de Transilvania|3
+Cazadores de sombras|Cassandra Clare|2007|Fantasía urbana|Clary Fray descubre que es una cazadora de sombras|6
+Los hombres me explican cosas|Rebecca Solnit|2014|Ensayo|En este ensayo feminista, Solnit explora|1
+El gran Gatsby|F. Scott Fitzgerald|1925|Novela del jazz|El enigmático Jay Gatsby organiza fiestas extravagantes|3
+1984|George Orwell|1949|Distopía|El régimen totalitario controla todos los aspectos|4
+El nombre del viento|Patrick Rothfuss|2007|Fantasía épica|Kvothe, un músico y mago talentoso, narra sus aventuras|5

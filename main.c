@@ -4,6 +4,7 @@
 #include <time.h>
 #include <json-c/json.h>
 
+#include "./encabezados/archivos.h"
 #include "./encabezados/menus.h"
 #include "./encabezados/estructuras.h"
 #include "./encabezados/gestionUsuario.h"
@@ -12,7 +13,7 @@
 
 int main()
 {
-  int opcion = -1;
+  int opcion = 0;
 
   while (opcion != 3)
   {
@@ -21,7 +22,7 @@ int main()
     switch (opcion)
     {
       case 1:
-        opcion = opcionesOperativas();
+        opcionesOperativas();
         break;
       case 2:
         opcionesGenerales();

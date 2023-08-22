@@ -1,42 +1,10 @@
 [
   {
-    "titulo": "Cien años de soledad",
-    "autor": "Gabriel García Márquez",
-    "anio": 1967,
-    "genero": "Realismo mágico",
-    "resumen": "Esta novela cuenta la historia...",
-    "cantidad": 4
-  },
-  {
-    "titulo": "1984",
-    "autor": "George Orwell",
-    "anio": 1949,
-    "genero": "Distopía",
-    "resumen": "En un futuro totalitario, el protagonista lucha contra el régimen...",
-    "cantidad": 3
-  },
-  {
-    "titulo": "Orgullo y prejuicio",
-    "autor": "Jane Austen",
-    "anio": 1813,
-    "genero": "Novela romántica",
-    "resumen": "La historia sigue Elizabeth Bennet mientras...",
-    "cantidad": 2
-  },
-  {
-    "titulo": "Los juegos del hambre",
-    "autor": "Suzanne Collins",
-    "anio": 2008,
-    "genero": "Ciencia ficción",
-    "resumen": "En un mundo distópico, Katniss Everdeen se convierte en un símbolo de rebelión...",
-    "cantidad": 5
-  },
-  {
-    "titulo": "El señor de los anillos: La comunidad del anillo",
-    "autor": "J.R.R. Tolkien",
-    "anio": 1954,
+    "titulo": "El nombre del viento",
+    "autor": "Patrick Rothfuss",
+    "anio": 2007,
     "genero": "Fantasía épica",
-    "resumen": "Frodo emprende un viaje para destruir un anillo malévolo...",
-    "cantidad": 6
+    "resumen": "Kvothe, un músico y mago talentoso, narra sus aventuras",
+    "cantidad": 5
   }
 ]

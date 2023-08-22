@@ -19,6 +19,12 @@ int seleccionOpcion() {
   return opcion;
 }
 
+void pausar(const char* mensaje) {
+  printf("%s", mensaje);
+  while (getchar() != '\n'); // Clear input buffer
+  getchar();
+}
+
 int menuPrincipal() {
   printf("************************************************\n");
   printf("*Bienvenido al sistema de gestion de biblioteca*\n");

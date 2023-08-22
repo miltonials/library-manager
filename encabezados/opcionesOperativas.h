@@ -1,68 +1,42 @@
 #ifndef OPCIONESOPERATIVAS_H
 #define OPCIONESOPERATIVAS_H
 
+void imprimirLibros(Libro *libros, int cantidadLibros)
+{
+  printf("********************\n");
+  printf("*Catálogo de libros*\n");
+  printf("********************\n");
 
-Libro solicitarDatosLibro(){
-  Libro libro;
-  printf("Ingrese el titulo del libro: ");
-  scanf("%49[^\n]", libro.titulo);  // Leer cadena con espacios (máximo 49 caracteres)
-  getchar();  // Consumir el carácter de nueva línea pendiente
-
-  printf("Ingrese el autor del libro: ");
-  scanf("%49[^\n]", libro.autor);
-  getchar();
-
-  printf("Ingrese el anio de publicacion del libro: ");
-  scanf("%d", &libro.anio);
-  getchar();
-
-  printf("Ingrese el genero del libro: ");
-  scanf("%49[^\n]", libro.genero);
-  getchar();
-
-  printf("Ingrese el resumen del libro: ");
-  scanf("%99[^\n]", libro.resumen);
-  getchar();
-
-  printf("Ingrese la cantidad de ejemplares del libro: ");
-  scanf("%d", &libro.cantidad);
-
-  return libro;  // Devolver la estructura Libro
-}
-
-void imprimirLibros(Libro *libros, int cantidadLibros){
-  printf("Libros:\n");
-  for (int i = 0; i < cantidadLibros-1; i++){
-    printf("Libro %d:\n", i);
-    // printf("id: %d\n", libros[i].id);
-    printf("titulo: %s\n", libros[i].titulo);
-    printf("autor: %s\n", libros[i].autor);
-    printf("anio: %d\n", libros[i].anio);
-    printf("genero: %s\n", libros[i].genero);
-    printf("resumen: %s\n", libros[i].resumen);
-    printf("cantidad: %d\n", libros[i].cantidad);
+  for (int i = 0; i < cantidadLibros - 1; i++) {
+    printf("Título: %s\n", libros[i].titulo);
+    printf("Autor: %s\n", libros[i].autor);
+    printf("Año: %d\n", libros[i].anio);
+    printf("Genero: %s\n", libros[i].genero);
+    printf("Resumen: %s\n", libros[i].resumen);
+    printf("Cantidad: %d\n", libros[i].cantidad);
+    printf("\n");
   }
 }
 
-Libro *cargarLibros(char *rutaArchivo){
-  FILE *fp;
-  char buffer[5000];
-  struct json_object *parsed_json;
-  size_t n, i;
+Libro *cargarLibros(char *rutaArchivo)
+{
+  char *contenido = leerArchivo(rutaArchivo);
+  if (contenido == NULL) {
+    return NULL;
+  }
 
-  fp = fopen(rutaArchivo, "r");
-  fread(buffer, sizeof(buffer), 1, fp);
-  fclose(fp);
+  struct json_object *parsed_json = json_tokener_parse(contenido);
+  free(contenido);
 
-  parsed_json = json_tokener_parse(buffer);
-  if (parsed_json == NULL){
+  if (parsed_json == NULL) {
     printf("Error al parsear el archivo\n");
     return NULL;
   }
 
-  n = json_object_array_length(parsed_json);
+  size_t n = json_object_array_length(parsed_json);
   Libro *libros = malloc(sizeof(Libro) * n);
-  for (i = 0; i < n; i++){
+
+  for (size_t i = 0; i < n; i++) {
     struct json_object *obj = json_object_array_get_idx(parsed_json, i);
 
     struct json_object *titulo_obj, *autor_obj, *anio_obj, *genero_obj, *resumen_obj, *cantidad_obj;
@@ -90,118 +64,211 @@ Libro *cargarLibros(char *rutaArchivo){
     strcpy(libros[i].genero, genero);
     strcpy(libros[i].resumen, resumen);
     libros[i].cantidad = cantidad;
-
-  }  
+  }
 
   json_object_put(parsed_json);
   return libros;
 }
 
-/*
-se debe permitir incluir en lote (incluye con información correcta y únicamente nuevos);
-la información será el nombre, autor, año publicación, género, resumen y cantidad. La unicidad la dará el nombre. Se debe indicar una ruta de archivo que contendrá los registros por incluir, con la siguiente forma:
-Cien años de soledad|Gabriel García Márquez|1967|Realismo mágico|Esta novela cuenta la historia|4 1984|George Orwell|1949|Distopía|En un futuro totalitario, el protagonista lucha contra el régimen|3 Orgullo y prejuicio|Jane Austen|1813|Novela romántica|La historia sigue Elizabeth Bennet mientras|2
-Según la cantidad indicada se genera un identificar para cada ejemplar (se almacenan ejemplares
-de producciones bibliográficas). Los datos se almacenan en otro archivo tipo json.*/
-int agregarLibro(){
-  // lista de struct libro, se carga desde el archivo
-  Libro *libros = NULL;
-  Libro libroAgregar;
-  libroAgregar = solicitarDatosLibro();
-  // solicitar ruta de archivo a cargar
-  char rutaArchivo[100];
-  printf("Ingrese la ruta del archivo: ");
-  scanf("%s", rutaArchivo);
-  // cargar archivo en lista de struct libro
-  libros = cargarLibros(rutaArchivo);
-  // se calcula la cantidad de libros
-
-
-  return 5;
-}
-
-int contarLibros(Libro *libros){
+int contarLibros(Libro *libros)
+{
   int cantidadLibros = 0;
-  while (libros[cantidadLibros].id != 0){
+  while (strcmp(libros[cantidadLibros].titulo, "") != 0) {
     cantidadLibros++;
   }
   return cantidadLibros;
 }
 
-void mostrarLibros(){
-  // cargar archivo en lista de struct libro
-  Libro *libros = cargarLibros("data/catalogo.json");
-  
-  // se calcula la cantidad de libros
+void mostrarLibros()
+{
+  Libro *libros = cargarLibros("./data/catalogo.json");
   int cantidadLibros = contarLibros(libros);
   imprimirLibros(libros, cantidadLibros);
   printf("Cantidad total de libros: %d\n", cantidadLibros);
   free(libros);
+
+  pausar("Presione enter para volver al menú...");
+  limpiarPantalla();
 }
 
-void opcionesGestionCatalogo() {
-  int opcion = menuGestionCatalogo();
-  printf("opcion: %d\n", opcion);
+// funcion existeLibro(libros, libro)
+// recibe un arreglo de libros y un libro
+// retorna 1 si el libro existe en el arreglo de libros
+// retorna 0 si el libro no existe en el arreglo de libros
 
-  while (opcion != 5){
-    switch (opcion){
-      case 1:
-        printf("Agregar libro.\n");
-        agregarLibro();
-        break;
-      case 2:
-        printf("Modificar libro.\n");
-        break;
-      case 3:
-        printf("Eliminar libro.\n");
-        break;
-      case 4:
-        mostrarLibros();
-        break;
-      case 5:
-        printf("Volver.\n");
-        break;
-      default:
-        printf("Opcion invalida.\n");
-        break;
+int existeLibro(Libro *libros, Libro libro)
+{
+  int cantidadLibros = contarLibros(libros);
+  for (int i = 0; i < cantidadLibros; i++) {
+    if (strcmp(libros[i].titulo, libro.titulo) == 0)
+    {
+      return 1;
+    }
+  }
+  return 0;
+}
+
+void guardarLibros(char* ruta, Libro* libros) {
+  struct json_object *parsed_json = json_object_new_array();
+
+  int cantidadLibros = contarLibros(libros);
+
+  for (int i = 0; i < cantidadLibros; i++) {
+    struct json_object *obj = json_object_new_object();
+
+    struct json_object *titulo_obj, *autor_obj, *anio_obj, *genero_obj, *resumen_obj, *cantidad_obj;
+
+    titulo_obj = json_object_new_string(libros[i].titulo);
+    autor_obj = json_object_new_string(libros[i].autor);
+    anio_obj = json_object_new_int(libros[i].anio);
+    genero_obj = json_object_new_string(libros[i].genero);
+    resumen_obj = json_object_new_string(libros[i].resumen);
+    cantidad_obj = json_object_new_int(libros[i].cantidad);
+
+    json_object_object_add(obj, "titulo", titulo_obj);
+    json_object_object_add(obj, "autor", autor_obj);
+    json_object_object_add(obj, "anio", anio_obj);
+    json_object_object_add(obj, "genero", genero_obj);
+    json_object_object_add(obj, "resumen", resumen_obj);
+    json_object_object_add(obj, "cantidad", cantidad_obj);
+
+    json_object_array_add(parsed_json, obj);
+  }
+
+  char *contenido = (char*) json_object_to_json_string(parsed_json);
+  escribirArchivo(ruta, contenido);
+}
+
+void actualizarCatalogo()
+{
+  // solicitar la ruta del archivo
+  char rutaArchivo[200];
+  printf("Ingrese la ruta del archivo: ");
+  scanf("%199s", rutaArchivo);
+
+  // cargar el archivo
+  char *contenido = leerArchivo(rutaArchivo);
+
+  Libro *libros = cargarLibros("./data/catalogo.json");
+
+  // recorrer cada linea del contenido
+  // crear un libro por cada linea
+
+  char *linea = "";
+  int librosAgregados = 0;
+
+  while (*contenido != '\0') {
+    linea = strsep(&contenido, "\n");
+    // hacer split de linea por |
+    char *titulo = strsep(&linea, "|");
+    char *autor = strsep(&linea, "|");
+    char *anio = strsep(&linea, "|");
+    char *genero = strsep(&linea, "|");
+    char *resumen = strsep(&linea, "|");
+    char *cantidad = strsep(&linea, "|");
+
+    // printf("Titulo: %s\n", titulo);
+    Libro libro;
+    strcpy(libro.titulo, titulo);
+    strcpy(libro.autor, autor);
+    libro.anio = atoi(anio);
+    strcpy(libro.genero, genero);
+    strcpy(libro.resumen, resumen);
+    libro.cantidad = atoi(cantidad);
+
+    // si el libro no está en la lista de libros, entonces agregarlo
+    if (!existeLibro(libros, libro))
+    {
+      int totalLibros = contarLibros(libros);
+      
+      if (totalLibros == 0) {
+        totalLibros--;
+      }
+
+      libros = realloc(libros, sizeof(Libro) * (totalLibros + 1));
+      libros[contarLibros(libros)] = libro;
+      librosAgregados++;
+      printf("+ El libro %s se agregó al catalogo.\n", libro.titulo);
+    }
+    else
+    {
+      printf("- El libro %s ya existe en el catalogo.\n", libro.titulo);
+    }
+  }
+
+  if (librosAgregados > 0) {
+    // guardar el arreglo de libros en el archivo
+    guardarLibros("./data/catalogo.json", libros);
+    printf("\n===============Se agregaron %d libros al catalogo.===============\n", librosAgregados);
+  }
+  else {
+    printf("No se agregaron libros al catalogo.\n");
+  }
+
+  pausar("Presione enter para volver al menú...");
+  limpiarPantalla();
+}
+
+void opcionesGestionCatalogo()
+{
+  int opcion = menuGestionCatalogo();
+
+  while (opcion != 5) {
+    switch (opcion)
+    {
+    case 1:
+      actualizarCatalogo();
+      break;
+    case 2:
+      printf("Modificar libro.\n");
+      break;
+    case 3:
+      printf("Eliminar libro.\n");
+      break;
+    case 4:
+      mostrarLibros();
+      break;
+    case 5:
+      printf("Volver.\n");
+      break;
+    default:
+      printf("Opcion invalida.\n");
+      break;
     }
     opcion = menuGestionCatalogo();
   }
 }
 
-int opcionesOperativas() {
+void opcionesOperativas()
+{
   int opcion = menuOpcionesOperativas();
-  while (opcion != 6){
-    int temp =  opcion;
-    switch (opcion){
-      case 1:
-        opcionesGestionCatalogo();
-        opcion = temp;
-        break;
-      case 2:
-        // printf("Gestion de usuarios.\n");
-        opcionGestionUsuarios();
-        break;
-      case 3:
-        printf("Historial de prestamos.\n");
-        break;
-      case 4:
-        printf("Vencimiento de prestamos.\n");
-        break;
-      case 5:
-        printf("Estadisticas.\n");
-        break;
-      case 6:
-        printf("Volver.\n");
-        break;
-      default:
-        printf("Opcion invalida.\n");
-        break;
+  while (opcion != 6) {
+    switch (opcion)
+    {
+    case 1:
+      opcionesGestionCatalogo();
+      break;
+    case 2:
+      opcionGestionUsuarios();
+      break;
+    case 3:
+      printf("Historial de prestamos.\n");
+      break;
+    case 4:
+      printf("Vencimiento de prestamos.\n");
+      break;
+    case 5:
+      printf("Estadisticas.\n");
+      break;
+    case 6:
+      printf("Volver.\n");
+      break;
+    default:
+      printf("Opcion invalida.\n");
+      break;
     }
     opcion = menuOpcionesOperativas();
   }
-  return 0;
 }
-
 
 #endif // OPCIONESOPERATIVAS_H

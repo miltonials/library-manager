@@ -54,7 +54,7 @@ int contarUsuarios(char *rutaArchivo){
     parsed_json = json_tokener_parse(buffer);
     if (parsed_json == NULL){
         printf("Error al parsear el archivo\n");
-        return NULL;
+        return -1;
     }
 
     n = json_object_array_length(parsed_json);
