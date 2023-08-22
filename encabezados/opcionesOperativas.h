@@ -95,7 +95,6 @@ void mostrarLibros()
 // recibe un arreglo de libros y un libro
 // retorna 1 si el libro existe en el arreglo de libros
 // retorna 0 si el libro no existe en el arreglo de libros
-
 int existeLibro(Libro *libros, Libro libro)
 {
   int cantidadLibros = contarLibros(libros);
@@ -135,7 +134,7 @@ void guardarLibros(char *ruta, Libro *libros)
     json_object_array_add(parsed_json, obj);
   }
 
-  char *contenido = (char *)strcat(json_object_to_json_string(parsed_json), "\n");
+  char *contenido = strcat( (char *) json_object_to_json_string(parsed_json), "\n");
   escribirArchivo(ruta, contenido);
 }
 
@@ -171,9 +170,9 @@ int libroValido(Libro libro)
   return 1;
 }
 
-void validarCatalogo()
+void validarCatalogo(Libro *libros)
 {
-  Libro *libros = cargarLibros("./data/catalogo.json");
+  // Libro *libros = cargarLibros("./data/catalogo.json");
   int cantidadLibros = contarLibros(libros);
   // elimina los libros que no tiene anio
   for (int i = 0; i < cantidadLibros; i++) {
@@ -201,7 +200,7 @@ void actualizarCatalogo()
   char *linea = "";
   int librosAgregados = 0;
 
-  while (*contenido != '\0') {
+  while (contenido != NULL && linea != NULL) {
     linea = strsep(&contenido, "\n");
     Libro libro;
     strcpy(libro.titulo, strsep(&linea, "|"));
@@ -226,14 +225,13 @@ void actualizarCatalogo()
 
   if (librosAgregados > 0) {
     // guardar el arreglo de libros en el archivo
-    guardarLibros("./data/catalogo.json", libros);
+    // guardarLibros("./data/catalogo.json", libros);
+    validarCatalogo(libros);
     printf("\n===============Se agregaron %d libros al catalogo.===============\n", librosAgregados);
   }
   else {
     printf("No se agregaron libros al catalogo.\n");
   }
-
-  validarCatalogo();
 
   pausar("Presione enter para volver al menú...");
   limpiarPantalla();
