@@ -100,15 +100,15 @@ int existeLibro(Libro *libros, Libro libro)
 {
   int cantidadLibros = contarLibros(libros);
   for (int i = 0; i < cantidadLibros; i++) {
-    if (strcmp(libros[i].titulo, libro.titulo) == 0)
-    {
+    if (strcmp(libros[i].titulo, libro.titulo) == 0) {
       return 1;
     }
   }
   return 0;
 }
 
-void guardarLibros(char* ruta, Libro* libros) {
+void guardarLibros(char *ruta, Libro *libros)
+{
   struct json_object *parsed_json = json_object_new_array();
 
   int cantidadLibros = contarLibros(libros);
@@ -135,57 +135,85 @@ void guardarLibros(char* ruta, Libro* libros) {
     json_object_array_add(parsed_json, obj);
   }
 
-  char *contenido = (char*) json_object_to_json_string(parsed_json);
+  char *contenido = (char *)strcat(json_object_to_json_string(parsed_json), "\n");
   escribirArchivo(ruta, contenido);
+}
+
+int libroValido(Libro libro)
+{
+  if (
+      strcmp(libro.titulo, "") == 0 ||
+      strcmp(libro.autor, "") == 0 ||
+      strcmp(libro.genero, "") == 0 ||
+      strcmp(libro.resumen, "") == 0 ||
+      libro.anio == 0) {
+    return 0;
+  }
+
+  char caracteresValidos[] = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ1234567890 .,()-¿?¡!";
+  int cantidadCaracteresValidos = strlen(caracteresValidos);
+  int cantidadCaracteresTitulo = strlen(libro.titulo);
+
+  for (int i = 0; i < cantidadCaracteresTitulo; i++) {
+    int caracterValido = 0;
+    for (int j = 0; j < cantidadCaracteresValidos; j++) {
+      if (libro.titulo[i] == caracteresValidos[j])
+      {
+        caracterValido = 1;
+        break;
+      }
+    }
+    if (caracterValido == 0) {
+      return 0;
+    }
+  }
+
+  return 1;
+}
+
+void validarCatalogo()
+{
+  Libro *libros = cargarLibros("./data/catalogo.json");
+  int cantidadLibros = contarLibros(libros);
+  // elimina los libros que no tiene anio
+  for (int i = 0; i < cantidadLibros; i++) {
+    if (libroValido(libros[i]) == 0) {
+      for (int j = i; j < cantidadLibros; j++)
+      {
+        libros[j] = libros[j + 1];
+      }
+      cantidadLibros--;
+      i--;
+    }
+  }
+
+  guardarLibros("./data/catalogo.json", libros);
 }
 
 void actualizarCatalogo()
 {
-  // solicitar la ruta del archivo
   char rutaArchivo[200];
   printf("Ingrese la ruta del archivo: ");
   scanf("%199s", rutaArchivo);
 
-  // cargar el archivo
   char *contenido = leerArchivo(rutaArchivo);
-
   Libro *libros = cargarLibros("./data/catalogo.json");
-
-  // recorrer cada linea del contenido
-  // crear un libro por cada linea
-
   char *linea = "";
   int librosAgregados = 0;
 
   while (*contenido != '\0') {
     linea = strsep(&contenido, "\n");
-    // hacer split de linea por |
-    char *titulo = strsep(&linea, "|");
-    char *autor = strsep(&linea, "|");
-    char *anio = strsep(&linea, "|");
-    char *genero = strsep(&linea, "|");
-    char *resumen = strsep(&linea, "|");
-    char *cantidad = strsep(&linea, "|");
-
-    // printf("Titulo: %s\n", titulo);
     Libro libro;
-    strcpy(libro.titulo, titulo);
-    strcpy(libro.autor, autor);
-    libro.anio = atoi(anio);
-    strcpy(libro.genero, genero);
-    strcpy(libro.resumen, resumen);
-    libro.cantidad = atoi(cantidad);
+    strcpy(libro.titulo, strsep(&linea, "|"));
+    strcpy(libro.autor, strsep(&linea, "|"));
+    libro.anio = atoi(strsep(&linea, "|"));
+    strcpy(libro.genero, strsep(&linea, "|"));
+    strcpy(libro.resumen, strsep(&linea, "|"));
+    libro.cantidad = atoi(strsep(&linea, "|"));
 
     // si el libro no está en la lista de libros, entonces agregarlo
-    if (!existeLibro(libros, libro))
-    {
-      int totalLibros = contarLibros(libros);
-      
-      if (totalLibros == 0) {
-        totalLibros--;
-      }
-
-      libros = realloc(libros, sizeof(Libro) * (totalLibros + 1));
+    if (!existeLibro(libros, libro)) {
+      libros = realloc(libros, sizeof(Libro) * (contarLibros(libros) + 1));
       libros[contarLibros(libros)] = libro;
       librosAgregados++;
       printf("+ El libro %s se agregó al catalogo.\n", libro.titulo);
@@ -205,6 +233,8 @@ void actualizarCatalogo()
     printf("No se agregaron libros al catalogo.\n");
   }
 
+  validarCatalogo();
+
   pausar("Presione enter para volver al menú...");
   limpiarPantalla();
 }
@@ -214,8 +244,7 @@ void opcionesGestionCatalogo()
   int opcion = menuGestionCatalogo();
 
   while (opcion != 5) {
-    switch (opcion)
-    {
+    switch (opcion) {
     case 1:
       actualizarCatalogo();
       break;
@@ -243,8 +272,7 @@ void opcionesOperativas()
 {
   int opcion = menuOpcionesOperativas();
   while (opcion != 6) {
-    switch (opcion)
-    {
+    switch (opcion) {
     case 1:
       opcionesGestionCatalogo();
       break;

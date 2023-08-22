@@ -8,7 +8,6 @@ typedef struct {
 } Usuario;
 
 typedef struct {
-  int id;
   char titulo[50];
   char autor[50];
   int anio;
