@@ -8,8 +8,8 @@
 #include "./encabezados/menus.h"
 #include "./encabezados/estructuras.h"
 #include "./encabezados/gestionUsuario.h"
-#include "./encabezados/opcionesGenerales.h"
 #include "./encabezados/opcionesOperativas.h"
+#include "./encabezados/opcionesGenerales.h"
 
 int main()
 {

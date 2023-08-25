@@ -24,4 +24,11 @@ typedef struct {
   char fechaFin[50];
 } Prestamo;
 
+typedef struct{
+  int cedula;
+  char titulo[50];
+  char fechaInicio[50];
+  char fechaFinal[50];
+} PrestamoEjemplar;
+
 #endif

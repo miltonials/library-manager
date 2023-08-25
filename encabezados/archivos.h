@@ -9,25 +9,25 @@ char* leerArchivo(const char* nombreArchivo) {
     }
 
     fseek(archivo, 0, SEEK_END);
-    long tamaño = ftell(archivo);
+    long tamano = ftell(archivo);
     rewind(archivo);
 
-    char* contenido = (char*)malloc(tamaño + 1);
+    char* contenido = (char*)malloc(tamano + 1);
     if (contenido == NULL) {
         perror("Error al asignar memoria");
         fclose(archivo);
         return NULL;
     }
 
-    size_t bytesLeidos = fread(contenido, 1, tamaño, archivo);
-    if (bytesLeidos != tamaño) {
+    size_t bytesLeidos = fread(contenido, 1, tamano, archivo);
+    if (bytesLeidos != tamano) {
         perror("Error al leer el archivo");
         fclose(archivo);
         free(contenido);
         return NULL;
     }
 
-    contenido[tamaño] = '\0';
+    contenido[tamano] = '\0';
     fclose(archivo);
     return contenido;
 }

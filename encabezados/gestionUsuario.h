@@ -151,7 +151,6 @@ void registrarUsuario(){
     json_object_put(parsed_json);
     printf("Usuario registrado con exito\n");
     free(usuarios);
-
 }
 
 void opcionGestionUsuarios(){

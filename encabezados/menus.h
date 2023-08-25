@@ -64,7 +64,7 @@ int menuOpcionesGenerales() {
   printf("3. Prestamo de ejemplar.\n");
   printf("4. Devolucion de ejemplar.\n");
   printf("5. Volver.\n");
-
+  printf("Ingrese una opcion: ");
   return seleccionOpcion();
 }
 
