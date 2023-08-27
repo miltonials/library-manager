@@ -189,15 +189,16 @@ void historialPrestamos(Biblioteca *biblioteca) {
 
   
   // for (int i = 0; i < cantidadPrestamos; i++) {
-  //   time_t tiempoPrestamo = biblioteca->prestamos[i].fechaPrestamo;
-  //   time_t tiempoEntrega = biblioteca->prestamos[i].fechaEntrega;
+  //   time_t tiempoPrestamo = obtenerFechaDeString(biblioteca->prestamos[i].fechaInicio);
+  //   time_t tiempoEntrega = obtenerFechaDeString(biblioteca->prestamos[i].fechaFin);
   //   if (tiempoPrestamo >= tiempoInicio && tiempoPrestamo <= tiempoFin) {
-  //     printf("Identificador de prestamo: %d\n", biblioteca->prestamos[i].idPrestamo);
-  //     printf("Usuario: %s\n", biblioteca->prestamos[i].usuario);
+  //     printf("Identificador de prestamo: %d\n", biblioteca->prestamos[i].id);
+  //     Usuario *usuario = existeUsuario(biblioteca->prestamos[i].cedulaUsuario);
+  //     printf("Usuario: %s (%s)\n", usuario->cedula, usuario->nombre);
   //     printf("Estado: %s\n", biblioteca->prestamos[i].estado);
-  //     printf("Nombre: %s\n", biblioteca->prestamos[i].nombre);
-  //     printf("Identificador de ejemplar: %s\n", biblioteca->prestamos[i].idEjemplar);
-  //     if (strcmp(biblioteca->prestamos[i].estado, "finalizado") == 0) {
+  //     printf("Libro: %s\n", biblioteca->prestamos[i].tituloLibro);
+
+  //     if (strcmp(biblioteca->prestamos[i].estado, "0") == 0) {
   //       if (tiempoEntrega > tiempoPrestamo) {
   //         printf("Entrega tardia: si\n");
   //       }

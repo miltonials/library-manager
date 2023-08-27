@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,6 +8,7 @@
 #include <hpdf.h>
 
 #include "./encabezados/archivos.h"
+#include "./encabezados/tiempo.h"
 #include "./encabezados/menus.h"
 #include "./encabezados/estructuras.h"
 #include "./encabezados/biblioteca/cargarDatos.h"
@@ -40,9 +43,10 @@ int main()
     }
   }
   
-  resumenBiblioteca(&biblioteca);
+  // resumenBiblioteca(&biblioteca);
   // actualizarBiblioteca(&biblioteca, "./data/");
 
   // resumenBiblioteca(&biblioteca);
+
   return 0;
 }

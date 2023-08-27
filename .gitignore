@@ -2,3 +2,5 @@
 main
 pruebas
 pruebas.c
+*.pdf
+*.json
