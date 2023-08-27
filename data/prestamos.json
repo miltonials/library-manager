@@ -1,8 +1,10 @@
 [
   {
-    "cedula":703010147,
-    "titulo":"1984",
-    "fechaInicio":"15/11/2022",
-    "fechaFinal":"18/12/2022"
+    "id": 1,
+    "tituloLibro": "1984",
+    "cedulaUsuario": "703010147",
+    "fechaInicio": "15\/11\/2022",
+    "fechaFin": "18\/12\/2022",
+    "estado": 1
   }
 ]

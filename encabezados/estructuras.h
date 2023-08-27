@@ -2,7 +2,7 @@
 #define ESTRUCTURAS_H
 
 typedef struct {
-  int cedula;
+  char *cedula;
   char nombre[50];
   char direccion[50];
 } Usuario;
@@ -18,17 +18,31 @@ typedef struct {
 
 typedef struct {
   int id;
-  int idLibro;
-  int cedulaUsuario;
-  char fechaInicio[50];
-  char fechaFin[50];
+  char *tituloLibro;
+  char *cedulaUsuario;
+  char *fechaInicio;
+  char *fechaFin;
+  int estado;
 } Prestamo;
 
 typedef struct{
-  int cedula;
+  char *cedula;
   char titulo[50];
   char fechaInicio[50];
   char fechaFinal[50];
 } PrestamoEjemplar;
+
+typedef struct {
+  Usuario *usuarios;
+  Libro *libros;
+  Prestamo *prestamos;
+  
+  char *rutaArchivos;
+  int cantidadUsuarios;
+  int cantidadLibros;
+  int cantidadPrestamos;
+} Biblioteca;
+
+
 
 #endif
