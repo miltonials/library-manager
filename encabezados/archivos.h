@@ -63,7 +63,9 @@ void crearPDF(const char *ruta, const char *nombreArchivo, const char *contenido
     HPDF_Font font = HPDF_GetFont(pdf, "Helvetica", NULL);
     HPDF_Page_SetFontAndSize(page, font, 12);
 
-    HPDF_Page_TextOut(page, 100, 700, contenido);
+    // HPDF_Page_TextOut(page, 100, 100, contenido);
+    // que ocupe toda el area de la pagina y que imprima saltos de linea que tenga el contenido
+    HPDF_Page_TextRect(page, 100, 600, 600, 100, contenido, HPDF_TALIGN_LEFT, NULL);
 
     HPDF_Page_EndText(page);
 

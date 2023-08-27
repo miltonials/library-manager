@@ -2,10 +2,35 @@
 #define OPCIONESGENERALES_H
 
 void prestamoApdf(Biblioteca *dirM_biblioteca, Prestamo *prestamo, Usuario *usuario, Libro *libro) {
-  // llamar a la funcion void crearPDF(const char *ruta, const char *nombreArchivo, const char *contenido)
+    char contenido[500];  // Ajusta el tamaño según tus necesidades
+    //la ruta es dirM_biblioteca->rutaArchivos más la palabra comprobantes
+    char *ruta = malloc(strlen(dirM_biblioteca->rutaArchivos) + strlen("comprobantes") + 1);
+    strcpy(ruta, dirM_biblioteca->rutaArchivos);
+    strcat(ruta, "comprobantes/");
 
-  return ;
+
+    // Crear el contenido del PDF utilizando los datos del préstamo, usuario y libro
+    snprintf(contenido, sizeof(contenido),
+             "Detalles del Préstamo:\n\n"
+             "ID de Préstamo: %d\n"
+             "Cédula de Usuario: %s (%s)\n"
+             "Título de Libro: %s\n"
+             "Fecha de Inicio: %s\n"
+             "Fecha de Fin: %s\n",
+             prestamo->id, prestamo->cedulaUsuario, usuario->nombre,
+             libro->titulo, prestamo->fechaInicio, prestamo->fechaFin);
+
+    // Generar el nombre del archivo (puedes personalizarlo)
+    char nombreArchivo[50];
+    snprintf(nombreArchivo, sizeof(nombreArchivo), "prestamo_%d", prestamo->id);
+
+    // Llamar a la función para crear el PDF
+    printf(" %s", contenido);
+    crearPDF(ruta, nombreArchivo, contenido);
+
+    printf("PDF de préstamo creado: %s\n", nombreArchivo);
 }
+
 
 void generarComprobante(Biblioteca *dirM_biblioteca, Usuario *usuario, Libro* libro, char *fechaInicio, char *fechaFinal){
   //validar que este disponible el libro
@@ -38,7 +63,10 @@ void generarComprobante(Biblioteca *dirM_biblioteca, Usuario *usuario, Libro* li
     dirM_biblioteca->prestamos = prestamos;
     dirM_biblioteca->cantidadPrestamos++;
 
+    libro->cantidad--;
+
     actualizarPrestamos(dirM_biblioteca, dirM_biblioteca->rutaArchivos);
+    actualizarCatalogo(dirM_biblioteca, dirM_biblioteca->rutaArchivos);
     prestamoApdf(dirM_biblioteca, &prestamo, usuario, libro);
     printf("El libro %s ha sido prestado al usuario %s\n", titulo, usuario->nombre);
   }else{
@@ -115,7 +143,7 @@ void prestamoEjemplar(Biblioteca *dirM_biblioteca){
 
   if (usuario != NULL) {
     if (libro != NULL) {
-      if(formatoFecha(fechaInicio) != 1 || formatoFecha(fechaFinal) != 1){
+      if(formatoFecha(fechaInicio) == 1 || formatoFecha(fechaFinal) == 1){
         generarComprobante(dirM_biblioteca, usuario, libro, fechaInicio, fechaFinal);
       }
       else{
