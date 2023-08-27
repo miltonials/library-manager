@@ -124,6 +124,7 @@ void cargarPrestamos2(Biblioteca *dirM_biblioteca) {
     json_object *cedulaUsuario = json_object_object_get(prestamo, "cedulaUsuario");
     json_object *fechaInicio = json_object_object_get(prestamo, "fechaInicio");
     json_object *fechaFin = json_object_object_get(prestamo, "fechaFin");
+    json_object *fechaDevolucion = json_object_object_get(prestamo, "fechaDevolucion");
     json_object *estado = json_object_object_get(prestamo, "estado");
     
     dirM_biblioteca->prestamos[i].id = json_object_get_int(id);
@@ -137,6 +138,9 @@ void cargarPrestamos2(Biblioteca *dirM_biblioteca) {
 
     dirM_biblioteca->prestamos[i].fechaFin = malloc(strlen(json_object_get_string(fechaFin)) + 1);
     strcpy(dirM_biblioteca->prestamos[i].fechaFin, json_object_get_string(fechaFin));
+
+    dirM_biblioteca->prestamos[i].fechaDevolucion = malloc(strlen(json_object_get_string(fechaDevolucion)));
+    strcpy(dirM_biblioteca->prestamos[i].fechaDevolucion, json_object_get_string(fechaDevolucion));
     dirM_biblioteca->prestamos[i].estado = json_object_get_int(estado);
   }
 

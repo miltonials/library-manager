@@ -1,1 +1,47 @@
-[{"id":1,"tituloLibro":"1984","cedulaUsuario":"703010147","fechaInicio":"15\/11\/2022","fechaFin":"18\/12\/2022","estado":1},{"id":2,"tituloLibro":"1984","cedulaUsuario":"123456789","fechaInicio":"21\/08\/2023","fechaFin":"21\/09\/2023","estado":1},{"id":3,"tituloLibro":"1984","cedulaUsuario":"123456789","fechaInicio":"21\/08\/2023","fechaFin":"21\/09\/2023","estado":1},{"id":4,"tituloLibro":"1984","cedulaUsuario":"123456789","fechaInicio":"21\/08\/2023","fechaFin":"21\/09\/2023","estado":1},{"id":5,"tituloLibro":"1984","cedulaUsuario":"123456789","fechaInicio":"21\/06\/2023","fechaFin":"23\/09\/2023","estado":1}]
+[
+  {
+    "id": 1,
+    "tituloLibro": "1984",
+    "cedulaUsuario": "703010147",
+    "fechaInicio": "15\/11\/2022",
+    "fechaFin": "18\/12\/2022",
+    "fechaDevolucion": "",
+    "estado": 1
+  },
+  {
+    "id": 2,
+    "tituloLibro": "1984",
+    "cedulaUsuario": "123456789",
+    "fechaInicio": "21\/08\/2023",
+    "fechaFin": "21\/09\/2023",
+    "fechaDevolucion": "",
+    "estado": 1
+  },
+  {
+    "id": 3,
+    "tituloLibro": "1984",
+    "cedulaUsuario": "123456789",
+    "fechaInicio": "21\/08\/2023",
+    "fechaFin": "21\/09\/2023",
+    "fechaDevolucion": "",
+    "estado": 1
+  },
+  {
+    "id": 4,
+    "tituloLibro": "1984",
+    "cedulaUsuario": "123456789",
+    "fechaInicio": "21\/08\/2023",
+    "fechaFin": "21\/09\/2023",
+    "fechaDevolucion": "",
+    "estado": 1
+  },
+  {
+    "id": 5,
+    "tituloLibro": "1984",
+    "cedulaUsuario": "123456789",
+    "fechaInicio": "21\/06\/2023",
+    "fechaFin": "23\/09\/2023",
+    "fechaDevolucion": "",
+    "estado": 1
+  }
+]

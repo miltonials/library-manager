@@ -84,6 +84,7 @@ void actualizarPrestamos(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
     json_object_object_add(prestamo, "cedulaUsuario", json_object_new_string(dirM_biblioteca->prestamos[i].cedulaUsuario));
     json_object_object_add(prestamo, "fechaInicio", json_object_new_string(dirM_biblioteca->prestamos[i].fechaInicio));
     json_object_object_add(prestamo, "fechaFin", json_object_new_string(dirM_biblioteca->prestamos[i].fechaFin));
+    json_object_object_add(prestamo, "fechaDevolucion", json_object_new_string(dirM_biblioteca->prestamos[i].fechaDevolucion));
     json_object_object_add(prestamo, "estado", json_object_new_int(dirM_biblioteca->prestamos[i].estado));
     json_object_array_add(prestamos, prestamo);
   }

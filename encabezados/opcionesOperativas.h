@@ -154,6 +154,64 @@ void opcionesGestionCatalogo(Biblioteca *dirM_biblioteca)
   }
 }
 
+//El sistema deberá mostrar todos los préstamos generados en el sistema en un rango de fechas indicado por el usuario (inicio-fin)
+//-considerando la fecha de entrega-, la información a mostrar será: identificador de préstamo, usuario, estado
+//(activo o finalizado), nombre, identificador de ejemplar y si presentó entrega tardía (si o no) -aquellos con estado finalizado-.
+void historialPrestamos(Biblioteca *biblioteca) {
+  int diaInicio, mesInicio, anioInicio;
+  int diaFin, mesFin, anioFin;
+  printf("Ingrese la fecha de inicio (dd/mm/aaaa): ");
+  scanf("%d/%d/%d", &diaInicio, &mesInicio, &anioInicio);
+  printf("Ingrese la fecha de fin (dd/mm/aaaa): ");
+  scanf("%d/%d/%d", &diaFin, &mesFin, &anioFin);
+
+  time_t tiempoInicio = {0};
+  struct tm *tiempoInicioInfo = localtime(&tiempoInicio);
+  tiempoInicioInfo->tm_mday = diaInicio;
+  tiempoInicioInfo->tm_mon = mesInicio - 1;
+  tiempoInicioInfo->tm_year = anioInicio - 1900;
+  tiempoInicioInfo->tm_hour = 0;
+  tiempoInicioInfo->tm_min = 0;
+  tiempoInicioInfo->tm_sec = 0;
+  tiempoInicio = mktime(tiempoInicioInfo);
+
+  time_t tiempoFin = {0};
+  struct tm *tiempoFinInfo = localtime(&tiempoFin);
+  tiempoFinInfo->tm_mday = diaFin;
+  tiempoFinInfo->tm_mon = mesFin - 1;
+  tiempoFinInfo->tm_year = anioFin - 1900;
+  tiempoFinInfo->tm_hour = 0;
+  tiempoFinInfo->tm_min = 0;
+  tiempoFinInfo->tm_sec = 0;
+  tiempoFin = mktime(tiempoFinInfo);
+
+  int cantidadPrestamos = biblioteca->cantidadPrestamos;
+
+  
+  // for (int i = 0; i < cantidadPrestamos; i++) {
+  //   time_t tiempoPrestamo = biblioteca->prestamos[i].fechaPrestamo;
+  //   time_t tiempoEntrega = biblioteca->prestamos[i].fechaEntrega;
+  //   if (tiempoPrestamo >= tiempoInicio && tiempoPrestamo <= tiempoFin) {
+  //     printf("Identificador de prestamo: %d\n", biblioteca->prestamos[i].idPrestamo);
+  //     printf("Usuario: %s\n", biblioteca->prestamos[i].usuario);
+  //     printf("Estado: %s\n", biblioteca->prestamos[i].estado);
+  //     printf("Nombre: %s\n", biblioteca->prestamos[i].nombre);
+  //     printf("Identificador de ejemplar: %s\n", biblioteca->prestamos[i].idEjemplar);
+  //     if (strcmp(biblioteca->prestamos[i].estado, "finalizado") == 0) {
+  //       if (tiempoEntrega > tiempoPrestamo) {
+  //         printf("Entrega tardia: si\n");
+  //       }
+  //       else {
+  //         printf("Entrega tardia: no\n");
+  //       }
+  //     }
+  //     printf("\n");
+  //   }
+  // }
+
+
+}
+
 void opcionesOperativas(Biblioteca *dirM_biblioteca)
 {
   int opcion = menuOpcionesOperativas();
@@ -166,7 +224,7 @@ void opcionesOperativas(Biblioteca *dirM_biblioteca)
       opcionGestionUsuarios(dirM_biblioteca);
       break;
     case 3:
-      printf("Historial de prestamos.\n");
+      historialPrestamos(dirM_biblioteca);
       break;
     case 4:
       printf("Vencimiento de prestamos.\n");

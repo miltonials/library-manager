@@ -22,16 +22,9 @@ typedef struct {
   char *cedulaUsuario;
   char *fechaInicio;
   char *fechaFin;
+  char *fechaDevolucion;
   int estado;
 } Prestamo;
-
-typedef struct{
-  char *cedula;
-  char titulo[50];
-  char fechaInicio[50];
-  char fechaFinal[50];
-  int estado;
-} PrestamoEjemplar;
 
 typedef struct {
   Usuario *usuarios;
