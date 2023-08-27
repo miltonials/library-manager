@@ -8,11 +8,11 @@ typedef struct {
 } Usuario;
 
 typedef struct {
-  char titulo[50];
-  char autor[50];
+  char *titulo;
+  char *autor;
   int anio;
-  char genero[50];
-  char resumen[500];
+  char *genero;
+  char *resumen;
   int cantidad;
 } Libro;
 
@@ -30,6 +30,7 @@ typedef struct{
   char titulo[50];
   char fechaInicio[50];
   char fechaFinal[50];
+  int estado;
 } PrestamoEjemplar;
 
 typedef struct {

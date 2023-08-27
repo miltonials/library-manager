@@ -2,10 +2,7 @@
 #define ACTUALIZARDATOS_H
 
 
-void actualizarBiblioteca(Biblioteca *dirM_biblioteca, char *rutaArchivos);
-void actualizarUsuarios(Biblioteca *dirM_biblioteca, char *rutaArchivos);
-void actualizarCatalogo(Biblioteca *dirM_biblioteca, char *rutaArchivos);
-void actualizarPrestamos(Biblioteca *dirM_biblioteca, char *rutaArchivos);
+
 
 void actualizarBiblioteca(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   actualizarUsuarios(dirM_biblioteca, rutaArchivos);

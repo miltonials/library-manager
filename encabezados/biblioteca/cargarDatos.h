@@ -7,6 +7,11 @@ void cargarLibros2(Biblioteca *dirM_biblioteca);
 void cargarPrestamos2(Biblioteca *dirM_biblioteca);
 void resumenBiblioteca(Biblioteca *dirM_biblioteca);
 
+void actualizarBiblioteca(Biblioteca *dirM_biblioteca, char *rutaArchivos);
+void actualizarUsuarios(Biblioteca *dirM_biblioteca, char *rutaArchivos);
+void actualizarCatalogo(Biblioteca *dirM_biblioteca, char *rutaArchivos);
+void actualizarPrestamos(Biblioteca *dirM_biblioteca, char *rutaArchivos);
+
 void cargarBiblioteca(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   dirM_biblioteca->rutaArchivos = rutaArchivos;
   cargarUsuarios2(dirM_biblioteca);
@@ -21,6 +26,12 @@ void cargarUsuarios2(Biblioteca *dirM_biblioteca) {
   strcpy(ruta, dirM_biblioteca->rutaArchivos);
   strcat(ruta, "usuarios.json");
   char *contenidoArchivo = leerArchivo(ruta);
+  
+  if (contenidoArchivo == NULL || strlen(contenidoArchivo) == 0) {
+    escribirArchivo(ruta, "[]");
+    contenidoArchivo = leerArchivo(ruta);
+  }
+  
   free(ruta);
 
   json_object *usuarios = json_tokener_parse(contenidoArchivo);
@@ -48,6 +59,12 @@ void cargarLibros2(Biblioteca *dirM_biblioteca) {
   strcpy(ruta, dirM_biblioteca->rutaArchivos);
   strcat(ruta, "catalogo.json");
   char *contenidoArchivo = leerArchivo(ruta);
+  
+  if (contenidoArchivo == NULL || strlen(contenidoArchivo) == 0) {
+    escribirArchivo(ruta, "[]");
+    contenidoArchivo = leerArchivo(ruta);
+  }
+  
   free(ruta);
 
   json_object *libros = json_tokener_parse(contenidoArchivo);
@@ -63,6 +80,11 @@ void cargarLibros2(Biblioteca *dirM_biblioteca) {
     json_object *resumen = json_object_object_get(libro, "resumen");
     json_object *cantidad = json_object_object_get(libro, "cantidad");
 
+    dirM_biblioteca->libros[i].titulo = malloc(strlen(json_object_get_string(titulo)) + 1);
+    dirM_biblioteca->libros[i].autor = malloc(strlen(json_object_get_string(autor)) + 1);
+    dirM_biblioteca->libros[i].genero = malloc(strlen(json_object_get_string(genero)) + 1);
+    dirM_biblioteca->libros[i].resumen = malloc(strlen(json_object_get_string(resumen)) + 1);
+    
     strcpy(dirM_biblioteca->libros[i].titulo, json_object_get_string(titulo));
     strcpy(dirM_biblioteca->libros[i].autor, json_object_get_string(autor));
     dirM_biblioteca->libros[i].anio = json_object_get_int(anio);
@@ -80,6 +102,12 @@ void cargarPrestamos2(Biblioteca *dirM_biblioteca) {
   strcpy(ruta, dirM_biblioteca->rutaArchivos);
   strcat(ruta, "prestamos.json");
   char *contenidoArchivo = leerArchivo(ruta);
+  
+  if (contenidoArchivo == NULL || strlen(contenidoArchivo) == 0) {
+    escribirArchivo(ruta, "[]");
+    contenidoArchivo = leerArchivo(ruta);
+  }
+  
   free(ruta);
 
   json_object *prestamos = json_tokener_parse(contenidoArchivo);

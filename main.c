@@ -10,7 +10,7 @@
 #include "./encabezados/biblioteca/cargarDatos.h"
 #include "./encabezados/biblioteca/actualizarDatos.h"
 // #include "./encabezados/gestionUsuario.h"
-// #include "./encabezados/opcionesOperativas.h"
+#include "./encabezados/opcionesOperativas.h"
 // #include "./encabezados/opcionesGenerales.h"
 
 int main()
@@ -18,28 +18,29 @@ int main()
   int opcion = 0;
   Biblioteca biblioteca;
   cargarBiblioteca(&biblioteca, "./data/");
-  // while (opcion != 3)
-  // {
-  //   opcion = menuPrincipal();
+  while (opcion != 3)
+  {
+    opcion = menuPrincipal();
     
-  //   switch (opcion)
-  //   {
-  //     case 1:
-  //       opcionesOperativas();
-  //       break;
-  //     case 2:
-  //       opcionesGenerales();
-  //       break;
-  //     case 3:
-  //       printf("👋 Gracias por usar el sistema de gestion de biblioteca.\n");
-  //       break;
-  //     default:
-  //       printf("Opcion invalida.\n");
-  //       break;
-  //   }
-  // }
+    switch (opcion)
+    {
+      case 1:
+        opcionesOperativas(&biblioteca);
+        break;
+      case 2:
+        // opcionesGenerales(&biblioteca);
+        break;
+      case 3:
+        printf("👋 Gracias por usar el sistema de gestion de biblioteca.\n");
+        break;
+      default:
+        printf("Opcion invalida.\n");
+        break;
+    }
+  }
   
-  actualizarBiblioteca(&biblioteca, "./data2/");
+  resumenBiblioteca(&biblioteca);
+  // actualizarBiblioteca(&biblioteca, "./data/");
 
   // resumenBiblioteca(&biblioteca);
   return 0;
