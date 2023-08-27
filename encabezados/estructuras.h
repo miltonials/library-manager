@@ -3,8 +3,8 @@
 
 typedef struct {
   char *cedula;
-  char nombre[50];
-  char direccion[50];
+  char *nombre;
+  char *direccion;
 } Usuario;
 
 typedef struct {

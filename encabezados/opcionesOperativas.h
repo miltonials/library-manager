@@ -163,7 +163,7 @@ void opcionesOperativas(Biblioteca *dirM_biblioteca)
       opcionesGestionCatalogo(dirM_biblioteca);
       break;
     case 2:
-      // opcionGestionUsuarios();
+      opcionGestionUsuarios(dirM_biblioteca);
       break;
     case 3:
       printf("Historial de prestamos.\n");

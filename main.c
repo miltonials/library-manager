@@ -9,7 +9,7 @@
 #include "./encabezados/estructuras.h"
 #include "./encabezados/biblioteca/cargarDatos.h"
 #include "./encabezados/biblioteca/actualizarDatos.h"
-// #include "./encabezados/gestionUsuario.h"
+#include "./encabezados/gestionUsuario.h"
 #include "./encabezados/opcionesOperativas.h"
 // #include "./encabezados/opcionesGenerales.h"
 

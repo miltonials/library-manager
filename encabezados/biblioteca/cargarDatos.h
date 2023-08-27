@@ -45,6 +45,8 @@ void cargarUsuarios2(Biblioteca *dirM_biblioteca) {
     json_object *direccion = json_object_object_get(usuario, "direccion");
 
     dirM_biblioteca->usuarios[i].cedula = malloc(strlen(json_object_get_string(cedula)) + 1);
+    dirM_biblioteca->usuarios[i].nombre = malloc(strlen(json_object_get_string(nombre)) + 1);
+    dirM_biblioteca->usuarios[i].direccion = malloc(strlen(json_object_get_string(direccion)) + 1);
     strcpy(dirM_biblioteca->usuarios[i].cedula, json_object_get_string(cedula));
     strcpy(dirM_biblioteca->usuarios[i].nombre, json_object_get_string(nombre));
     strcpy(dirM_biblioteca->usuarios[i].direccion, json_object_get_string(direccion));
