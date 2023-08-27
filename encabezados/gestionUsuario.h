@@ -41,21 +41,22 @@ Usuario solicitarDatosUsuario() {
     return UsuarioNuevo;
 }
 
-int existeUsuario(Biblioteca *dirM_biblioteca, Usuario usuarioNuevo) {
+Usuario *existeUsuario(Biblioteca *dirM_biblioteca, char *cedula) {
     int cantidadUsuarios = dirM_biblioteca->cantidadUsuarios;
     for (int i = 0; i < cantidadUsuarios; i++) {
-        if (strcmp(dirM_biblioteca->usuarios[i].cedula, usuarioNuevo.cedula) == 0) {
+        if (strcmp(dirM_biblioteca->usuarios[i].cedula, cedula) == 0) {
             printf("El usuario %s ya está registrado con el número de cédula %s.\n", dirM_biblioteca->usuarios[i].nombre, dirM_biblioteca->usuarios[i].cedula);
-            return 1;
+            return &dirM_biblioteca->usuarios[i];
         }
     }
-    return 0;
+    
+    return NULL;
 }
 
 void registrarUsuario(Biblioteca *dirM_biblioteca){
     Usuario usuarioNuevo = solicitarDatosUsuario();
 
-    if (existeUsuario(dirM_biblioteca, usuarioNuevo)) {
+    if (existeUsuario(dirM_biblioteca, usuarioNuevo.cedula)) {
         return;
     }
     

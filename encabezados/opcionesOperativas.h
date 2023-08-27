@@ -21,15 +21,15 @@ void mostrarLibros(Biblioteca *dirM_biblioteca)
   limpiarPantalla();
 }
 
-int existeLibro(Biblioteca *dirM_biblioteca, Libro libro)
+Libro *existeLibro(Biblioteca *dirM_biblioteca, char *titulo)
 {
   int cantidadLibros = dirM_biblioteca->cantidadLibros;
   for (int i = 0; i < cantidadLibros; i++) {
-    if (strcmp(dirM_biblioteca->libros[i].titulo, libro.titulo) == 0) {
-      return 1;
+    if (strcmp(dirM_biblioteca->libros[i].titulo, titulo) == 0) {
+      return &dirM_biblioteca->libros[i];
     }
   }
-  return 0;
+  return NULL;
 }
 
 int formatoArchivo_txt(char *rutaArchivo)
@@ -101,7 +101,7 @@ void actualizarCatalogo_txt(Biblioteca *dirM_biblioteca)
       }
       campoActual++;
     }
-    if (existeLibro(dirM_biblioteca, libro) == 0) {
+    if (existeLibro(dirM_biblioteca, libro.titulo) == NULL) {
       //mostrar libro en un sola linea solo el titulo
       printf("+ %s\n", libro.titulo);
       libros[dirM_biblioteca->cantidadLibros] = libro;

@@ -3,7 +3,7 @@ Cien años de soledad|Gabriel García Márquez|1967|Realismo mágico|Esta novela
 Orgullo y prejuicio|Jane Austen|1813|Novela romántica|La historia sigue Elizabeth Bennet mientras|2
 Don Quijote de la Mancha|Miguel de Cervantes|1605|Novela de aventuras|La historia narra las locuras y|5
 Harry Potter y la piedra filosofal|J.K. Rowling|1997|Fantasía|El joven mago Harry Potter descubre su|6
-El Señor de los Anillos|J.R.R. Tolkien|1954|Fantasía |épica|Un grupo de héroes emprende una peligrosa|4
+El Señor de los Anillos|J.R.R. Tolkien|1954|Fantasía épica|Un grupo de héroes emprende una peligrosa|4
 Crónica de una muerte anunciada|Gabriel García Márquez|1981|Realismo mágico|La historia gira en torno al asesinato|3
 Matar un ruiseñor|Harper Lee|1960|Novela de aprendizaje|La novela aborda temas de raza e injusticia|2
 La sombra del viento|Carlos Ruiz Zafón|2001|Novela gótica|El protagonista descubre un libro misterioso|4

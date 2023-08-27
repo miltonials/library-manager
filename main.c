@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include <json-c/json.h>
+#include <hpdf.h>
 
 #include "./encabezados/archivos.h"
 #include "./encabezados/menus.h"
@@ -11,7 +12,7 @@
 #include "./encabezados/biblioteca/actualizarDatos.h"
 #include "./encabezados/gestionUsuario.h"
 #include "./encabezados/opcionesOperativas.h"
-// #include "./encabezados/opcionesGenerales.h"
+#include "./encabezados/opcionesGenerales.h"
 
 int main()
 {
@@ -28,7 +29,7 @@ int main()
         opcionesOperativas(&biblioteca);
         break;
       case 2:
-        // opcionesGenerales(&biblioteca);
+        opcionesGenerales(&biblioteca);
         break;
       case 3:
         printf("👋 Gracias por usar el sistema de gestion de biblioteca.\n");
