@@ -118,6 +118,93 @@ void prestamoEjemplar(Biblioteca *dirM_biblioteca){
   limpiarPantalla();
 }
 
+Prestamo *existePrestamo(Biblioteca *dirM_biblioteca, int prestamo_id) {
+  Prestamo *prestamos = dirM_biblioteca->prestamos;
+  int cantidadPrestamos = dirM_biblioteca->cantidadPrestamos;
+  int i;
+  for (i = 0; i < cantidadPrestamos; i++) {
+    if (prestamos[i].id == prestamo_id) {
+      return &prestamos[i];
+    }
+  }
+  return NULL;
+}
+
+/*
+El sistema debe permitir devolver un ejemplar, para esto solicitará el identificador de préstamo y
+la fecha de devolución. El sistema calculará el monto asociado al préstamo de la siguiente manera:
+
+1 a 7 días: 150 (tarificación por día) y 75 (tarificación por día tardío)
+8 a 15 días: 125 (tarificación por día) y 50 (tarificación por día tardío)
+16 o más días: 100 (tarificación por día) y 25 (tarificación por día tardío)
+
+formula: (dias * tarificacion) + (diasTardios * tarificacionTardia)
+*/
+void devolucionEjemplar(Biblioteca *dirM_biblioteca) {
+  Prestamo *prestamos = dirM_biblioteca->prestamos;
+  int cantidadPrestamos = dirM_biblioteca->cantidadPrestamos;
+  int idPrestamo;
+  char fechaDevolucion[20];
+  int dias;
+  int diasTardios;
+  int tarificacion;
+  int tarificacionTardia;
+  int monto;
+  int i;
+  
+  printf("Ingrese el id del prestamo: ");
+  scanf("%d", &idPrestamo);
+  printf("Ingrese la fecha de devolucion: ");
+  scanf("%s", fechaDevolucion);
+
+  Prestamo *prestamo = existePrestamo(dirM_biblioteca, idPrestamo);
+
+  if (prestamo != NULL) {
+    if (prestamo->estado == 0) {
+      printf("El prestamo ya fue devuelto\n");
+    }
+    else if(formatoFecha(fechaDevolucion) == 1){
+      Libro *libro = existeLibro(dirM_biblioteca, prestamo->tituloLibro);
+      dias = diferenciaDias(prestamo->fechaInicio, fechaDevolucion);
+      diasTardios = diferenciaDias(fechaDevolucion, prestamo->fechaFin);
+      if (diasTardios < 0) {
+        pausar("La fecha de devolución no puede ser menor a la fecha de fin del préstamo.");
+        limpiarPantalla();
+        return;
+      }
+      if(dias <= 7){
+        tarificacion = 150;
+        tarificacionTardia = 75;
+      }
+      else if(dias <= 15){
+        tarificacion = 125;
+        tarificacionTardia = 50;
+      }
+      else{
+        tarificacion = 100;
+        tarificacionTardia = 25;
+      }
+      monto = (dias * tarificacion) + (diasTardios * tarificacionTardia);
+      printf("El monto a pagar es: %d\n", monto);
+      
+      libro->cantidad++;
+      prestamo->estado = 0;
+
+      actualizarCatalogo(dirM_biblioteca, dirM_biblioteca->rutaArchivos);
+      actualizarPrestamos(dirM_biblioteca, dirM_biblioteca->rutaArchivos);
+    }
+    else{
+      printf("El formato de fecha es incorrecto\n");
+    }
+  }
+  else {
+    printf("El prestamo no existe\n");
+  }
+
+  pausar("Presione enter para volver al menú...");
+  limpiarPantalla();
+}
+
 void opcionesGenerales(Biblioteca *dirM_biblioteca) {
   int opcion = menuOpcionesGenerales();
   while(opcion != 5) {
@@ -134,6 +221,7 @@ void opcionesGenerales(Biblioteca *dirM_biblioteca) {
       break;
     case 4:
       printf("Devolucion de ejemplar.\n");
+      devolucionEjemplar(dirM_biblioteca);
       break;
     case 5:
       printf("Volver.\n");

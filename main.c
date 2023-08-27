@@ -42,7 +42,6 @@ int main()
         break;
     }
   }
-  
   // resumenBiblioteca(&biblioteca);
   // actualizarBiblioteca(&biblioteca, "./data/");
 

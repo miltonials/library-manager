@@ -79,5 +79,13 @@ int formatoFecha(char *fecha) {
   return 1;
 }
 
+int diferenciaDias(const char *fechaInicio, const char *fechaFinal) {
+  time_t fechaInicio_time = obtenerFechaDeString(fechaInicio);
+  time_t fechaFinal_time = obtenerFechaDeString(fechaFinal);
+
+  int dias = (int) difftime(fechaFinal_time, fechaInicio_time) / (60 * 60 * 24);
+
+  return dias;
+}
 
 #endif
