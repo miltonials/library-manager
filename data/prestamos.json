@@ -1,8 +1,10 @@
 [
   {
+    "id":1,
     "cedula":703010147,
-    "titulo":"1984",
-    "fechaInicio":"15/11/2022",
-    "fechaFinal":"18/12/2022"
+    "titulo":"Orgullo y prejuicio",
+    "fechaInicio":"15\/11\/2022",
+    "fechaFinal":"18\/12\/2022",
+    "estado":1
   }
 ]
