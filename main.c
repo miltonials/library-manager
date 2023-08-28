@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <json-c/json.h>
-#include <hpdf.h>
+#include <json-c/json.h> //sudo apt-get install libjson-c-dev
+#include <hpdf.h> // sudo apt-get install libharu-dev,  como se usa libreria externa, se debe compilar con -lhpdf
 
 #include "./encabezados/archivos.h"
 #include "./encabezados/tiempo.h"

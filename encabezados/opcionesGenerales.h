@@ -96,11 +96,15 @@ void prestamoEjemplar(Biblioteca *dirM_biblioteca){
 
   Libro *libro = existeLibro(dirM_biblioteca, titulo);
   Usuario *usuario = existeUsuario(dirM_biblioteca, cedula);
-
   if (usuario != NULL) {
     if (libro != NULL) {
       if(formatoFecha(fechaInicio) == 1 || formatoFecha(fechaFinal) == 1){
-        generarComprobante(dirM_biblioteca, usuario, libro, fechaInicio, fechaFinal);
+        //validar que la fecha de inicio sea menor a la fecha final
+        if(validarRangoFechas(fechaInicio, fechaFinal) == 1){
+          generarComprobante(dirM_biblioteca, usuario, libro, fechaInicio, fechaFinal);
+        }else{
+          printf("La fecha de inicio no puede ser mayor a la fecha final\n");
+        }
       }
       else{
         printf("El formato de fecha es incorrecto\n");
