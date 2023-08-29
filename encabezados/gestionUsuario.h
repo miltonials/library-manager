@@ -14,14 +14,21 @@ void verUsuarios(Biblioteca *dirM_biblioteca) {
     pausar("Presione enter para volver al menú...");
     limpiarPantalla();
 }
+char *buscarNombre(Biblioteca *dirM_biblioteca, char *cedula) {
+    int cantidadUsuarios = dirM_biblioteca->cantidadUsuarios;
+    for (int i = 0; i < cantidadUsuarios; i++) {
+        if (strcmp(dirM_biblioteca->usuarios[i].cedula, cedula) == 0) {
+            return dirM_biblioteca->usuarios[i].nombre;
+        }
+    }
+    return NULL;
+}
 
 Usuario solicitarDatosUsuario() {
     Usuario UsuarioNuevo;
     char cedula[20];
     char nombre[100];
-    char direccion[100];
-    
-
+    char direccion[100]; 
 
     printf("Ingrese la cedula del usuario: ");
     scanf(" %[^\n]s", cedula);
@@ -36,7 +43,6 @@ Usuario solicitarDatosUsuario() {
     strcpy(UsuarioNuevo.nombre, nombre);
     UsuarioNuevo.direccion = malloc(strlen(direccion) + 1);
     strcpy(UsuarioNuevo.direccion, direccion);
-
 
     return UsuarioNuevo;
 }

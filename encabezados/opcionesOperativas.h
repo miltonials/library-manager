@@ -158,59 +158,47 @@ void opcionesGestionCatalogo(Biblioteca *dirM_biblioteca)
 //-considerando la fecha de entrega-, la información a mostrar será: identificador de préstamo, usuario, estado
 //(activo o finalizado), nombre, identificador de ejemplar y si presentó entrega tardía (si o no) -aquellos con estado finalizado-.
 void historialPrestamos(Biblioteca *biblioteca) {
-  int diaInicio, mesInicio, anioInicio;
-  int diaFin, mesFin, anioFin;
-  printf("Ingrese la fecha de inicio (dd/mm/aaaa): ");
-  scanf("%d/%d/%d", &diaInicio, &mesInicio, &anioInicio);
-  printf("Ingrese la fecha de fin (dd/mm/aaaa): ");
-  scanf("%d/%d/%d", &diaFin, &mesFin, &anioFin);
+  char fechaInicio[20];
+  char fechaFinal[20];
+  printf("Ingrese la fecha de inicio: ");
+  scanf("%s", fechaInicio);
+  printf("Ingrese la fecha final: ");
+  scanf("%s", fechaFinal);
 
-  time_t tiempoInicio = {0};
-  struct tm *tiempoInicioInfo = localtime(&tiempoInicio);
-  tiempoInicioInfo->tm_mday = diaInicio;
-  tiempoInicioInfo->tm_mon = mesInicio - 1;
-  tiempoInicioInfo->tm_year = anioInicio - 1900;
-  tiempoInicioInfo->tm_hour = 0;
-  tiempoInicioInfo->tm_min = 0;
-  tiempoInicioInfo->tm_sec = 0;
-  tiempoInicio = mktime(tiempoInicioInfo);
-
-  time_t tiempoFin = {0};
-  struct tm *tiempoFinInfo = localtime(&tiempoFin);
-  tiempoFinInfo->tm_mday = diaFin;
-  tiempoFinInfo->tm_mon = mesFin - 1;
-  tiempoFinInfo->tm_year = anioFin - 1900;
-  tiempoFinInfo->tm_hour = 0;
-  tiempoFinInfo->tm_min = 0;
-  tiempoFinInfo->tm_sec = 0;
-  tiempoFin = mktime(tiempoFinInfo);
-
-  int cantidadPrestamos = biblioteca->cantidadPrestamos;
-
-  
-  // for (int i = 0; i < cantidadPrestamos; i++) {
-  //   time_t tiempoPrestamo = obtenerFechaDeString(biblioteca->prestamos[i].fechaInicio);
-  //   time_t tiempoEntrega = obtenerFechaDeString(biblioteca->prestamos[i].fechaFin);
-  //   if (tiempoPrestamo >= tiempoInicio && tiempoPrestamo <= tiempoFin) {
-  //     printf("Identificador de prestamo: %d\n", biblioteca->prestamos[i].id);
-  //     Usuario *usuario = existeUsuario(biblioteca->prestamos[i].cedulaUsuario);
-  //     printf("Usuario: %s (%s)\n", usuario->cedula, usuario->nombre);
-  //     printf("Estado: %s\n", biblioteca->prestamos[i].estado);
-  //     printf("Libro: %s\n", biblioteca->prestamos[i].tituloLibro);
-
-  //     if (strcmp(biblioteca->prestamos[i].estado, "0") == 0) {
-  //       if (tiempoEntrega > tiempoPrestamo) {
-  //         printf("Entrega tardia: si\n");
-  //       }
-  //       else {
-  //         printf("Entrega tardia: no\n");
-  //       }
-  //     }
-  //     printf("\n");
-  //   }
-  // }
-
-
+  if (formatoFecha(fechaInicio) == 1 || formatoFecha(fechaFinal) == 1) {
+    //validar que la fecha de inicio sea menor a la fecha final
+    if (validarRangoFechas(fechaInicio, fechaFinal) == 1) {
+      Prestamo *prestamos = biblioteca->prestamos;
+      int cantidadPrestamos = biblioteca->cantidadPrestamos;
+      int i;
+      for (i = 0; i < cantidadPrestamos; i++) {
+        if(prestamos[i].fechaDevolucion == NULL) {
+          continue;
+        }else{
+          if ( validarRangoFechas(fechaInicio, prestamos[i].fechaDevolucion) == 1 && validarRangoFechas(prestamos[i].fechaDevolucion, fechaFinal) == 1) {
+            char *nombreUsuario = buscarNombre(biblioteca, prestamos[i].cedulaUsuario);
+            printf("Identificador de prestamo: %d\n", prestamos[i].id);
+            printf("Usuario: %s\n", nombreUsuario);
+            // printf("Usuario: %s\n", prestamos[i].cedulaUsuario);
+            if (prestamos[i].estado == 1){
+              printf("Estado: activo\n");
+            }else{
+              printf("Estado: cancelado\n");
+            }
+            printf("Nombre: %s\n", prestamos[i].tituloLibro);
+            // printf("Identificador de ejemplar: %d\n", prestamos[i].libro->id);
+            // printf("Entrega tardía: %s\n", prestamos[i].entregaTardia);
+            printf("\n");
+          }
+        }
+      }
+    }else {
+      printf("La fecha de inicio no puede ser mayor a la fecha final\n");
+    }
+  }
+  else {
+    printf("El formato de fecha es incorrecto\n");
+  }
 }
 
 void opcionesOperativas(Biblioteca *dirM_biblioteca)
