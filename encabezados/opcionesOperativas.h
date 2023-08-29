@@ -200,6 +200,52 @@ void historialPrestamos(Biblioteca *biblioteca) {
     printf("El formato de fecha es incorrecto\n");
   }
 }
+/*
+El sistema deberá mostrar los préstamos vencidos y próximos a vencer (préstamos que vencen de 0 a 3 días),
+ la información a mostrar por cada préstamo será: identificador de préstamo, usuario,
+fecha de entrega, nombre e identificador de ejemplar. Considera fecha de sistema.*/
+void prestamosVencidos(Biblioteca *biblioteca) {
+  Prestamo *prestamos = biblioteca->prestamos;
+  int cantidadPrestamos = biblioteca->cantidadPrestamos;
+  int i;
+  int dias;
+  for (i = 0; i < cantidadPrestamos; i++) {
+    // printf("fecha de devolucion: %s\n", obtenerFechaActual());
+    if(prestamos[i].fechaDevolucion == NULL) {
+      continue;
+    }else{
+      dias = tadiasEnDias(obtenerFechaActual(), prestamos[i].fechaFin);
+      // printf("fecha de devolucion: %s\n", prestamos[i].fechaFin);
+      // printf("fecha actual: %s\n", obtenerFechaActual());
+      // printf("dias: %d\n", dias);
+      if(validarRangoFechas(prestamos[i].fechaFin, obtenerFechaActual()) == 1){
+        if (dias >= 1 ) {
+          char *nombreUsuario = buscarNombre(biblioteca, prestamos[i].cedulaUsuario);
+          printf("Identificador de prestamo: %d\n", prestamos[i].id);
+          printf("Usuario: %s\n", nombreUsuario);
+          printf("Fecha de entrega: %s\n", prestamos[i].fechaFin);
+          printf("Nombre: %s\n", prestamos[i].tituloLibro);
+          printf("Dias tardios: %d\n", dias);
+          printf("\n");
+        }
+      }else{
+        // printf("prestamo a vencer\n");
+        dias = diferenciaDias(obtenerFechaActual(), prestamos[i].fechaFin);
+        // printf("dias: %d\n", dias);
+        if (dias >= 0 && dias <= 3) {
+          char *nombreUsuario = buscarNombre(biblioteca, prestamos[i].cedulaUsuario);
+          printf("Prestamo proximo a vencer\n");
+          printf("Identificador de prestamo: %d\n", prestamos[i].id);
+          printf("Usuario: %s\n", nombreUsuario);
+          printf("Fecha de entrega: %s\n", prestamos[i].fechaFin);
+          printf("Nombre: %s\n", prestamos[i].tituloLibro);
+          printf("Dias para vencer: %d\n", dias);
+          printf("\n");
+        }
+      }
+    }
+  }
+}
 
 void opcionesOperativas(Biblioteca *dirM_biblioteca)
 {
@@ -216,7 +262,7 @@ void opcionesOperativas(Biblioteca *dirM_biblioteca)
       historialPrestamos(dirM_biblioteca);
       break;
     case 4:
-      printf("Vencimiento de prestamos.\n");
+      prestamosVencidos(dirM_biblioteca);
       break;
     case 5:
       printf("Estadisticas.\n");

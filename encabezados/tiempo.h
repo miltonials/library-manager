@@ -8,13 +8,22 @@ time_t obtenerFechaDeString(const char *fecha);
 int validarRangoFechas(const char *fechaInicio, const char *fechaFinal);
 int formatoFecha(char *fecha);
 int tadiasEnDias(const char *fechaInicio, const char *fechaFinal);
+char *obtenerFechaActual();
 
-int tadiasEnDias(const char *fechaDevolucion, const char *fechaFinal) {
-  time_t fechaDevolucion_time = obtenerFechaDeString(fechaDevolucion);
-  time_t fechaFinal_time = obtenerFechaDeString(fechaFinal);
+char *obtenerFechaActual() {
+  time_t fechaActual_time = time(NULL);
+  struct tm *fechaActual_tm = localtime(&fechaActual_time);
+  char *fechaActual = malloc(sizeof(char) * 11);
+  strftime(fechaActual, 11, "%d/%m/%Y", fechaActual_tm);
+  return fechaActual;
+}
+
+int tadiasEnDias(const char *fechaEntrega, const char *fechaActual) {
+  time_t fechaEntrega_time = obtenerFechaDeString(fechaEntrega);
+  time_t fechaFinal_time = obtenerFechaDeString(fechaActual);
   // si la fecha de devolucion es mayor a la fecha de fin
-  if (fechaDevolucion_time > fechaFinal_time) {
-    int dias = (int) difftime(fechaDevolucion_time, fechaFinal_time) / (60 * 60 * 24);
+  if (fechaEntrega_time > fechaFinal_time) {
+    int dias = (int) difftime(fechaEntrega_time, fechaFinal_time) / (60 * 60 * 24);
     return dias;
   }
   return 0;
@@ -40,28 +49,12 @@ time_t obtenerFechaDeString(const char *fecha) {
   return fecha_time;
 }
 
-/*
-time_t obtenerFechaDeString(const char *fecha) {
-  struct tm fecha_tm;
-  char *cp_fecha = malloc (sizeof(char) * strlen(fecha));
-  strcpy(cp_fecha, fecha);
-
-  strftime(cp_fecha,sizeof(cp_fecha), "%d/%m/%Y", &fecha_tm);
-  strptime(fecha, "%d/%m/%Y", &fecha_tm);
-
-  time_t fecha_time = mktime(&fecha_tm);
-  // printf("Fecha en time_t: %ld\n", (long)fecha_time);
-
-  return fecha_time;
-}
-*/
 
 int validarRangoFechas(const char *fechaInicio, const char *fechaFinal) {
   time_t fechaInicio_time = obtenerFechaDeString(fechaInicio);
   time_t fechaFinal_time = obtenerFechaDeString(fechaFinal);
 
   if (fechaInicio_time >= fechaFinal_time) {
-    // printf("La fecha de inicio no puede ser mayor a la fecha final\n");
     return 0;
   }
 

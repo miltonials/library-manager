@@ -17,8 +17,7 @@
 #include "./encabezados/opcionesOperativas.h"
 #include "./encabezados/opcionesGenerales.h"
 
-int main()
-{
+int main(){
   int opcion = 0;
   Biblioteca biblioteca;
   cargarBiblioteca(&biblioteca, "./data/");

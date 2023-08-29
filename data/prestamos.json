@@ -40,9 +40,9 @@
         "tituloLibro": "1984",
         "cedulaUsuario": "123456789",
         "fechaInicio": "21\/06\/2023",
-        "fechaFin": "23\/09\/2023",
+        "fechaFin": "30\/08\/2023",
         "fechaDevolucion": "",
-        "estado": 0
+        "estado": 1
     },
     {
         "id": 6,
