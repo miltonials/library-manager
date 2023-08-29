@@ -7,6 +7,18 @@
 time_t obtenerFechaDeString(const char *fecha);
 int validarRangoFechas(const char *fechaInicio, const char *fechaFinal);
 int formatoFecha(char *fecha);
+int tadiasEnDias(const char *fechaInicio, const char *fechaFinal);
+
+int tadiasEnDias(const char *fechaDevolucion, const char *fechaFinal) {
+  time_t fechaDevolucion_time = obtenerFechaDeString(fechaDevolucion);
+  time_t fechaFinal_time = obtenerFechaDeString(fechaFinal);
+  // si la fecha de devolucion es mayor a la fecha de fin
+  if (fechaDevolucion_time > fechaFinal_time) {
+    int dias = (int) difftime(fechaDevolucion_time, fechaFinal_time) / (60 * 60 * 24);
+    return dias;
+  }
+  return 0;
+}
 
 time_t obtenerFechaDeString(const char *fecha) {
   struct tm fecha_tm = {0};  // Inicializar la estructura tm a 0
@@ -100,6 +112,7 @@ int formatoFecha(char *fecha) {
 
   return 1;
 }
+
 
 int diferenciaDias(const char *fechaInicio, const char *fechaFinal) {
   time_t fechaInicio_time = obtenerFechaDeString(fechaInicio);

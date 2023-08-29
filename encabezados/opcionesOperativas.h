@@ -177,6 +177,7 @@ void historialPrestamos(Biblioteca *biblioteca) {
         }else{
           if ( validarRangoFechas(fechaInicio, prestamos[i].fechaDevolucion) == 1 && validarRangoFechas(prestamos[i].fechaDevolucion, fechaFinal) == 1) {
             char *nombreUsuario = buscarNombre(biblioteca, prestamos[i].cedulaUsuario);
+            int diasTardios = tadiasEnDias(prestamos[i].fechaDevolucion, prestamos[i].fechaFin);
             printf("Identificador de prestamo: %d\n", prestamos[i].id);
             printf("Usuario: %s\n", nombreUsuario);
             // printf("Usuario: %s\n", prestamos[i].cedulaUsuario);
@@ -186,8 +187,7 @@ void historialPrestamos(Biblioteca *biblioteca) {
               printf("Estado: cancelado\n");
             }
             printf("Nombre: %s\n", prestamos[i].tituloLibro);
-            // printf("Identificador de ejemplar: %d\n", prestamos[i].libro->id);
-            // printf("Entrega tardía: %s\n", prestamos[i].entregaTardia);
+            printf("Dias tardios: %d\n", diasTardios);
             printf("\n");
           }
         }
