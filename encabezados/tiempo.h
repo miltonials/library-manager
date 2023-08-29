@@ -9,6 +9,27 @@ int validarRangoFechas(const char *fechaInicio, const char *fechaFinal);
 int formatoFecha(char *fecha);
 
 time_t obtenerFechaDeString(const char *fecha) {
+  struct tm fecha_tm = {0};  // Inicializar la estructura tm a 0
+  char *cp_fecha = malloc(sizeof(char) * (strlen(fecha) + 1));  // Asegurar espacio para el carácter nulo
+
+  strcpy(cp_fecha, fecha);
+
+  // Parsear la fecha en la estructura tm
+  if (strptime(cp_fecha, "%d/%m/%Y", &fecha_tm) == NULL) {
+    // Manejar el error si la fecha no se pudo analizar correctamente
+    // perror("Error al analizar la fecha");
+    free(cp_fecha);  // Liberar la memoria antes de salir
+    return -1;  // Valor de error
+  }
+
+  time_t fecha_time = mktime(&fecha_tm);
+  free(cp_fecha);  // Liberar la memoria después de usarla
+
+  return fecha_time;
+}
+
+/*
+time_t obtenerFechaDeString(const char *fecha) {
   struct tm fecha_tm;
   char *cp_fecha = malloc (sizeof(char) * strlen(fecha));
   strcpy(cp_fecha, fecha);
@@ -21,6 +42,7 @@ time_t obtenerFechaDeString(const char *fecha) {
 
   return fecha_time;
 }
+*/
 
 int validarRangoFechas(const char *fechaInicio, const char *fechaFinal) {
   time_t fechaInicio_time = obtenerFechaDeString(fechaInicio);
