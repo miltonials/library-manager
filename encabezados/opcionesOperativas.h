@@ -76,12 +76,9 @@ void actualizarCatalogo_txt(Biblioteca *dirM_biblioteca)
   char *linea = "";
   int librosAgregados = 0;
 
-  // if (formatoArchivo_txt(rutaArchivo) == 0) {
-  //   printf("El archivo no tiene el formato correcto.\n");
-  //   return;
-  // }
   int nLineaAct = 0;
   char *lineaCp = "";
+  
   //formato del archivo: titulo|autor|anio|genero|resumen|cantidad  
   while ((linea = strsep(&contenido, "\n")) != NULL) {
     nLineaAct++;

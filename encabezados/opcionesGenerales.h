@@ -212,12 +212,50 @@ void devolucionEjemplar(Biblioteca *dirM_biblioteca) {
   limpiarPantalla();
 }
 
+/*
+El sistema deberá solicitar al usuario un texto y con lo escrito por el usuario buscará aplicando la técnica “contiene”
+y “o”, es decir, buscará si el texto indicado está contenido en el nombre, autor o resumen. Por cada ejemplar que haga
+“match” se mostrará identificador, nombre, resumen y estado (disponible o no).
+*/
+void busquedaSimple(Biblioteca *dirM_biblioteca) {
+  char textoUsuario[200];
+  printf("Ingrese el texto a buscar: ");
+  scanf(" %[^\n]s", textoUsuario);
+
+  limpiarPantalla();
+  
+  for (int i = 0; i < dirM_biblioteca->cantidadLibros; i++) {
+    Libro *ejemplar = &(dirM_biblioteca->libros[i]);
+
+    // Verificar si el texto está contenido en nombre, autor o resumen
+    if (strstr(ejemplar->titulo, textoUsuario) != NULL ||
+      strstr(ejemplar->autor, textoUsuario) != NULL ||
+      strstr(ejemplar->resumen, textoUsuario) != NULL) {
+      
+      // Mostrar los detalles del ejemplar
+      printf("Identificador: %d\n", ejemplar->id);
+      printf("Nombre: %s\n", ejemplar->titulo);
+      printf("Resumen: %s\n", ejemplar->resumen);
+
+      if (ejemplar->cantidad > 0) {
+        printf("Estado: Disponible\n");
+      } else {
+        printf("Estado: No disponible\n");
+      }
+
+      printf("\n");
+    }
+  }
+}
+
+
 void opcionesGenerales(Biblioteca *dirM_biblioteca) {
   int opcion = menuOpcionesGenerales();
   while(opcion != 5) {
     switch (opcion){
     case 1:
       printf("Busqueda simple.\n");
+      busquedaSimple(dirM_biblioteca);
       break;
     case 2:
       printf("Busqueda avanzada.\n");

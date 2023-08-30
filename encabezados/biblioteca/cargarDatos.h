@@ -168,7 +168,7 @@ void resumenBiblioteca(Biblioteca *dirM_biblioteca) {
   printf("📖 Libros:\n");
   for (int i = 0; i < dirM_biblioteca->cantidadLibros; i++) {
     //mostrar todos lo datos en una sola linea
-    printf("  %s %s %d %s %s %d\n", dirM_biblioteca->libros[i].titulo, dirM_biblioteca->libros[i].autor, dirM_biblioteca->libros[i].anio, dirM_biblioteca->libros[i].genero, dirM_biblioteca->libros[i].resumen, dirM_biblioteca->libros[i].cantidad);
+    printf("%d  %s %s %d %s %s %d\n", dirM_biblioteca->libros[i].id, dirM_biblioteca->libros[i].titulo, dirM_biblioteca->libros[i].autor, dirM_biblioteca->libros[i].anio, dirM_biblioteca->libros[i].genero, dirM_biblioteca->libros[i].resumen, dirM_biblioteca->libros[i].cantidad);
   }
 
   printf("\n");
