@@ -2,8 +2,4 @@
 main
 pruebas
 pruebas.c
-data/comprobantes/*.pdf
-data/catalogo.json
-data/prestamos.json
-data/usuarios.json
-data/libros.txt
+*.o

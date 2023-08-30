@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <stdbool.h> // Para utilizar el tipo de dato bool
 #include <json-c/json.h> //sudo apt-get install libjson-c-dev
 #include <hpdf.h> // sudo apt-get install libharu-dev,  como se usa libreria externa, se debe compilar con -lhpdf
 

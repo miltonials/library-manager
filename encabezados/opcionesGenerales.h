@@ -1,39 +1,39 @@
 #ifndef OPCIONESGENERALES_H
 #define OPCIONESGENERALES_H
 
-void prestamoApdf(Biblioteca *dirM_biblioteca, Prestamo *prestamo, Usuario *usuario, Libro *libro) {
-    char contenido[500];  // Ajusta el tamaño según tus necesidades
-    //la ruta es dirM_biblioteca->rutaArchivos más la palabra comprobantes
-    char *ruta = malloc(strlen(dirM_biblioteca->rutaArchivos) + strlen("comprobantes") + 1);
-    strcpy(ruta, dirM_biblioteca->rutaArchivos);
-    strcat(ruta, "comprobantes/");
+void prestamoApdf(Biblioteca *dirM_biblioteca, Prestamo *prestamo, Usuario *usuario, Libro *libro)
+{
+  char contenido[500]; // Ajusta el tamaño según tus necesidades
+  // la ruta es dirM_biblioteca->rutaArchivos más la palabra comprobantes
+  char *ruta = malloc(strlen(dirM_biblioteca->rutaArchivos) + strlen("comprobantes") + 1);
+  strcpy(ruta, dirM_biblioteca->rutaArchivos);
+  strcat(ruta, "comprobantes/");
 
+  // Crear el contenido del PDF utilizando los datos del préstamo, usuario y libro
+  snprintf(contenido, sizeof(contenido),
+           "Detalles del Préstamo:\n\n"
+           "ID de Préstamo: %d\n"
+           "Cédula de Usuario: %s (%s)\n"
+           "Título de Libro: %s\n"
+           "Fecha de Inicio: %s\n"
+           "Fecha de Fin: %s\n",
+           prestamo->id, prestamo->cedulaUsuario, usuario->nombre,
+           libro->titulo, prestamo->fechaInicio, prestamo->fechaFin);
 
-    // Crear el contenido del PDF utilizando los datos del préstamo, usuario y libro
-    snprintf(contenido, sizeof(contenido),
-             "Detalles del Préstamo:\n\n"
-             "ID de Préstamo: %d\n"
-             "Cédula de Usuario: %s (%s)\n"
-             "Título de Libro: %s\n"
-             "Fecha de Inicio: %s\n"
-             "Fecha de Fin: %s\n",
-             prestamo->id, prestamo->cedulaUsuario, usuario->nombre,
-             libro->titulo, prestamo->fechaInicio, prestamo->fechaFin);
+  // Generar el nombre del archivo (puedes personalizarlo)
+  char nombreArchivo[50];
+  snprintf(nombreArchivo, sizeof(nombreArchivo), "prestamo_%d", prestamo->id);
 
-    // Generar el nombre del archivo (puedes personalizarlo)
-    char nombreArchivo[50];
-    snprintf(nombreArchivo, sizeof(nombreArchivo), "prestamo_%d", prestamo->id);
+  // Llamar a la función para crear el PDF
+  printf(" %s", contenido);
+  crearPDF(ruta, nombreArchivo, contenido);
 
-    // Llamar a la función para crear el PDF
-    printf(" %s", contenido);
-    crearPDF(ruta, nombreArchivo, contenido);
-
-    printf("PDF de préstamo creado: %s\n", nombreArchivo);
+  printf("PDF de préstamo creado: %s\n", nombreArchivo);
 }
 
-
-void generarComprobante(Biblioteca *dirM_biblioteca, Usuario *usuario, Libro* libro, char *fechaInicio, char *fechaFinal){
-  //validar que este disponible el libro
+void generarComprobante(Biblioteca *dirM_biblioteca, Usuario *usuario, Libro *libro, char *fechaInicio, char *fechaFinal)
+{
+  // validar que este disponible el libro
   Prestamo *prestamos = dirM_biblioteca->prestamos;
   Libro *libros = dirM_biblioteca->libros;
   int cantidadLibros = dirM_biblioteca->cantidadLibros;
@@ -44,8 +44,9 @@ void generarComprobante(Biblioteca *dirM_biblioteca, Usuario *usuario, Libro* li
   titulo = malloc(strlen(libro->titulo) + 1);
   strcpy(titulo, libro->titulo);
 
-  if(libroDisponible > 0){
-    //generar comprobante
+  if (libroDisponible > 0)
+  {
+    // generar comprobante
     Prestamo prestamo;
     prestamo.id = cantidadPrestamos + 1;
     // prestamo.tituloLibro = malloc(strlen(titulo) + 1);
@@ -70,12 +71,15 @@ void generarComprobante(Biblioteca *dirM_biblioteca, Usuario *usuario, Libro* li
     actualizarCatalogo(dirM_biblioteca, dirM_biblioteca->rutaArchivos);
     prestamoApdf(dirM_biblioteca, &prestamo, usuario, libro);
     printf("El libro %s ha sido prestado al usuario %s\n", titulo, usuario->nombre);
-  }else{
+  }
+  else
+  {
     printf("El libro no esta disponible\n");
   }
 }
 
-void prestamoEjemplar(Biblioteca *dirM_biblioteca){
+void prestamoEjemplar(Biblioteca *dirM_biblioteca)
+{
   Usuario *usuarios = dirM_biblioteca->usuarios;
   Libro *libros = dirM_biblioteca->libros;
   int cantidadLibros = dirM_biblioteca->cantidadLibros;
@@ -85,7 +89,7 @@ void prestamoEjemplar(Biblioteca *dirM_biblioteca){
   // char titulo[50];
   char fechaInicio[20];
   char fechaFinal[20];
-  
+
   printf("Ingrese la cedula del usuario: ");
   scanf(" %[^\n]s", cedula);
   // se pide el titulo del libro se acepta espacios
@@ -98,26 +102,35 @@ void prestamoEjemplar(Biblioteca *dirM_biblioteca){
 
   Libro *libro = buscarLibro_id(dirM_biblioteca, id);
   Usuario *usuario = existeUsuario(dirM_biblioteca, cedula);
-  if (usuario != NULL) {
-    if (libro != NULL) {
-      if(formatoFecha(fechaInicio) == 1 || formatoFecha(fechaFinal) == 1){
-        //validar que la fecha de inicio sea menor a la fecha final
-        if(validarRangoFechas(fechaInicio, fechaFinal) == 1){
-          
+  if (usuario != NULL)
+  {
+    if (libro != NULL)
+    {
+      if (formatoFecha(fechaInicio) == 1 || formatoFecha(fechaFinal) == 1)
+      {
+        // validar que la fecha de inicio sea menor a la fecha final
+        if (validarRangoFechas(fechaInicio, fechaFinal) == 1)
+        {
+
           generarComprobante(dirM_biblioteca, usuario, libro, fechaInicio, fechaFinal);
-        }else{
+        }
+        else
+        {
           printf("La fecha de inicio no puede ser mayor a la fecha final\n");
         }
       }
-      else{
+      else
+      {
         printf("El formato de fecha es incorrecto\n");
       }
     }
-    else {
+    else
+    {
       printf("El libro no existe\n");
     }
   }
-  else {
+  else
+  {
     printf("El usuario no existe\n");
   }
 
@@ -125,12 +138,15 @@ void prestamoEjemplar(Biblioteca *dirM_biblioteca){
   limpiarPantalla();
 }
 
-Prestamo *existePrestamo(Biblioteca *dirM_biblioteca, int prestamo_id) {
+Prestamo *existePrestamo(Biblioteca *dirM_biblioteca, int prestamo_id)
+{
   Prestamo *prestamos = dirM_biblioteca->prestamos;
   int cantidadPrestamos = dirM_biblioteca->cantidadPrestamos;
   int i;
-  for (i = 0; i < cantidadPrestamos; i++) {
-    if (prestamos[i].id == prestamo_id) {
+  for (i = 0; i < cantidadPrestamos; i++)
+  {
+    if (prestamos[i].id == prestamo_id)
+    {
       return &prestamos[i];
     }
   }
@@ -147,7 +163,8 @@ la fecha de devolución. El sistema calculará el monto asociado al préstamo de
 
 formula: (dias * tarificacion) + (diasTardios * tarificacionTardia)
 */
-void devolucionEjemplar(Biblioteca *dirM_biblioteca) {
+void devolucionEjemplar(Biblioteca *dirM_biblioteca)
+{
   Prestamo *prestamos = dirM_biblioteca->prestamos;
   int cantidadPrestamos = dirM_biblioteca->cantidadPrestamos;
   int idPrestamo;
@@ -158,7 +175,7 @@ void devolucionEjemplar(Biblioteca *dirM_biblioteca) {
   int tarificacionTardia;
   int monto;
   int i;
-  
+
   printf("Ingrese el id del prestamo: ");
   scanf("%d", &idPrestamo);
   printf("Ingrese la fecha de devolucion: ");
@@ -166,45 +183,54 @@ void devolucionEjemplar(Biblioteca *dirM_biblioteca) {
 
   Prestamo *prestamo = existePrestamo(dirM_biblioteca, idPrestamo);
 
-  if (prestamo != NULL) {
-    if (prestamo->estado == 0) {
+  if (prestamo != NULL)
+  {
+    if (prestamo->estado == 0)
+    {
       printf("El prestamo ya fue devuelto\n");
     }
-    else if(formatoFecha(fechaDevolucion) == 1){
+    else if (formatoFecha(fechaDevolucion) == 1)
+    {
       Libro *libro = buscarLibro_id(dirM_biblioteca, prestamo->idLibro);
       dias = diferenciaDias(prestamo->fechaInicio, fechaDevolucion);
       diasTardios = diferenciaDias(fechaDevolucion, prestamo->fechaFin);
-      if (diasTardios < 0) {
+      if (diasTardios < 0)
+      {
         pausar("La fecha de devolución no puede ser menor a la fecha de fin del préstamo.");
         limpiarPantalla();
         return;
       }
-      if(dias <= 7){
+      if (dias <= 7)
+      {
         tarificacion = 150;
         tarificacionTardia = 75;
       }
-      else if(dias <= 15){
+      else if (dias <= 15)
+      {
         tarificacion = 125;
         tarificacionTardia = 50;
       }
-      else{
+      else
+      {
         tarificacion = 100;
         tarificacionTardia = 25;
       }
       monto = (dias * tarificacion) + (diasTardios * tarificacionTardia);
       printf("El monto a pagar es: %d\n", monto);
-      
+
       libro->cantidad++;
       prestamo->estado = 0;
 
       actualizarCatalogo(dirM_biblioteca, dirM_biblioteca->rutaArchivos);
       actualizarPrestamos(dirM_biblioteca, dirM_biblioteca->rutaArchivos);
     }
-    else{
+    else
+    {
       printf("El formato de fecha es incorrecto\n");
     }
   }
-  else {
+  else
+  {
     printf("El prestamo no existe\n");
   }
 
@@ -212,34 +238,35 @@ void devolucionEjemplar(Biblioteca *dirM_biblioteca) {
   limpiarPantalla();
 }
 
-/*
-El sistema deberá solicitar al usuario un texto y con lo escrito por el usuario buscará aplicando la técnica “contiene”
-y “o”, es decir, buscará si el texto indicado está contenido en el nombre, autor o resumen. Por cada ejemplar que haga
-“match” se mostrará identificador, nombre, resumen y estado (disponible o no).
-*/
-void busquedaSimple(Biblioteca *dirM_biblioteca) {
+void busquedaSimple(Biblioteca *dirM_biblioteca)
+{
   char textoUsuario[200];
   printf("Ingrese el texto a buscar: ");
   scanf(" %[^\n]s", textoUsuario);
 
   limpiarPantalla();
-  
-  for (int i = 0; i < dirM_biblioteca->cantidadLibros; i++) {
+
+  for (int i = 0; i < dirM_biblioteca->cantidadLibros; i++)
+  {
     Libro *ejemplar = &(dirM_biblioteca->libros[i]);
 
     // Verificar si el texto está contenido en nombre, autor o resumen
     if (strstr(ejemplar->titulo, textoUsuario) != NULL ||
-      strstr(ejemplar->autor, textoUsuario) != NULL ||
-      strstr(ejemplar->resumen, textoUsuario) != NULL) {
-      
+        strstr(ejemplar->autor, textoUsuario) != NULL ||
+        strstr(ejemplar->resumen, textoUsuario) != NULL)
+    {
+
       // Mostrar los detalles del ejemplar
       printf("Identificador: %d\n", ejemplar->id);
       printf("Nombre: %s\n", ejemplar->titulo);
       printf("Resumen: %s\n", ejemplar->resumen);
 
-      if (ejemplar->cantidad > 0) {
+      if (ejemplar->cantidad > 0)
+      {
         printf("Estado: Disponible\n");
-      } else {
+      }
+      else
+      {
         printf("Estado: No disponible\n");
       }
 
@@ -248,17 +275,137 @@ void busquedaSimple(Biblioteca *dirM_biblioteca) {
   }
 }
 
+// Función auxiliar para verificar si un texto está contenido o coincide exactamente
+bool contieneTexto(char *campo, char *texto, char tecnica)
+{
+  if (tecnica == 'c')
+  {
+    return (strstr(campo, texto) != NULL);
+  }
+  else if (tecnica == 'e')
+  {
+    return (strcmp(campo, texto) == 0);
+  }
+  return false;
+}
 
-void opcionesGenerales(Biblioteca *dirM_biblioteca) {
+char solicitarTecnica_busquedaAvanzada(char *texto)
+{
+  if (strlen(texto) == 0)
+  {
+    return 'c';
+  }
+  
+  char tecnica;
+  printf("Ingrese técnica (c: contiene, e: exacta): ");
+  scanf(" %c", &tecnica);
+  return tecnica;
+}
+
+void solicitarTexto_busquedaAvanzada(char *texto, const char *campo) {
+    printf("Ingrese texto para buscar en %s (deje en blanco si no desea buscar en este campo): ", campo);
+    
+    int i = 0;
+    char ch;
+
+    // limpiar el stdin
+    while (getchar() != '\n');
+
+    while (i < 199 && (ch = getchar()) != EOF && ch != '\n') {
+        texto[i] = ch;
+        i++;
+    }
+
+    texto[i] = '\0';
+}
+
+char solicitarOperador()
+{
+  char operador;
+  printf("Ingrese operador entre campos (o: 'o', y: 'y'): ");
+  scanf(" %c", &operador);
+  return operador;
+}
+
+bool cumpleCriterios(Libro *ejemplar, char *texto, char tecnica, char *campo)
+{
+  return (strlen(texto) == 0 || contieneTexto(campo, texto, tecnica));
+}
+
+bool cumpleOperador(bool *matches, char operador)
+{
+  if (operador == 'o')
+  {
+    return matches[0] || matches[1] || matches[2] || matches[3];
+  }
+  else if (operador == 'y')
+  {
+    return matches[0] && matches[1] && matches[2] && matches[3];
+  }
+  return false;
+}
+
+void mostrarDetalle(Libro *ejemplar)
+{
+  printf("Identificador: %d\n", ejemplar->id);
+  printf("Nombre: %s\n", ejemplar->titulo);
+  printf("Resumen: %s\n", ejemplar->resumen);
+  printf("\n");
+}
+
+void busquedaAvanzada(Biblioteca *dirM_biblioteca)
+{
+  // Solicitar detalles de búsqueda
+  char textoNombre[200];
+  char textoAutor[200];
+  char textoGenero[200];
+  char textoResumen[200];
+
+  char operador;
+
+  solicitarTexto_busquedaAvanzada(textoNombre, "el nombre");
+  char tecnicaNombre = solicitarTecnica_busquedaAvanzada(textoNombre);
+  solicitarTexto_busquedaAvanzada(textoAutor, "el autor");
+  char tecnicaAutor = solicitarTecnica_busquedaAvanzada(textoAutor);
+  solicitarTexto_busquedaAvanzada(textoGenero, "el género");
+  char tecnicaGenero = solicitarTecnica_busquedaAvanzada(textoGenero);
+  solicitarTexto_busquedaAvanzada(textoResumen, "el resumen");
+  char tecnicaResumen = solicitarTecnica_busquedaAvanzada(textoResumen);
+  operador = solicitarOperador();
+
+  // Iterar a través de cada ejemplar en el array de libros
+  for (int i = 0; i < dirM_biblioteca->cantidadLibros; i++)
+  {
+    Libro *ejemplar = &(dirM_biblioteca->libros[i]);
+    bool matches[4];
+
+    matches[0] = cumpleCriterios(ejemplar, textoNombre, tecnicaNombre, ejemplar->titulo);
+    matches[1] = cumpleCriterios(ejemplar, textoAutor, tecnicaAutor, ejemplar->autor);
+    matches[2] = cumpleCriterios(ejemplar, textoGenero, tecnicaGenero, ejemplar->genero);
+    matches[3] = cumpleCriterios(ejemplar, textoResumen, tecnicaResumen, ejemplar->resumen);
+
+    if (cumpleOperador(matches, operador))
+    {
+      printf("\n");
+      mostrarDetalle(ejemplar);
+    }
+  }
+}
+
+void opcionesGenerales(Biblioteca *dirM_biblioteca)
+{
   int opcion = menuOpcionesGenerales();
-  while(opcion != 5) {
-    switch (opcion){
+  while (opcion != 5)
+  {
+    switch (opcion)
+    {
     case 1:
       printf("Busqueda simple.\n");
       busquedaSimple(dirM_biblioteca);
       break;
     case 2:
       printf("Busqueda avanzada.\n");
+      busquedaAvanzada(dirM_biblioteca);
       break;
     case 3:
       printf("Prestamo de ejemplar.\n");
@@ -278,6 +425,5 @@ void opcionesGenerales(Biblioteca *dirM_biblioteca) {
     opcion = menuOpcionesGenerales();
   }
 }
-
 
 #endif // OPCIONESGENERALES_H
