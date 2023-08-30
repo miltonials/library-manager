@@ -2,5 +2,8 @@
 main
 pruebas
 pruebas.c
-*.pdf
-*.json
+data/comprobantes/*.pdf
+data/catalogo.json
+data/prestamos.json
+data/usuarios.json
+data/libros.txt

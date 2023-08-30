@@ -21,10 +21,23 @@ void mostrarLibros(Biblioteca *dirM_biblioteca)
   limpiarPantalla();
 }
 
+
+Libro *buscarLibro_id(Biblioteca *dirM_biblioteca, int id) {
+  int cantidadLibros = dirM_biblioteca->cantidadLibros;
+  for (int i = 0; i < cantidadLibros; i++) {
+    if (dirM_biblioteca->libros[i].id == id) {
+      return &dirM_biblioteca->libros[i];
+    }
+  }
+  return NULL;
+}
+
+
 Libro *existeLibro(Biblioteca *dirM_biblioteca, char *titulo)
 {
   int cantidadLibros = dirM_biblioteca->cantidadLibros;
-  for (int i = 0; i < cantidadLibros; i++) {
+  int i = 0;
+  for (i = 0; i < cantidadLibros; i++) {
     if (strcmp(dirM_biblioteca->libros[i].titulo, titulo) == 0) {
       return &dirM_biblioteca->libros[i];
     }
@@ -32,9 +45,9 @@ Libro *existeLibro(Biblioteca *dirM_biblioteca, char *titulo)
   return NULL;
 }
 
-int formatoArchivo_txt(char *rutaArchivo)
+int formatoArchivo_txt(char *contenido)
 {
-  char *contenido = leerArchivo(rutaArchivo);
+  // char *contenido = leerArchivo(rutaArchivo);
 
   char *linea = "";
   int campos = 0;
@@ -58,18 +71,29 @@ void actualizarCatalogo_txt(Biblioteca *dirM_biblioteca)
   scanf("%199s", rutaArchivo);
 
   char *contenido = leerArchivo(rutaArchivo);
-  Libro *libros = dirM_biblioteca->libros;
+  // Libro *libros = dirM_biblioteca->libros;
+
   char *linea = "";
   int librosAgregados = 0;
 
-  if (formatoArchivo_txt(rutaArchivo) == 0) {
-    printf("El archivo no tiene el formato correcto.\n");
-    return;
-  }
-
+  // if (formatoArchivo_txt(rutaArchivo) == 0) {
+  //   printf("El archivo no tiene el formato correcto.\n");
+  //   return;
+  // }
+  int nLineaAct = 0;
+  char *lineaCp = "";
   //formato del archivo: titulo|autor|anio|genero|resumen|cantidad  
   while ((linea = strsep(&contenido, "\n")) != NULL) {
-    Libro libro;
+    nLineaAct++;
+    lineaCp = malloc(strlen(linea) + 1);
+    strcpy(lineaCp, linea);
+
+    if (formatoArchivo_txt(lineaCp) == 0) {
+      printf("Linea %d con formato incorrecto.\n", nLineaAct);
+      continue;
+    }
+
+    Libro libro = {0};
     char *campo = "";
     int campoActual = 0;
     while ((campo = strsep(&linea, "|")) != NULL) {
@@ -102,25 +126,22 @@ void actualizarCatalogo_txt(Biblioteca *dirM_biblioteca)
       campoActual++;
     }
     if (existeLibro(dirM_biblioteca, libro.titulo) == NULL) {
-      //mostrar libro en un sola linea solo el titulo
-      printf("+ %s\n", libro.titulo);
-      libros[dirM_biblioteca->cantidadLibros] = libro;
+      libro.id = dirM_biblioteca->cantidadLibros + 1;
+      dirM_biblioteca->libros[dirM_biblioteca->cantidadLibros] = libro;
       dirM_biblioteca->cantidadLibros++;
       librosAgregados++;
+
+      actualizarCatalogo(dirM_biblioteca, dirM_biblioteca->rutaArchivos);
+      cargarLibros(dirM_biblioteca);
+
+      printf("+ %s ha sido  agregado con el id %d\n", libro.titulo, libro.id);
     }
     else {
       printf("- %s\n", libro.titulo);
     }
   }
 
-  if (librosAgregados > 0) {
-    actualizarBiblioteca(dirM_biblioteca, dirM_biblioteca->rutaArchivos);
-    printf("\n===============Se agregaron %d libros al catalogo.===============\n", librosAgregados);
-  }
-  else {
-    printf("No se agregaron libros al catalogo.\n");
-  }
-
+  printf("\n===============Se agregaron %d libros al catalogo.===============\n", librosAgregados);
   pausar("Presione enter para volver al menú...");
   limpiarPantalla();
 }
@@ -176,7 +197,9 @@ void historialPrestamos(Biblioteca *biblioteca) {
           continue;
         }else{
           if ( validarRangoFechas(fechaInicio, prestamos[i].fechaDevolucion) == 1 && validarRangoFechas(prestamos[i].fechaDevolucion, fechaFinal) == 1) {
-            char *nombreUsuario = buscarNombre(biblioteca, prestamos[i].cedulaUsuario);
+            Usuario *usuario = existeUsuario(biblioteca, prestamos[i].cedulaUsuario);
+            Libro *libro = buscarLibro_id(biblioteca, prestamos[i].idLibro);
+            char *nombreUsuario = usuario->nombre;
             int diasTardios = tadiasEnDias(prestamos[i].fechaDevolucion, prestamos[i].fechaFin);
             printf("Identificador de prestamo: %d\n", prestamos[i].id);
             printf("Usuario: %s\n", nombreUsuario);
@@ -186,7 +209,7 @@ void historialPrestamos(Biblioteca *biblioteca) {
             }else{
               printf("Estado: cancelado\n");
             }
-            printf("Nombre: %s\n", prestamos[i].tituloLibro);
+            printf("Nombre: %s (%d)\n", libro->titulo, libro->id);
             printf("Dias tardios: %d\n", diasTardios);
             printf("\n");
           }
@@ -214,17 +237,19 @@ void prestamosVencidos(Biblioteca *biblioteca) {
     if(prestamos[i].fechaDevolucion == NULL) {
       continue;
     }else{
+      Usuario *usuario = existeUsuario(biblioteca, prestamos[i].cedulaUsuario);
+      Libro *libro = buscarLibro_id(biblioteca, prestamos[i].idLibro);
       dias = tadiasEnDias(obtenerFechaActual(), prestamos[i].fechaFin);
       // printf("fecha de devolucion: %s\n", prestamos[i].fechaFin);
       // printf("fecha actual: %s\n", obtenerFechaActual());
       // printf("dias: %d\n", dias);
       if(validarRangoFechas(prestamos[i].fechaFin, obtenerFechaActual()) == 1){
         if (dias >= 1 ) {
-          char *nombreUsuario = buscarNombre(biblioteca, prestamos[i].cedulaUsuario);
+          
           printf("Identificador de prestamo: %d\n", prestamos[i].id);
-          printf("Usuario: %s\n", nombreUsuario);
+          printf("Usuario: %s\n", usuario->nombre);
           printf("Fecha de entrega: %s\n", prestamos[i].fechaFin);
-          printf("Nombre: %s\n", prestamos[i].tituloLibro);
+          printf("Nombre: %s\n", libro->titulo);
           printf("Dias tardios: %d\n", dias);
           printf("\n");
         }
@@ -233,12 +258,11 @@ void prestamosVencidos(Biblioteca *biblioteca) {
         dias = diferenciaDias(obtenerFechaActual(), prestamos[i].fechaFin);
         // printf("dias: %d\n", dias);
         if (dias >= 0 && dias <= 3) {
-          char *nombreUsuario = buscarNombre(biblioteca, prestamos[i].cedulaUsuario);
           printf("Prestamo proximo a vencer\n");
           printf("Identificador de prestamo: %d\n", prestamos[i].id);
-          printf("Usuario: %s\n", nombreUsuario);
+          printf("Usuario: %s\n", usuario->nombre);
           printf("Fecha de entrega: %s\n", prestamos[i].fechaFin);
-          printf("Nombre: %s\n", prestamos[i].tituloLibro);
+          printf("Nombre: %s\n", libro->titulo);
           printf("Dias para vencer: %d\n", dias);
           printf("\n");
         }

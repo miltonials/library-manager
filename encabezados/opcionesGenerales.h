@@ -48,8 +48,9 @@ void generarComprobante(Biblioteca *dirM_biblioteca, Usuario *usuario, Libro* li
     //generar comprobante
     Prestamo prestamo;
     prestamo.id = cantidadPrestamos + 1;
-    prestamo.tituloLibro = malloc(strlen(titulo) + 1);
-    strcpy(prestamo.tituloLibro, titulo);
+    // prestamo.tituloLibro = malloc(strlen(titulo) + 1);
+    // strcpy(prestamo.idLibro, libro->id);
+    prestamo.idLibro = libro->id;
     prestamo.cedulaUsuario = malloc(strlen(usuario->cedula) + 1);
     strcpy(prestamo.cedulaUsuario, usuario->cedula);
     prestamo.fechaInicio = malloc(strlen(fechaInicio) + 1);
@@ -80,21 +81,22 @@ void prestamoEjemplar(Biblioteca *dirM_biblioteca){
   int cantidadLibros = dirM_biblioteca->cantidadLibros;
   int cantidadUsuarios = dirM_biblioteca->cantidadUsuarios;
   char cedula[20];
-  char titulo[50];
+  int id = 0;
+  // char titulo[50];
   char fechaInicio[20];
   char fechaFinal[20];
   
   printf("Ingrese la cedula del usuario: ");
   scanf(" %[^\n]s", cedula);
   // se pide el titulo del libro se acepta espacios
-  printf("Ingrese el titulo del libro: ");
-  scanf(" %[^\n]s", titulo);
+  printf("Ingrese el id del libro/ejemplar: ");
+  scanf("%d", &id);
   printf("Ingrese la fecha de inicio: ");
   scanf("%s", fechaInicio);
   printf("Ingrese la fecha final: ");
   scanf("%s", fechaFinal);
 
-  Libro *libro = existeLibro(dirM_biblioteca, titulo);
+  Libro *libro = buscarLibro_id(dirM_biblioteca, id);
   Usuario *usuario = existeUsuario(dirM_biblioteca, cedula);
   if (usuario != NULL) {
     if (libro != NULL) {
@@ -169,7 +171,7 @@ void devolucionEjemplar(Biblioteca *dirM_biblioteca) {
       printf("El prestamo ya fue devuelto\n");
     }
     else if(formatoFecha(fechaDevolucion) == 1){
-      Libro *libro = existeLibro(dirM_biblioteca, prestamo->tituloLibro);
+      Libro *libro = buscarLibro_id(dirM_biblioteca, prestamo->idLibro);
       dias = diferenciaDias(prestamo->fechaInicio, fechaDevolucion);
       diasTardios = diferenciaDias(fechaDevolucion, prestamo->fechaFin);
       if (diasTardios < 0) {

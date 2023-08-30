@@ -54,7 +54,10 @@ void actualizarCatalogo(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   json_object *catalogo = json_object_new_array();
   for (int i = 0; i < dirM_biblioteca->cantidadLibros; i++) {
     json_object *libro = json_object_new_object();
+    json_object_object_add(libro, "id", json_object_new_int(dirM_biblioteca->libros[i].id));
     json_object_object_add(libro, "titulo", json_object_new_string(dirM_biblioteca->libros[i].titulo));
+    //al ejecutar la linea anterior da segmentation faul ¿por qué?
+    // 
     json_object_object_add(libro, "autor", json_object_new_string(dirM_biblioteca->libros[i].autor));
     json_object_object_add(libro, "anio", json_object_new_int(dirM_biblioteca->libros[i].anio));
     json_object_object_add(libro, "genero", json_object_new_string(dirM_biblioteca->libros[i].genero));
@@ -80,7 +83,8 @@ void actualizarPrestamos(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   for (int i = 0; i < dirM_biblioteca->cantidadPrestamos; i++) {
     json_object *prestamo = json_object_new_object();
     json_object_object_add(prestamo, "id", json_object_new_int(dirM_biblioteca->prestamos[i].id));
-    json_object_object_add(prestamo, "tituloLibro", json_object_new_string(dirM_biblioteca->prestamos[i].tituloLibro));
+    // json_object_object_add(prestamo, "tituloLibro", json_object_new_string(dirM_biblioteca->prestamos[i].tituloLibro));
+    json_object_object_add(prestamo, "idLibro", json_object_new_int(dirM_biblioteca->prestamos[i].idLibro));
     json_object_object_add(prestamo, "cedulaUsuario", json_object_new_string(dirM_biblioteca->prestamos[i].cedulaUsuario));
     json_object_object_add(prestamo, "fechaInicio", json_object_new_string(dirM_biblioteca->prestamos[i].fechaInicio));
     json_object_object_add(prestamo, "fechaFin", json_object_new_string(dirM_biblioteca->prestamos[i].fechaFin));

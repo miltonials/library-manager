@@ -14,15 +14,6 @@ void verUsuarios(Biblioteca *dirM_biblioteca) {
     pausar("Presione enter para volver al menú...");
     limpiarPantalla();
 }
-char *buscarNombre(Biblioteca *dirM_biblioteca, char *cedula) {
-    int cantidadUsuarios = dirM_biblioteca->cantidadUsuarios;
-    for (int i = 0; i < cantidadUsuarios; i++) {
-        if (strcmp(dirM_biblioteca->usuarios[i].cedula, cedula) == 0) {
-            return dirM_biblioteca->usuarios[i].nombre;
-        }
-    }
-    return NULL;
-}
 
 Usuario solicitarDatosUsuario() {
     Usuario UsuarioNuevo;

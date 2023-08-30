@@ -8,6 +8,7 @@ typedef struct {
 } Usuario;
 
 typedef struct {
+  int id;
   char *titulo;
   char *autor;
   int anio;
@@ -18,7 +19,7 @@ typedef struct {
 
 typedef struct {
   int id;
-  char *tituloLibro;
+  int idLibro;
   char *cedulaUsuario;
   char *fechaInicio;
   char *fechaFin;

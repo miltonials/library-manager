@@ -3,7 +3,7 @@
 
 void cargarBiblioteca(Biblioteca *dirM_biblioteca, char *rutaArchivos);
 void cargarUsuarios2(Biblioteca *dirM_biblioteca);
-void cargarLibros2(Biblioteca *dirM_biblioteca);
+void cargarLibros(Biblioteca *dirM_biblioteca);
 void cargarPrestamos2(Biblioteca *dirM_biblioteca);
 void resumenBiblioteca(Biblioteca *dirM_biblioteca);
 
@@ -15,7 +15,7 @@ void actualizarPrestamos(Biblioteca *dirM_biblioteca, char *rutaArchivos);
 void cargarBiblioteca(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   dirM_biblioteca->rutaArchivos = rutaArchivos;
   cargarUsuarios2(dirM_biblioteca);
-  cargarLibros2(dirM_biblioteca);
+  cargarLibros(dirM_biblioteca);
   cargarPrestamos2(dirM_biblioteca);
 
   printf("📚 Biblioteca cargada correctamente.\n");
@@ -53,10 +53,9 @@ void cargarUsuarios2(Biblioteca *dirM_biblioteca) {
   }
 
   free(contenidoArchivo);
-  printf("👤 Usuarios cargados correctamente.\n");
 }
 
-void cargarLibros2(Biblioteca *dirM_biblioteca) {
+void cargarLibros(Biblioteca *dirM_biblioteca) {
   char *ruta = malloc(strlen(dirM_biblioteca->rutaArchivos) + strlen("catalogo.json") + 1);
   strcpy(ruta, dirM_biblioteca->rutaArchivos);
   strcat(ruta, "catalogo.json");
@@ -71,10 +70,11 @@ void cargarLibros2(Biblioteca *dirM_biblioteca) {
 
   json_object *libros = json_tokener_parse(contenidoArchivo);
   dirM_biblioteca->cantidadLibros = json_object_array_length(libros);
-  dirM_biblioteca->libros = malloc(sizeof(Libro) * dirM_biblioteca->cantidadLibros);
+  dirM_biblioteca->libros = malloc(sizeof(Libro) * ((dirM_biblioteca->cantidadLibros) + 1));
 
   for (int i = 0; i < dirM_biblioteca->cantidadLibros; i++){
     json_object *libro = json_object_array_get_idx(libros, i);
+    json_object *id = json_object_object_get(libro, "id");
     json_object *titulo = json_object_object_get(libro, "titulo");
     json_object *autor = json_object_object_get(libro, "autor");
     json_object *anio = json_object_object_get(libro, "anio");
@@ -86,7 +86,8 @@ void cargarLibros2(Biblioteca *dirM_biblioteca) {
     dirM_biblioteca->libros[i].autor = malloc(strlen(json_object_get_string(autor)) + 1);
     dirM_biblioteca->libros[i].genero = malloc(strlen(json_object_get_string(genero)) + 1);
     dirM_biblioteca->libros[i].resumen = malloc(strlen(json_object_get_string(resumen)) + 1);
-    
+  
+    dirM_biblioteca->libros[i].id = json_object_get_int(id);
     strcpy(dirM_biblioteca->libros[i].titulo, json_object_get_string(titulo));
     strcpy(dirM_biblioteca->libros[i].autor, json_object_get_string(autor));
     dirM_biblioteca->libros[i].anio = json_object_get_int(anio);
@@ -96,7 +97,6 @@ void cargarLibros2(Biblioteca *dirM_biblioteca) {
   }
 
   free(contenidoArchivo);
-  printf("📖 Libros cargados correctamente.\n");
 }
 
 void cargarPrestamos2(Biblioteca *dirM_biblioteca) {
@@ -120,7 +120,8 @@ void cargarPrestamos2(Biblioteca *dirM_biblioteca) {
     //titulo y cedula son punteros
     json_object *prestamo = json_object_array_get_idx(prestamos, i);
     json_object *id = json_object_object_get(prestamo, "id");
-    json_object *tituloLibro = json_object_object_get(prestamo, "tituloLibro");
+    // json_object *tituloLibro = json_object_object_get(prestamo, "tituloLibro");
+    json_object *idLibro = json_object_object_get(prestamo, "idLibro");
     json_object *cedulaUsuario = json_object_object_get(prestamo, "cedulaUsuario");
     json_object *fechaInicio = json_object_object_get(prestamo, "fechaInicio");
     json_object *fechaFin = json_object_object_get(prestamo, "fechaFin");
@@ -128,8 +129,9 @@ void cargarPrestamos2(Biblioteca *dirM_biblioteca) {
     json_object *estado = json_object_object_get(prestamo, "estado");
     
     dirM_biblioteca->prestamos[i].id = json_object_get_int(id);
-    dirM_biblioteca->prestamos[i].tituloLibro = malloc(strlen(json_object_get_string(tituloLibro)) + 1);
-    strcpy(dirM_biblioteca->prestamos[i].tituloLibro, json_object_get_string(tituloLibro));
+    // dirM_biblioteca->prestamos[i].tituloLibro = malloc(strlen(json_object_get_string(tituloLibro)) + 1);
+    // strcpy(dirM_biblioteca->prestamos[i].tituloLibro, json_object_get_string(tituloLibro));
+    dirM_biblioteca->prestamos[i].idLibro = json_object_get_int(idLibro);
     dirM_biblioteca->prestamos[i].cedulaUsuario = malloc(strlen(json_object_get_string(cedulaUsuario)) + 1);
     strcpy(dirM_biblioteca->prestamos[i].cedulaUsuario, json_object_get_string(cedulaUsuario));
     
@@ -145,7 +147,6 @@ void cargarPrestamos2(Biblioteca *dirM_biblioteca) {
   }
 
   free(contenidoArchivo);
-  printf("📚 Prestamos cargados correctamente.\n");
 }
 
 
@@ -173,7 +174,7 @@ void resumenBiblioteca(Biblioteca *dirM_biblioteca) {
   printf("\n");
   printf("📚 Prestamos:\n");
   for (int i = 0; i < dirM_biblioteca->cantidadPrestamos; i++){
-    printf("  %d %s %s %s %s %d\n", dirM_biblioteca->prestamos[i].id, dirM_biblioteca->prestamos[i].tituloLibro, dirM_biblioteca->prestamos[i].cedulaUsuario, dirM_biblioteca->prestamos[i].fechaInicio, dirM_biblioteca->prestamos[i].fechaFin, dirM_biblioteca->prestamos[i].estado);
+    printf("  %d %d %s %s %s %d\n", dirM_biblioteca->prestamos[i].id, dirM_biblioteca->prestamos[i].idLibro, dirM_biblioteca->prestamos[i].cedulaUsuario, dirM_biblioteca->prestamos[i].fechaInicio, dirM_biblioteca->prestamos[i].fechaFin, dirM_biblioteca->prestamos[i].estado);
   }
 }
 
