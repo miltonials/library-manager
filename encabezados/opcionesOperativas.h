@@ -364,6 +364,166 @@ void top3UsuariosMasPrestamos(Biblioteca *dirM_biblioteca){
     printf("\n");
   }
 }
+int calcularMontoRecaudado(const char *fechaInicio,const char *fechaFin,const char *fechaDevolucion){
+  int dias = diferenciaDias(fechaInicio, fechaDevolucion);
+  int diasTardios = tadiasEnDias(fechaDevolucion, fechaFin);
+  int tarificacion;
+  int tarificacionTardia;
+  int monto;
+  // printf("dias: %d\n", dias);
+  // printf("dias tardios: %d\n", diasTardios);
+  if(dias <= 7){
+    tarificacion = 150;
+    tarificacionTardia = 75;
+  }
+  else if(dias <= 15){
+    tarificacion = 125;
+    tarificacionTardia = 50;
+  }
+  else{
+    tarificacion = 100;
+    tarificacionTardia = 25;
+  }
+  monto = (dias * tarificacion) + (diasTardios * tarificacionTardia);
+  return monto;
+}
+
+char *obtenerMesAnio(const char *fecha) {
+  if (strlen(fecha) != 10) {
+    return NULL; // Manejo de errores: la fecha no tiene el formato esperado
+  }
+
+  char *mesAnio = malloc(8);
+  if (mesAnio == NULL) {
+    return NULL; // Manejo de errores: no se pudo asignar memoria
+  }
+
+  char mes[3];
+  char anio[5];
+
+  strncpy(mes, fecha + 3, 2); // Avanza 3 caracteres para saltar el día y el "/"
+  mes[2] = '\0';
+
+  strncpy(anio, fecha + 6, 4);
+  anio[4] = '\0';
+
+  snprintf(mesAnio, 8, "%s/%s", mes, anio);
+
+
+  return mesAnio;
+}
+
+MayorRecaudacionMes *ordenarPrestamosMesAnoMayorMontoRecaudado(MayorRecaudacionMes *mayorRecaudacionMes, int cantidadPrestamos) {
+  int i, j;
+  MayorRecaudacionMes aux;
+
+  for (i = 0; i < cantidadPrestamos - 1; i++) {
+    for (j = i + 1; j < cantidadPrestamos; j++) {
+      // Comparar por montos recaudados en orden descendente
+      if (mayorRecaudacionMes[i].montosRecaudados < mayorRecaudacionMes[j].montosRecaudados) {
+        aux = mayorRecaudacionMes[i];
+        mayorRecaudacionMes[i] = mayorRecaudacionMes[j];
+        mayorRecaudacionMes[j] = aux;
+      }
+    }
+  }
+
+  return mayorRecaudacionMes;
+}
+
+/*
+retorna una lista de MayorRecaudacionMes
+*/
+MayorRecaudacionMes *listarMesAnoMayorMontoRecaudado(Biblioteca *dirM_biblioteca, int *cantidad) {
+  Prestamo *prestamos = dirM_biblioteca->prestamos;
+  int cantidadPrestamos = dirM_biblioteca->cantidadPrestamos;
+
+  MayorRecaudacionMes *mayorRecaudacionMes = malloc(sizeof(MayorRecaudacionMes) * cantidadPrestamos);
+  if (mayorRecaudacionMes == NULL) {
+      return NULL; // Manejo de errores: no se pudo asignar memoria
+  }
+
+  int cantidadPrestamosFinalizados = 0;
+
+  for (int i = 0; i < cantidadPrestamos; i++) {
+      if (prestamos[i].estado == 0) {
+          char *mesAnio = obtenerMesAnio(prestamos[i].fechaInicio);
+
+          int existe = 0;
+          for (int j = 0; j < cantidadPrestamosFinalizados; j++) {
+              if (strcmp(mesAnio, mayorRecaudacionMes[j].mesAnio) == 0) {
+                  existe = 1;
+                  break;
+              }
+          }
+
+          if (existe == 0) {
+              // printf("No existe\n");
+              mayorRecaudacionMes[cantidadPrestamosFinalizados].idPrestamo = prestamos[i].id;
+              mayorRecaudacionMes[cantidadPrestamosFinalizados].mesAnio = strdup(mesAnio);
+              mayorRecaudacionMes[cantidadPrestamosFinalizados].montosRecaudados = calcularMontoRecaudado(prestamos[i].fechaInicio, prestamos[i].fechaFin, prestamos[i].fechaDevolucion);
+
+              cantidadPrestamosFinalizados++;
+          } else {
+              // Buscar la posición del mes y año en la lista
+              int posicion = -1;
+              for (int j = 0; j < cantidadPrestamosFinalizados; j++) {
+                  if (strcmp(mesAnio, mayorRecaudacionMes[j].mesAnio) == 0) {
+                      posicion = j;
+                      break;
+                  }
+              }
+
+              if (posicion != -1) {
+                  mayorRecaudacionMes[posicion].montosRecaudados += calcularMontoRecaudado(prestamos[i].fechaInicio, prestamos[i].fechaFin, prestamos[i].fechaDevolucion);
+              }
+          }
+
+          free(mesAnio);
+      }
+  }
+  //imprimir lista
+  /*
+  for(int i = 0; i < cantidadPrestamosFinalizados; i++){
+    printf("Mes anio: %s\n", mayorRecaudacionMes[i].mesAnio);
+    printf("Monto recaudado: %d\n", mayorRecaudacionMes[i].montosRecaudados);
+    printf("\n");
+  }
+  */
+  MayorRecaudacionMes *mayorRecaudacionMesOrdenado = ordenarPrestamosMesAnoMayorMontoRecaudado(mayorRecaudacionMes, cantidadPrestamosFinalizados);
+  *cantidad = cantidadPrestamosFinalizados;
+  return mayorRecaudacionMesOrdenado;
+}
+
+void top5MesesMayorMontoRecaudado(Biblioteca *dirM_biblioteca){
+  int cantidad;
+  MayorRecaudacionMes *mayorRecaudacionMes = listarMesAnoMayorMontoRecaudado(dirM_biblioteca, &cantidad);
+  
+  int cantidadMayorRecaudacionMes = 0;
+  while (mayorRecaudacionMes[cantidadMayorRecaudacionMes].mesAnio != NULL && cantidadMayorRecaudacionMes < 5 ) {
+    cantidadMayorRecaudacionMes++;
+  }
+
+  for (int i = 0; i < cantidadMayorRecaudacionMes; i++) {
+    if(i == cantidad){
+      break;
+    }
+    printf("Mes anio: %s\n", mayorRecaudacionMes[i].mesAnio);
+    printf("Monto recaudado: %d\n", mayorRecaudacionMes[i].montosRecaudados);
+    printf("\n");
+
+  }
+  
+  // Liberar memoria asignada a las estructuras MayorRecaudacionMes
+  for (int i = 0; i < cantidadMayorRecaudacionMes; i++) {
+    if(i == cantidad){
+      break;
+    }
+    free(mayorRecaudacionMes[i].mesAnio);
+  }
+  free(mayorRecaudacionMes);
+}
+
 /*
 Estadísticas Se deberán mostrar las siguientes estadísticas (indican el código o letra de esta): 
 A. Top 3 de producciones (nombre) más prestadas. 
@@ -382,6 +542,7 @@ void menuOpcionesEstadisticas(Biblioteca *dirM_biblioteca){
       break;
     case 3:
       printf("Top 5 de mes-año con mayor monto recaudado (según fecha de inicio).\n");
+      top5MesesMayorMontoRecaudado(dirM_biblioteca);
       break;
     case 4:
       printf("Volver.\n");

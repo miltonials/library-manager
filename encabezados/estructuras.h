@@ -50,6 +50,12 @@ typedef struct{
   int cantidadPrestamos;
 } EstadisticasUsuario;
 
+typedef struct{
+  int idPrestamo;
+  char *mesAnio;
+  int montosRecaudados;
+} MayorRecaudacionMes;
+
 
 
 #endif

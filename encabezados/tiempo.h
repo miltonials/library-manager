@@ -29,6 +29,7 @@ int tadiasEnDias(const char *fechaEntrega, const char *fechaActual) {
   return 0;
 }
 
+
 time_t obtenerFechaDeString(const char *fecha) {
   struct tm fecha_tm = {0};  // Inicializar la estructura tm a 0
   char *cp_fecha = malloc(sizeof(char) * (strlen(fecha) + 1));  // Asegurar espacio para el carácter nulo
