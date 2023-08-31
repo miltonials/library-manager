@@ -316,6 +316,54 @@ void top3ProduccionesMasPrestadas(Biblioteca *dirM_biblioteca){
     printf("\n");
   }
 }
+EstadisticasUsuario *listarUsuariosMasPrestamos(Biblioteca *dirM_biblioteca){
+  Usuario *usuarios = dirM_biblioteca->usuarios;
+  Prestamo *prestamos = dirM_biblioteca->prestamos;
+  int cantidadPrestamos = dirM_biblioteca->cantidadPrestamos;
+  int cantidadUsuarios = dirM_biblioteca->cantidadUsuarios;
+  EstadisticasUsuario *estadisticasUsuarios = malloc(sizeof(EstadisticasUsuario) * cantidadUsuarios);
+  int i;
+  int j;
+  int cantidadPrestamosUsuario = 0;
+  for (i = 0; i < cantidadUsuarios; i++) {
+    cantidadPrestamosUsuario = 0;
+    for (j = 0; j < cantidadPrestamos; j++) {
+      if (strcmp(usuarios[i].cedula, prestamos[j].cedulaUsuario) == 0) {
+        cantidadPrestamosUsuario++;
+      }
+    }
+    estadisticasUsuarios[i].cedulaUsuario = usuarios[i].cedula;
+    estadisticasUsuarios[i].nombreUsuario = usuarios[i].nombre;
+    estadisticasUsuarios[i].cantidadPrestamos = cantidadPrestamosUsuario;
+  }
+  return estadisticasUsuarios;
+} 
+EstadisticasUsuario *ordenarUsuariosMasPrestamos(EstadisticasUsuario *estadisticasUsuarios, int cantidadUsuarios){
+  int i;
+  int j;
+  EstadisticasUsuario aux;
+  for (i = 0; i < cantidadUsuarios; i++) {
+    for (j = 0; j < cantidadUsuarios; j++) {
+      if (estadisticasUsuarios[i].cantidadPrestamos > estadisticasUsuarios[j].cantidadPrestamos) {
+        aux = estadisticasUsuarios[i];
+        estadisticasUsuarios[i] = estadisticasUsuarios[j];
+        estadisticasUsuarios[j] = aux;
+      }
+    }
+  }
+  return estadisticasUsuarios;
+}
+void top3UsuariosMasPrestamos(Biblioteca *dirM_biblioteca){
+  EstadisticasUsuario *estadisticasUsuarios = listarUsuariosMasPrestamos(dirM_biblioteca);
+  int cantidadUsuarios = dirM_biblioteca->cantidadUsuarios;
+  estadisticasUsuarios = ordenarUsuariosMasPrestamos(estadisticasUsuarios, cantidadUsuarios);
+  int i;
+  for (i = 0; i < 3; i++) {
+    printf("Nombre: %s\n", estadisticasUsuarios[i].nombreUsuario);
+    printf("Cantidad de prestamos: %d\n", estadisticasUsuarios[i].cantidadPrestamos);
+    printf("\n");
+  }
+}
 /*
 Estadísticas Se deberán mostrar las siguientes estadísticas (indican el código o letra de esta): 
 A. Top 3 de producciones (nombre) más prestadas. 
@@ -330,7 +378,7 @@ void menuOpcionesEstadisticas(Biblioteca *dirM_biblioteca){
       top3ProduccionesMasPrestadas(dirM_biblioteca);
       break;
     case 2:
-      printf("Top 3 de usuarios con más préstamos.\n");
+      top3UsuariosMasPrestamos(dirM_biblioteca);
       break;
     case 3:
       printf("Top 5 de mes-año con mayor monto recaudado (según fecha de inicio).\n");
