@@ -10,6 +10,11 @@ int formatoFecha(char *fecha);
 int tadiasEnDias(const char *fechaInicio, const char *fechaFinal);
 char *obtenerFechaActual();
 
+/*
+Funcion que retorna la fecha actual del sistema
+entradas: ninguna
+salidas: fecha actual del sistema en formato dd/mm/aaaa
+*/
 char *obtenerFechaActual() {
   time_t fechaActual_time = time(NULL);
   struct tm *fechaActual_tm = localtime(&fechaActual_time);
@@ -18,6 +23,11 @@ char *obtenerFechaActual() {
   return fechaActual;
 }
 
+/*
+Funcion que retorna la cantidad de dias tardias que tiene un prestamo
+entradas: fecha de inicio del prestamo, fecha de fin del prestamo
+salidas: cantidad de dias tardias, int 
+*/
 int tadiasEnDias(const char *fechaEntrega, const char *fechaActual) {
   time_t fechaEntrega_time = obtenerFechaDeString(fechaEntrega);
   time_t fechaFinal_time = obtenerFechaDeString(fechaActual);
@@ -29,7 +39,11 @@ int tadiasEnDias(const char *fechaEntrega, const char *fechaActual) {
   return 0;
 }
 
-
+/*
+Funcion que retorna la fecha en formato time_t
+entradas: fecha en formato dd/mm/aaaa
+salidas: fecha en formato time_t
+*/
 time_t obtenerFechaDeString(const char *fecha) {
   struct tm fecha_tm = {0};  // Inicializar la estructura tm a 0
   char *cp_fecha = malloc(sizeof(char) * (strlen(fecha) + 1));  // Asegurar espacio para el carácter nulo
@@ -50,7 +64,11 @@ time_t obtenerFechaDeString(const char *fecha) {
   return fecha_time;
 }
 
-
+/*
+Funcion que valida que la fecha de inicio sea menor a la fecha de fin
+entradas: fecha de inicio, fecha de fin
+salidas: 1 si la fecha de inicio es menor a la fecha de fin, 0 en caso contrario
+*/
 int validarRangoFechas(const char *fechaInicio, const char *fechaFinal) {
   time_t fechaInicio_time = obtenerFechaDeString(fechaInicio);
   time_t fechaFinal_time = obtenerFechaDeString(fechaFinal);
@@ -62,7 +80,11 @@ int validarRangoFechas(const char *fechaInicio, const char *fechaFinal) {
   return 1;
 }
 
-
+/*
+Funcion que valida que la fecha tenga el formato correcto
+entradas: fecha en formato dd/mm/aaaa
+salidas: 1 si la fecha tiene el formato correcto, 0 en caso contrario
+*/
 int formatoFecha(char *fecha) {
   //fecha con formato: dd/mm/aaaa -> 10 caracteres
   
@@ -107,7 +129,11 @@ int formatoFecha(char *fecha) {
   return 1;
 }
 
-
+/*
+Funcion que retorna la diferencia en dias entre dos fechas
+entradas: fecha de inicio, fecha de fin
+salidas: diferencia en dias entre las dos fechas
+*/  
 int diferenciaDias(const char *fechaInicio, const char *fechaFinal) {
   time_t fechaInicio_time = obtenerFechaDeString(fechaInicio);
   time_t fechaFinal_time = obtenerFechaDeString(fechaFinal);
