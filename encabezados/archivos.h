@@ -1,6 +1,11 @@
 #ifndef ARCHIVOS_H
 #define ARCHIVOS_H
 
+/*
+Funcion que lee el contenido de un archivo
+Entrada: Nombre del archivo
+Salida: Contenido del archivo
+*/
 char* leerArchivo(const char* nombreArchivo) {
     FILE* archivo = fopen(nombreArchivo, "r");
     if (archivo == NULL) {
@@ -32,6 +37,11 @@ char* leerArchivo(const char* nombreArchivo) {
     return contenido;
 }
 
+/*
+Funcion que escribe el contenido en un archivo
+Entrada: Ruta del archivo y contenido a escribir
+Salida: 1 si se escribio correctamente, -1 si no se pudo abrir el archivo, -2 si no se pudo escribir el archivo
+*/
 int escribirArchivo(char* ruta, char* contenido){
     FILE* archivo = fopen(ruta, "w");
     if (archivo == NULL) {
@@ -50,6 +60,11 @@ int escribirArchivo(char* ruta, char* contenido){
     return 1;
 }
 
+/*
+Funcion que crea un archivo PDF
+Entrada: Ruta donde se creara el archivo, nombre del archivo y contenido del archivo
+Salida: Ninguna
+*/
 void crearPDF(const char *ruta, const char *nombreArchivo, const char *contenido) {
     HPDF_Doc pdf = HPDF_New(NULL, NULL);
     if (!pdf) {

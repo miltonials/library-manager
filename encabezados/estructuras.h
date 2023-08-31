@@ -1,6 +1,7 @@
 #ifndef ESTRUCTURAS_H
 #define ESTRUCTURAS_H
 
+// Definicion de estructuras
 typedef struct {
   char *cedula;
   char *nombre;

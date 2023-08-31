@@ -12,6 +12,11 @@ void actualizarUsuarios(Biblioteca *dirM_biblioteca, char *rutaArchivos);
 void actualizarCatalogo(Biblioteca *dirM_biblioteca, char *rutaArchivos);
 void actualizarPrestamos(Biblioteca *dirM_biblioteca, char *rutaArchivos);
 
+/*
+Funcion que carga los datos almacenados en los archivos JSON
+Entrada: Puntero a la biblioteca y ruta de los archivos
+Salida: Ninguna
+*/
 void cargarBiblioteca(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   dirM_biblioteca->rutaArchivos = rutaArchivos;
   cargarUsuarios2(dirM_biblioteca);
@@ -21,6 +26,11 @@ void cargarBiblioteca(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   printf("📚 Biblioteca cargada correctamente.\n");
 }
 
+/*
+Funcion que carga los usuarios almacenados en el archivo JSON
+Entrada: Puntero a la biblioteca
+Salida: Ninguna
+*/
 void cargarUsuarios2(Biblioteca *dirM_biblioteca) {
   char *ruta = malloc(strlen(dirM_biblioteca->rutaArchivos) + strlen("usuarios.json") + 1);
   strcpy(ruta, dirM_biblioteca->rutaArchivos);
@@ -55,6 +65,11 @@ void cargarUsuarios2(Biblioteca *dirM_biblioteca) {
   free(contenidoArchivo);
 }
 
+/*
+Funcion que carga los libros almacenados en el archivo JSON
+Entrada: Puntero a la biblioteca
+Salida: Ninguna
+*/
 void cargarLibros(Biblioteca *dirM_biblioteca) {
   char *ruta = malloc(strlen(dirM_biblioteca->rutaArchivos) + strlen("catalogo.json") + 1);
   strcpy(ruta, dirM_biblioteca->rutaArchivos);
@@ -99,6 +114,11 @@ void cargarLibros(Biblioteca *dirM_biblioteca) {
   free(contenidoArchivo);
 }
 
+/*
+Funcion que carga los prestamos almacenados en el archivo JSON
+Entrada: Puntero a la biblioteca
+Salida: Ninguna
+*/
 void cargarPrestamos2(Biblioteca *dirM_biblioteca) {
   char *ruta = malloc(strlen(dirM_biblioteca->rutaArchivos) + strlen("prestamos.json") + 1);
   strcpy(ruta, dirM_biblioteca->rutaArchivos);
@@ -148,8 +168,11 @@ void cargarPrestamos2(Biblioteca *dirM_biblioteca) {
   free(contenidoArchivo);
 }
 
-
-
+/*
+Funcion que muestra un resumen de la biblioteca
+Entrada: Puntero a la biblioteca
+Salida: Ninguna
+*/
 void resumenBiblioteca(Biblioteca *dirM_biblioteca) {
   printf("📚 Biblioteca:\n");
   printf("  📖 Libros: %d\n", dirM_biblioteca->cantidadLibros);

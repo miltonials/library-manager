@@ -1,9 +1,11 @@
 #ifndef ACTUALIZARDATOS_H
 #define ACTUALIZARDATOS_H
 
-
-
-
+/*
+Funcion que actualiza los datos almacenados en los archivos JSON
+Entrada: Puntero a la biblioteca y ruta de los archivos
+Salida: Ninguna
+*/
 void actualizarBiblioteca(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   actualizarUsuarios(dirM_biblioteca, rutaArchivos);
   actualizarCatalogo(dirM_biblioteca, rutaArchivos);
@@ -12,6 +14,11 @@ void actualizarBiblioteca(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   printf("📚 Biblioteca actualizada correctamente.\n");
 }
 
+/*
+Funcion que obtiene la ruta de un archivo
+Entrada: Ruta de la carpeta de archivos y nombre del archivo
+Salida: Ruta del archivo
+*/
 char* obtenerRutaActualizacion(char *rutaArchivos, char *nombreArchivo) {
   char *ruta = malloc(strlen(rutaArchivos) + strlen(nombreArchivo) + 1);
   strcpy(ruta, rutaArchivos);
@@ -19,7 +26,11 @@ char* obtenerRutaActualizacion(char *rutaArchivos, char *nombreArchivo) {
   return ruta;
 }
 
-// Estas funciones guardar los datos de la biblioteca en archivos JSON
+/*
+Funcion que actualiza los usuarios almacenados en el archivo JSON
+Entrada: Puntero a la biblioteca y ruta de los archivos
+Salida: Ninguna
+*/
 void actualizarUsuarios(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   char *ruta = obtenerRutaActualizacion(rutaArchivos, "usuarios.json");
   FILE *archivo = fopen(ruta, "w");
@@ -42,6 +53,11 @@ void actualizarUsuarios(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   fclose(archivo);
 }
 
+/*
+Funcion que actualiza el catalogo almacenado en el archivo JSON
+Entrada: Puntero a la biblioteca y ruta de los archivos
+Salida: Ninguna
+*/
 void actualizarCatalogo(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   char *ruta = obtenerRutaActualizacion(rutaArchivos, "catalogo.json");
   FILE *archivo = fopen(ruta, "w");
@@ -70,6 +86,11 @@ void actualizarCatalogo(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   fclose(archivo);
 }
 
+/*
+Funcion que actualiza los prestamos almacenados en el archivo JSON
+Entrada: Puntero a la biblioteca y ruta de los archivos
+Salida: Ninguna
+*/
 void actualizarPrestamos(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   char *ruta = obtenerRutaActualizacion(rutaArchivos, "prestamos.json");
   FILE *archivo = fopen(ruta, "w");
