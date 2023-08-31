@@ -1,6 +1,16 @@
 #ifndef OPCIONESGENERALES_H
 #define OPCIONESGENERALES_H
 
+/*
+Funcion que crea un pdf con los datos del prestamo
+Entradas: 
+  dirM_biblioteca: puntero a la biblioteca
+  prestamo: puntero al prestamo
+  usuario: puntero al usuario
+  libro: puntero al libro
+Salidas:
+  void
+*/
 void prestamoApdf(Biblioteca *dirM_biblioteca, Prestamo *prestamo, Usuario *usuario, Libro *libro)
 {
   char contenido[500]; // Ajusta el tamaño según tus necesidades
@@ -31,6 +41,17 @@ void prestamoApdf(Biblioteca *dirM_biblioteca, Prestamo *prestamo, Usuario *usua
   printf("PDF de préstamo creado: %s\n", nombreArchivo);
 }
 
+/*
+Funcion que genera un comprobante de prestamo
+Entradas: 
+  dirM_biblioteca: puntero a la biblioteca
+  usuario: puntero al usuario
+  libro: puntero al libro
+  fechaInicio: puntero a la fecha de inicio
+  fechaFinal: puntero a la fecha final
+Salidas:
+  void
+*/
 void generarComprobante(Biblioteca *dirM_biblioteca, Usuario *usuario, Libro *libro, char *fechaInicio, char *fechaFinal)
 {
   // validar que este disponible el libro
@@ -78,6 +99,13 @@ void generarComprobante(Biblioteca *dirM_biblioteca, Usuario *usuario, Libro *li
   }
 }
 
+/*
+Funcion realiza el prestamo de un ejemplar
+Entradas: 
+  dirM_biblioteca: puntero a la biblioteca
+Salidas:
+  void
+*/
 void prestamoEjemplar(Biblioteca *dirM_biblioteca)
 {
   Usuario *usuarios = dirM_biblioteca->usuarios;
@@ -138,6 +166,14 @@ void prestamoEjemplar(Biblioteca *dirM_biblioteca)
   limpiarPantalla();
 }
 
+/*
+Funcion que busca un prestamo por su id
+Entradas: 
+  dirM_biblioteca: puntero a la biblioteca
+  prestamo_id: id del prestamo
+Salidas:
+  Prestamo *: puntero al prestamo
+*/
 Prestamo *existePrestamo(Biblioteca *dirM_biblioteca, int prestamo_id)
 {
   Prestamo *prestamos = dirM_biblioteca->prestamos;
@@ -162,6 +198,13 @@ la fecha de devolución. El sistema calculará el monto asociado al préstamo de
 16 o más días: 100 (tarificación por día) y 25 (tarificación por día tardío)
 
 formula: (dias * tarificacion) + (diasTardios * tarificacionTardia)
+*/
+/*
+Funcion que realiza la devolucion de un ejemplar
+Entradas: 
+  dirM_biblioteca: puntero a la biblioteca
+Salidas:
+  void
 */
 void devolucionEjemplar(Biblioteca *dirM_biblioteca)
 {
@@ -238,6 +281,13 @@ void devolucionEjemplar(Biblioteca *dirM_biblioteca)
   limpiarPantalla();
 }
 
+/*
+Funcion que realiza la busqueda simple
+Entradas: 
+  dirM_biblioteca: puntero a la biblioteca
+Salidas:
+  void
+*/
 void busquedaSimple(Biblioteca *dirM_biblioteca)
 {
   char textoUsuario[200];
@@ -276,6 +326,13 @@ void busquedaSimple(Biblioteca *dirM_biblioteca)
 }
 
 // Función auxiliar para verificar si un texto está contenido o coincide exactamente
+/*
+Funcion que verifica si un texto esta contenido o coincide exactamente
+Entradas: 
+  campo: puntero al campo
+  texto: puntero al texto
+  tecnica: tecnica de busqueda
+*/
 bool contieneTexto(char *campo, char *texto, char tecnica)
 {
   if (tecnica == 'c')
@@ -289,6 +346,13 @@ bool contieneTexto(char *campo, char *texto, char tecnica)
   return false;
 }
 
+/*
+Funcion que solicita la tecnica de busqueda avanzada
+Entradas: 
+  texto: puntero al texto
+Salidas:
+  char: tecnica de busqueda
+*/
 char solicitarTecnica_busquedaAvanzada(char *texto)
 {
   if (strlen(texto) == 0)
@@ -302,6 +366,14 @@ char solicitarTecnica_busquedaAvanzada(char *texto)
   return tecnica;
 }
 
+/*
+Funcion que solicita el texto de busqueda avanzada
+Entradas: 
+  texto: puntero al texto
+  campo: puntero al campo
+Salidas:
+  void
+*/
 void solicitarTexto_busquedaAvanzada(char *texto, const char *campo) {
     printf("Ingrese texto para buscar en %s (deje en blanco si no desea buscar en este campo): ", campo);
     
@@ -319,6 +391,13 @@ void solicitarTexto_busquedaAvanzada(char *texto, const char *campo) {
     texto[i] = '\0';
 }
 
+/*
+Funcion que solicita el operador de busqueda avanzada
+Entradas: 
+  void
+Salidas:
+  char: operador de busqueda
+*/
 char solicitarOperador()
 {
   char operador;
@@ -327,11 +406,29 @@ char solicitarOperador()
   return operador;
 }
 
+/*
+Funcion que verifica si cumple los criterios
+Entradas: 
+  ejemplar: puntero al ejemplar
+  texto: puntero al texto
+  tecnica: tecnica de busqueda
+  campo: puntero al campo
+Salidas:
+  bool: si cumple o no los criterios
+*/
 bool cumpleCriterios(Libro *ejemplar, char *texto, char tecnica, char *campo)
 {
   return (strlen(texto) == 0 || contieneTexto(campo, texto, tecnica));
 }
 
+/*
+Funcion que verifica si cumple el operador de busqueda avanzada
+Entradas: 
+  matches: puntero a los matches
+  operador: operador de busqueda
+Salidas:
+  bool: si cumple o no el operador
+*/
 bool cumpleOperador(bool *matches, char operador)
 {
   if (operador == 'o')
@@ -345,6 +442,13 @@ bool cumpleOperador(bool *matches, char operador)
   return false;
 }
 
+/*
+Funcion que muestra el detalle de un ejemplar
+Entradas: 
+  ejemplar: puntero al ejemplar
+Salidas:
+  void
+*/
 void mostrarDetalle(Libro *ejemplar)
 {
   printf("Identificador: %d\n", ejemplar->id);
@@ -353,6 +457,13 @@ void mostrarDetalle(Libro *ejemplar)
   printf("\n");
 }
 
+/*
+Funcion que realiza la busqueda avanzada de un ejemplar y muestra sus detalles
+Entradas: 
+  dirM_biblioteca: puntero a la biblioteca
+Salidas:
+  void
+*/
 void busquedaAvanzada(Biblioteca *dirM_biblioteca)
 {
   // Solicitar detalles de búsqueda
@@ -392,6 +503,13 @@ void busquedaAvanzada(Biblioteca *dirM_biblioteca)
   }
 }
 
+/*
+Funcion que muestra el menu de opciones generales
+Entradas: 
+  dirM_biblioteca: puntero a la biblioteca
+Salidas:
+  void
+*/
 void opcionesGenerales(Biblioteca *dirM_biblioteca)
 {
   int opcion = menuOpcionesGenerales();
