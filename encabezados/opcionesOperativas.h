@@ -267,9 +267,87 @@ void prestamosVencidos(Biblioteca *biblioteca) {
     }
   }
 }
+EstadisticasLibro *listarLibrosMasPrestados(Biblioteca *dirM_biblioteca){
+  Libro *libros = dirM_biblioteca->libros;
+  Prestamo *prestamos = dirM_biblioteca->prestamos;
+  int cantidadPrestamos = dirM_biblioteca->cantidadPrestamos;
+  int cantidadLibros = dirM_biblioteca->cantidadLibros;
+  EstadisticasLibro *estadisticasLibros = malloc(sizeof(EstadisticasLibro) * cantidadLibros);
+  int i;
+  int j;
+  int cantidadPrestamosLibro = 0;
+  for (i = 0; i < cantidadLibros; i++) {
+    cantidadPrestamosLibro = 0;
+    for (j = 0; j < cantidadPrestamos; j++) {
+      if (libros[i].id == prestamos[j].idLibro) {
+        cantidadPrestamosLibro++;
+      }
+    }
+    estadisticasLibros[i].idLibro = libros[i].id;
+    estadisticasLibros[i].nombreLibro = libros[i].titulo;
+    estadisticasLibros[i].cantidadPrestamos = cantidadPrestamosLibro;
+  }
+  return estadisticasLibros;
+}
+EstadisticasLibro *ordenarLibrosMasPrestados(EstadisticasLibro *estadisticasLibros, int cantidadLibros){
+  int i;
+  int j;
+  EstadisticasLibro aux;
+  for (i = 0; i < cantidadLibros; i++) {
+    for (j = 0; j < cantidadLibros; j++) {
+      if (estadisticasLibros[i].cantidadPrestamos > estadisticasLibros[j].cantidadPrestamos) {
+        aux = estadisticasLibros[i];
+        estadisticasLibros[i] = estadisticasLibros[j];
+        estadisticasLibros[j] = aux;
+      }
+    }
+  }
+  return estadisticasLibros;
+}
+// A. Top 3 de producciones (nombre) más prestadas. 
+void top3ProduccionesMasPrestadas(Biblioteca *dirM_biblioteca){
+  EstadisticasLibro *estadisticasLibros = listarLibrosMasPrestados(dirM_biblioteca);
+  int cantidadLibros = dirM_biblioteca->cantidadLibros;
+  estadisticasLibros = ordenarLibrosMasPrestados(estadisticasLibros, cantidadLibros);
+  int i;
+  for (i = 0; i < 3; i++) {
+    printf("Titulo: %s\n", estadisticasLibros[i].nombreLibro);
+    printf("Cantidad de prestamos: %d\n", estadisticasLibros[i].cantidadPrestamos);
+    printf("\n");
+  }
+}
+/*
+Estadísticas Se deberán mostrar las siguientes estadísticas (indican el código o letra de esta): 
+A. Top 3 de producciones (nombre) más prestadas. 
+B. Top 3 de usuarios con más préstamos.
+C. Top 5 de mes-año con mayor monto recaudado (según fecha de inicio).
+*/
+void menuOpcionesEstadisticas(Biblioteca *dirM_biblioteca){
+  int opcion = menuEstadisticas();
+  while (opcion != 4) {
+    switch (opcion) {
+    case 1:
+      top3ProduccionesMasPrestadas(dirM_biblioteca);
+      break;
+    case 2:
+      printf("Top 3 de usuarios con más préstamos.\n");
+      break;
+    case 3:
+      printf("Top 5 de mes-año con mayor monto recaudado (según fecha de inicio).\n");
+      break;
+    case 4:
+      printf("Volver.\n");
+      break;
+    default:
+      printf("Opcion invalida.\n");
+      break;
+    }
+    opcion = menuEstadisticas();
+  }
 
-void opcionesOperativas(Biblioteca *dirM_biblioteca)
-{
+}
+
+void opcionesOperativas(Biblioteca *dirM_biblioteca){
   int opcion = menuOpcionesOperativas();
   while (opcion != 6) {
     switch (opcion) {
@@ -286,7 +364,7 @@ void opcionesOperativas(Biblioteca *dirM_biblioteca)
       prestamosVencidos(dirM_biblioteca);
       break;
     case 5:
-      printf("Estadisticas.\n");
+      menuOpcionesEstadisticas(dirM_biblioteca);
       break;
     case 6:
       printf("Volver.\n");

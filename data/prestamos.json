@@ -1,6 +1,7 @@
 [
     {
         "id": 1,
+        "idLibro": 2,
         "tituloLibro": "1984",
         "cedulaUsuario": "703010147",
         "fechaInicio": "15\/11\/2022",
@@ -10,6 +11,7 @@
     },
     {
         "id": 2,
+        "idLibro": 2,
         "tituloLibro": "1984",
         "cedulaUsuario": "123456789",
         "fechaInicio": "21\/08\/2023",
@@ -19,6 +21,7 @@
     },
     {
         "id": 3,
+        "idLibro": 2,
         "tituloLibro": "1984",
         "cedulaUsuario": "123456789",
         "fechaInicio": "21\/08\/2023",
@@ -28,6 +31,7 @@
     },
     {
         "id": 4,
+        "idLibro": 2,
         "tituloLibro": "1984",
         "cedulaUsuario": "123456789",
         "fechaInicio": "21\/08\/2023",
@@ -37,6 +41,7 @@
     },
     {
         "id": 5,
+        "idLibro": 2,
         "tituloLibro": "1984",
         "cedulaUsuario": "123456789",
         "fechaInicio": "21\/06\/2023",
@@ -46,6 +51,7 @@
     },
     {
         "id": 6,
+        "idLibro": 2,
         "tituloLibro": "1984",
         "cedulaUsuario": "703010147",
         "fechaInicio": "27\/8\/2023",
@@ -55,6 +61,7 @@
     },
     {
         "id": 7,
+        "idLibro": 2,
         "tituloLibro": "1984",
         "cedulaUsuario": "703010147",
         "fechaInicio": "15\/11\/2022",

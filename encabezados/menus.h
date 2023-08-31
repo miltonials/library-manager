@@ -93,4 +93,21 @@ int menuGestionUsuarios(){
   return seleccionOpcion();
 }
 
+/*
+A. Top 3 de producciones (nombre) más prestadas. 
+B. Top 3 de usuarios con más préstamos.
+C. Top 5 de mes-año con mayor monto recaudado (según fecha de inicio
+*/
+int menuEstadisticas(){
+  printf("**********************\n");
+  printf("*Estadisticas*\n");
+  printf("**********************\n");
+  printf("1. Top 3 de producciones más prestadas.\n");
+  printf("2. Top 3 de usuarios con más préstamos.\n");
+  printf("3. Top 5 de mes-año con mayor monto recaudado.\n");
+  printf("4. Volver.\n");
+  printf("Ingrese una opcion: ");
+  return seleccionOpcion();
+}
+
 #endif

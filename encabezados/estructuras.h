@@ -38,6 +38,12 @@ typedef struct {
   int cantidadPrestamos;
 } Biblioteca;
 
+typedef struct{
+  int idLibro;
+  char *nombreLibro;
+  int cantidadPrestamos;
+} EstadisticasLibro;
+
 
 
 #endif

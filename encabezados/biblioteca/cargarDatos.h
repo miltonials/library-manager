@@ -145,7 +145,6 @@ void cargarPrestamos2(Biblioteca *dirM_biblioteca) {
     strcpy(dirM_biblioteca->prestamos[i].fechaDevolucion, json_object_get_string(fechaDevolucion));
     dirM_biblioteca->prestamos[i].estado = json_object_get_int(estado);
   }
-
   free(contenidoArchivo);
 }
 
