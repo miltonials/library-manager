@@ -1,10 +1,20 @@
 #ifndef MENUS_H
 #define MENUS_H
 
+/*
+Funcion que limpia la pantalla de la consola.
+Entradas: ninguna.
+Salidas: ninguna.
+*/
 void limpiarPantalla() {
   system("clear");
 }
 
+/*
+Funcion que captura la opcion ingresada por el usuario.
+Entradas: ninguna.
+Salidas: opcion ingresada por el usuario.
+*/
 int seleccionOpcion() {
   int opcion = 0;
 
@@ -19,12 +29,22 @@ int seleccionOpcion() {
   return opcion;
 }
 
+/*
+Funcion que pausa la ejecucion del programa hasta que el usuario presione una tecla.
+Entradas: mensaje a mostrar al usuario.
+Salidas: ninguna.
+*/
 void pausar(const char* mensaje) {
   printf("%s", mensaje);
   while (getchar() != '\n'); // Clear input buffer
   getchar();
 }
 
+/*
+Funcion que muestra el menu principal.
+Entradas: ninguna.
+Salidas: opcion ingresada por el usuario.
+*/
 int menuPrincipal() {
   printf("************************************************\n");
   printf("*Bienvenido al sistema de gestion de biblioteca*\n");
@@ -38,6 +58,11 @@ int menuPrincipal() {
   return seleccionOpcion();
 }
 
+/*
+Funcion que muestra el menu de opciones operativas.
+Entradas: ninguna.
+Salidas: opcion ingresada por el usuario.
+*/
 int menuOpcionesOperativas() {
   printf("*********************\n");
   printf("*Opciones Operativas*\n");
@@ -54,6 +79,11 @@ int menuOpcionesOperativas() {
   return seleccionOpcion();
 }
 
+/*
+Funcion que muestra el menu de opciones generales.
+Entradas: ninguna.
+Salidas: opcion ingresada por el usuario.
+*/
 int menuOpcionesGenerales() {
   printf("********************\n");
   printf("*Opciones Generales*\n");
@@ -68,6 +98,11 @@ int menuOpcionesGenerales() {
   return seleccionOpcion();
 }
 
+/*
+Funcion que muestra el menu de gestion de catalogo.
+Entradas: ninguna.
+Salidas: opcion ingresada por el usuario.
+*/
 int menuGestionCatalogo(){
   printf("*********************\n");
   printf("*Gestion de Catalogo*\n");
@@ -81,6 +116,11 @@ int menuGestionCatalogo(){
   return seleccionOpcion();
 }
 
+/*
+Funcion que muestra el menu de gestion de usuarios.
+Entradas: ninguna.
+Salidas: opcion ingresada por el usuario.
+*/
 int menuGestionUsuarios(){
   printf("**********************\n");
   printf("*Gestion de Usuarios*\n");
@@ -97,6 +137,11 @@ int menuGestionUsuarios(){
 A. Top 3 de producciones (nombre) más prestadas. 
 B. Top 3 de usuarios con más préstamos.
 C. Top 5 de mes-año con mayor monto recaudado (según fecha de inicio
+*/
+/*
+Funcion que muestra el menu de estadisticas.
+Entradas: ninguna.
+Salidas: opcion ingresada por el usuario.
 */
 int menuEstadisticas(){
   printf("**********************\n");

@@ -1,6 +1,11 @@
 #ifndef GESTIONUSUARIO_H
 #define GESTIONUSUARIO_H
 
+/*
+Funcion que muestra los usuarios registrados en la biblioteca
+Entrada: Puntero a la biblioteca
+Salida: Ninguna
+*/
 void verUsuarios(Biblioteca *dirM_biblioteca) {
     int cantidadUsuarios = dirM_biblioteca->cantidadUsuarios;
     printf("Cantidad de usuarios: %d\n", cantidadUsuarios);
@@ -15,6 +20,11 @@ void verUsuarios(Biblioteca *dirM_biblioteca) {
     limpiarPantalla();
 }
 
+/*
+Funcion que solicita los datos de un usuario
+Entrada: Ninguna
+Salida: Estructura de tipo Usuario
+*/
 Usuario solicitarDatosUsuario() {
     Usuario UsuarioNuevo;
     char cedula[20];
@@ -38,6 +48,11 @@ Usuario solicitarDatosUsuario() {
     return UsuarioNuevo;
 }
 
+/*
+Funcion que verifica si un usuario existe en la biblioteca
+Entrada: Puntero a la biblioteca y cedula del usuario
+Salida: Puntero al usuario si existe, NULL si no existe
+*/
 Usuario *existeUsuario(Biblioteca *dirM_biblioteca, char *cedula) {
     int cantidadUsuarios = dirM_biblioteca->cantidadUsuarios;
     for (int i = 0; i < cantidadUsuarios; i++) {
@@ -49,6 +64,11 @@ Usuario *existeUsuario(Biblioteca *dirM_biblioteca, char *cedula) {
     return NULL;
 }
 
+/*
+Funcion que registra un usuario en la biblioteca
+Entrada: Puntero a la biblioteca
+Salida: Ninguna
+*/
 void registrarUsuario(Biblioteca *dirM_biblioteca){
     Usuario usuarioNuevo = solicitarDatosUsuario();
 
@@ -64,6 +84,11 @@ void registrarUsuario(Biblioteca *dirM_biblioteca){
     actualizarUsuarios(dirM_biblioteca, dirM_biblioteca->rutaArchivos);
 }
 
+/*
+Funcion que muestra el menu de gestion de usuarios y captura la opcion seleccionada
+Entrada: Ninguna
+Salida: ninguna
+*/
 void opcionGestionUsuarios(Biblioteca *dirM_biblioteca){
     int opcion = menuGestionUsuarios();
     while (opcion != 4){
