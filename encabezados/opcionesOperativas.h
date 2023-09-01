@@ -1,10 +1,20 @@
 #ifndef OPCIONESOPERATIVAS_H
 #define OPCIONESOPERATIVAS_H
+/**
+ * @file opcionesOperativas.h
+ * @brief Funciones para gestionar las opciones operativas de la biblioteca (catalogo, prestamos, devoluciones, etc)
+ * @version 1.0
+ * @date 29/09/2023
+ * @author @Andyporras,@miltonials
+*/
 
-/*
-Funcion que muestra los libro existentes en la biblioteca
-entradas: direccion de memoria de la biblioteca
-salidas: ninguna
+/**
+ * Mostrar libros.
+ * 
+ * Esta funcion muestra los libros de la biblioteca en pantalla.
+ * 
+ * @param dirM_biblioteca direccion de memoria de la biblioteca
+ * @return ninguna
 */
 void mostrarLibros(Biblioteca *dirM_biblioteca)
 {
@@ -25,10 +35,14 @@ void mostrarLibros(Biblioteca *dirM_biblioteca)
   pausar("Presione enter para volver al menú...");
   limpiarPantalla();
 }
-/*
-Funcion que busca un libro por su id
-entradas: direccion de memoria de la biblioteca, id del libro
-salidas: direccion de memoria del libro
+/**
+ * Buscar libro por id.
+ * 
+ * Esta funcion busca un libro por id y retorna la direccion de memoria del libro.
+ * 
+ * @param dirM_biblioteca direccion de memoria de la biblioteca
+ * @param id id del libro
+ * @return direccion de memoria del libro
 */
 Libro *buscarLibro_id(Biblioteca *dirM_biblioteca, int id) {
   int cantidadLibros = dirM_biblioteca->cantidadLibros;
@@ -40,10 +54,14 @@ Libro *buscarLibro_id(Biblioteca *dirM_biblioteca, int id) {
   return NULL;
 }
 
-/*
-Funcion que valida y retorna si existe un titulo de un libro
-entradas: direccion de memoria de la biblioteca, titulo del libro
-salidas: direccion de memoria del libro
+/**
+ * Existe libro.
+ * 
+ * Esta funcion busca un libro por titulo y retorna la direccion de memoria del libro.
+ * 
+ * @param dirM_biblioteca direccion de memoria de la biblioteca
+ * @param titulo titulo del libro
+ * @return direccion de memoria del libro
 */
 Libro *existeLibro(Biblioteca *dirM_biblioteca, char *titulo)
 {
@@ -57,10 +75,13 @@ Libro *existeLibro(Biblioteca *dirM_biblioteca, char *titulo)
   return NULL;
 }
 
-/*
-Funcion que valida si el formato del archivo txt es correcto
-Entradas: contenido del archivo
-Salidas: 1 si el formato es correcto, 0 si el formato es incorrecto
+/**
+ * Formato archivo txt.
+ * 
+ * Esta funcion valida el formato de un archivo txt. Retorna 1 si el formato es correcto, 0 si el formato es incorrecto.
+ * 
+ * @param contenido contenido del archivo
+ * @return 1 si el formato es correcto, 0 si el formato es incorrecto
 */
 int formatoArchivo_txt(char *contenido)
 {
@@ -81,10 +102,13 @@ int formatoArchivo_txt(char *contenido)
   return 1;
 }
 
-/*
-Funcion que actualiza el catalogo de libros
-Entradas: direccion de memoria de la biblioteca
-Salidas: ninguna
+/**
+ * Actualizar catalogo txt.
+ * 
+ * Esta funcion actualiza el catalogo de libros de la biblioteca con un archivo txt.
+ * 
+ * @param dirM_biblioteca direccion de memoria de la biblioteca
+ * @return ninguna
 */
 void actualizarCatalogo_txt(Biblioteca *dirM_biblioteca)
 {
@@ -165,10 +189,13 @@ void actualizarCatalogo_txt(Biblioteca *dirM_biblioteca)
   limpiarPantalla();
 }
 
-/*
-Funcion que muestra y captura la opcion del menu de gestion de catalogo
-Entradas: ninguna
-Salidas: opcion del menu
+/**
+ * Opciones gestion catalogo.
+ * 
+ * Esta funcion muestra el menu de gestion de catalogo y captura la opcion.
+ * 
+ * @param dirM_biblioteca direccion de memoria de la biblioteca
+ * @return ninguna
 */
 void opcionesGestionCatalogo(Biblioteca *dirM_biblioteca)
 {
@@ -196,10 +223,13 @@ void opcionesGestionCatalogo(Biblioteca *dirM_biblioteca)
 //El sistema deberá mostrar todos los préstamos generados en el sistema en un rango de fechas indicado por el usuario (inicio-fin)
 //-considerando la fecha de entrega-, la información a mostrar será: identificador de préstamo, usuario, estado
 //(activo o finalizado), nombre, identificador de ejemplar y si presentó entrega tardía (si o no) -aquellos con estado finalizado-.
-/*
-Funcion que muestra los prestamos en un rango de fechas
-entradas: direccion de memoria de la biblioteca
-salidas: ninguna
+/**
+ * Historial prestamos.
+ * 
+ * Esta funcion muestra el historial de prestamos de la biblioteca en un rango de fechas indicado por el usuario.
+ * 
+ * @param dirM_biblioteca direccion de memoria de la biblioteca
+ * @return ninguna
 */
 void historialPrestamos(Biblioteca *biblioteca) {
   char fechaInicio[20];
@@ -250,10 +280,13 @@ void historialPrestamos(Biblioteca *biblioteca) {
 El sistema deberá mostrar los préstamos vencidos y próximos a vencer (préstamos que vencen de 0 a 3 días),
  la información a mostrar por cada préstamo será: identificador de préstamo, usuario,
 fecha de entrega, nombre e identificador de ejemplar. Considera fecha de sistema.*/
-/*
-Funcion que muestra los prestamos vencidos y proximos a vencer
-entradas: direccion de memoria de la biblioteca
-salidas: ninguna
+/**
+ * Prestamos vencidos.
+ * 
+ * Esta funcion muestra los prestamos vencidos y proximos a vencer.
+ * 
+ * @param dirM_biblioteca direccion de memoria de la biblioteca
+ * @return ninguna
 */
 void prestamosVencidos(Biblioteca *biblioteca) {
   Prestamo *prestamos = biblioteca->prestamos;
@@ -298,10 +331,13 @@ void prestamosVencidos(Biblioteca *biblioteca) {
     }
   }
 }
-/*
-Funcion que retorna una lista de libros mas prestados
-entradas: direccion de memoria de la biblioteca
-salidas: lista de libros mas prestados
+/**
+ * Listar prestamos.
+ * 
+ * Esta funcion lista los libros prestados. retorna una lista de estructuras EstadisticasLibro que contiene el id del libro, el nombre del libro y la cantidad de prestamos.
+ * 
+ * @param dirM_biblioteca direccion de memoria de la biblioteca
+ * @return lista de estructuras EstadisticasLibro
 */
 EstadisticasLibro *listarLibrosMasPrestados(Biblioteca *dirM_biblioteca){
   Libro *libros = dirM_biblioteca->libros;
@@ -325,10 +361,13 @@ EstadisticasLibro *listarLibrosMasPrestados(Biblioteca *dirM_biblioteca){
   }
   return estadisticasLibros;
 }
-/*
-Funcion que ordena una lista de libros mas prestados
-entradas: lista de libros mas prestados, cantidad de libros
-salidas: lista de libros mas prestados ordenada
+/**
+ * Ordenar libros mas prestados.
+ * 
+ * Esta funcion ordena una lista de estructuras EstadisticasLibro por cantidad de prestamos.
+ * 
+ * @param estadisticasLibros lista de estructuras EstadisticasLibro
+ * @param cantidadLibros cantidad de libros
 */
 EstadisticasLibro *ordenarLibrosMasPrestados(EstadisticasLibro *estadisticasLibros, int cantidadLibros){
   int i;
@@ -346,10 +385,13 @@ EstadisticasLibro *ordenarLibrosMasPrestados(EstadisticasLibro *estadisticasLibr
   return estadisticasLibros;
 }
 // A. Top 3 de producciones (nombre) más prestadas. 
-/*
-Funcion que muestra los 3 libros mas prestados
-entradas: direccion de memoria de la biblioteca
-salidas: ninguna
+/**
+ * Top 3 producciones mas prestadas.
+ * 
+ * Esta funcion muestra los 3 libros mas prestados.
+ * 
+ * @param dirM_biblioteca direccion de memoria de la biblioteca
+ * @return ninguna
 */
 void top3ProduccionesMasPrestadas(Biblioteca *dirM_biblioteca){
   EstadisticasLibro *estadisticasLibros = listarLibrosMasPrestados(dirM_biblioteca);
@@ -361,11 +403,19 @@ void top3ProduccionesMasPrestadas(Biblioteca *dirM_biblioteca){
     printf("Cantidad de prestamos: %d\n", estadisticasLibros[i].cantidadPrestamos);
     printf("\n");
   }
+  // Liberar memoria asignada a las estructuras EstadisticasLibro
+  for (int i = 0; i < cantidadLibros; i++) {
+    free(estadisticasLibros[i].nombreLibro);
+  }
 }
-/*
-Funcion que retorna una lista de usuarios con mas prestamos
-entradas: direccion de memoria de la biblioteca
-salidas: lista de usuarios con mas prestamos
+/**
+ * Listar usuarios mas prestamos.
+ * 
+ * Esta funcion lista los usuarios con mas prestamos. retorna una lista de estructuras EstadisticasUsuario que 
+ * contiene la cedula del usuario, el nombre del usuario y la cantidad de prestamos.
+ * 
+ * @param dirM_biblioteca direccion de memoria de la biblioteca
+ * @return lista de estructuras EstadisticasUsuario
 */
 EstadisticasUsuario *listarUsuariosMasPrestamos(Biblioteca *dirM_biblioteca){
   Usuario *usuarios = dirM_biblioteca->usuarios;
@@ -389,10 +439,14 @@ EstadisticasUsuario *listarUsuariosMasPrestamos(Biblioteca *dirM_biblioteca){
   }
   return estadisticasUsuarios;
 } 
-/*
-Funcion que ordena una lista de usuarios con mas prestamos
-entradas: lista de usuarios con mas prestamos, cantidad de usuarios
-salidas: lista de usuarios con mas prestamos ordenada
+/**
+ * Ordenar usuarios mas prestamos.
+ * 
+ * Esta funcion ordena una lista de estructuras EstadisticasUsuario por cantidad de prestamos.
+ * 
+ * @param estadisticasUsuarios lista de estructuras EstadisticasUsuario
+ * @param cantidadUsuarios cantidad de usuarios
+ * @return lista de estructuras EstadisticasUsuario ordenada
 */
 EstadisticasUsuario *ordenarUsuariosMasPrestamos(EstadisticasUsuario *estadisticasUsuarios, int cantidadUsuarios){
   int i;
@@ -410,10 +464,13 @@ EstadisticasUsuario *ordenarUsuariosMasPrestamos(EstadisticasUsuario *estadistic
   return estadisticasUsuarios;
 }
 // B. Top 3 de usuarios con más préstamos.
-/*
-Funcion que muestra los 3 usuarios con mas prestamos
-entradas: direccion de memoria de la biblioteca
-salidas: ninguna
+/**
+ * Top 3 usuarios mas prestamos.
+ * 
+ * Esta funcion muestra los 3 usuarios con mas prestamos.
+ * 
+ * @param dirM_biblioteca direccion de memoria de la biblioteca
+ * @return ninguna
 */
 void top3UsuariosMasPrestamos(Biblioteca *dirM_biblioteca){
   EstadisticasUsuario *estadisticasUsuarios = listarUsuariosMasPrestamos(dirM_biblioteca);
@@ -425,11 +482,20 @@ void top3UsuariosMasPrestamos(Biblioteca *dirM_biblioteca){
     printf("Cantidad de prestamos: %d\n", estadisticasUsuarios[i].cantidadPrestamos);
     printf("\n");
   }
+  // Liberar memoria asignada a las estructuras EstadisticasUsuario
+  for (int i = 0; i < cantidadUsuarios; i++) {
+    free(estadisticasUsuarios[i].nombreUsuario);
+  }
 }
-/*
-Funcion que calcula el monto recaudado de un prestamo
-entradas: fecha de inicio, fecha de fin, fecha de devolucion
-salidas: monto recaudado
+/**
+ * Calcular monto recaudado.
+ * 
+ * Esta funcion calcula el monto recaudado de un prestamo.
+ * 
+ * @param fechaInicio fecha de inicio del prestamo
+ * @param fechaFin fecha de fin del prestamo
+ * @param fechaDevolucion fecha de devolucion del prestamo
+ * @return monto recaudado
 */
 int calcularMontoRecaudado(const char *fechaInicio,const char *fechaFin,const char *fechaDevolucion){
   int dias = diferenciaDias(fechaInicio, fechaDevolucion);
@@ -454,10 +520,13 @@ int calcularMontoRecaudado(const char *fechaInicio,const char *fechaFin,const ch
   monto = (dias * tarificacion) + (diasTardios * tarificacionTardia);
   return monto;
 }
-/*
-Funcion que obtiene el mes y año de una fecha
-entradas: fecha
-salidas: mes y año
+/**
+ * Obtener mes y año.
+ * 
+ * Esta funcion obtiene el mes y año de una fecha. retorna una cadena de caracteres con el mes y año. Ejemplo: 01/2021
+ * 
+ * @param fecha fecha
+ * @return cadena de caracteres con el mes y año
 */
 char *obtenerMesAnio(const char *fecha) {
   if (strlen(fecha) != 10) {
@@ -483,10 +552,14 @@ char *obtenerMesAnio(const char *fecha) {
 
   return mesAnio;
 }
-/*
-Funcion que ordena una lista de prestamos por mes y año
-entradas: lista de MayorRecaudacion, cantidad de prestamos
-salidas: lista de prestamos ordenada
+/**
+ * Ordenar prestamos mes año mayor monto recaudado.
+ * 
+ * Esta funcion ordena una lista de estructuras MayorRecaudacionMes por monto recaudado.
+ * 
+ * @param mayorRecaudacionMes lista de estructuras MayorRecaudacionMes
+ * @param cantidadPrestamos cantidad de prestamos
+ * @return lista de estructuras MayorRecaudacionMes ordenada
 */
 MayorRecaudacionMes *ordenarPrestamosMesAnoMayorMontoRecaudado(MayorRecaudacionMes *mayorRecaudacionMes, int cantidadPrestamos) {
   int i, j;
@@ -506,11 +579,16 @@ MayorRecaudacionMes *ordenarPrestamosMesAnoMayorMontoRecaudado(MayorRecaudacionM
   return mayorRecaudacionMes;
 }
 
-/*
-retorna una lista de MayorRecaudacionMes
-entradas: direccion de memoria de la biblioteca, cantidad de prestamos
-salidas: lista de MayorRecaudacionMes
-*/
+/**
+ * Listar mes año mayor monto recaudado.
+ * 
+ * Esta funcion lista los meses y años con mayor monto recaudado. retorna una lista de estructuras MayorRecaudacionMes que contiene el 
+ * id del prestamo, el mes y año y el monto recaudado.
+ * 
+ * @param dirM_biblioteca direccion de memoria de la biblioteca
+ * @param cantidad cantidad de prestamos
+ * @return lista de estructuras MayorRecaudacionMes
+*/  
 MayorRecaudacionMes *listarMesAnoMayorMontoRecaudado(Biblioteca *dirM_biblioteca, int *cantidad) {
   Prestamo *prestamos = dirM_biblioteca->prestamos;
   int cantidadPrestamos = dirM_biblioteca->cantidadPrestamos;
@@ -563,10 +641,13 @@ MayorRecaudacionMes *listarMesAnoMayorMontoRecaudado(Biblioteca *dirM_biblioteca
   *cantidad = cantidadPrestamosFinalizados;
   return mayorRecaudacionMesOrdenado;
 }
-/*
-Funcion que muestra los 5 meses años con mayor monto recaudado
-entradas: direccion de memoria de la biblioteca
-salidas: ninguna
+/**
+ * Top 5 meses mayor monto recaudado.
+ * 
+ * Esta funcion muestra los 5 meses con mayor monto recaudado.
+ * 
+ * @param dirM_biblioteca direccion de memoria de la biblioteca
+ * @return ninguna
 */
 void top5MesesMayorMontoRecaudado(Biblioteca *dirM_biblioteca){
   int cantidad;
@@ -603,10 +684,13 @@ A. Top 3 de producciones (nombre) más prestadas.
 B. Top 3 de usuarios con más préstamos.
 C. Top 5 de mes-año con mayor monto recaudado (según fecha de inicio).
 */
-/*
-Funcion que muestra el menu de estadistica y captura la opcion
-entradas: la direccion de memoria de la biblioteca
-salidas: ninguna
+/**
+ * Menu opciones estadisticas.
+ * 
+ * Esta funcion muestra el menu de opciones estadisticas y captura la opcion.
+ * 
+ * @param dirM_biblioteca direccion de memoria de la biblioteca
+ * @return ninguna
 */
 void menuOpcionesEstadisticas(Biblioteca *dirM_biblioteca){
   int opcion = menuEstadisticas();
@@ -614,13 +698,15 @@ void menuOpcionesEstadisticas(Biblioteca *dirM_biblioteca){
     switch (opcion) {
     case 1:
       top3ProduccionesMasPrestadas(dirM_biblioteca);
+      pausar("Presione enter para volver al menú...")
       break;
     case 2:
       top3UsuariosMasPrestamos(dirM_biblioteca);
+      pausar("Presione enter para volver al menú...")
       break;
     case 3:
-      printf("Top 5 de mes-año con mayor monto recaudado (según fecha de inicio).\n");
       top5MesesMayorMontoRecaudado(dirM_biblioteca);
+      pausar("Presione enter para volver al menú...")
       break;
     case 4:
       printf("Volver.\n");
@@ -632,10 +718,13 @@ void menuOpcionesEstadisticas(Biblioteca *dirM_biblioteca){
     opcion = menuEstadisticas();
   }
 }
-/*
-Funcion que muestra el menu de opciones operativas y captura la opcion
-entradas: la direccion de memoria de la biblioteca
-salidas: ninguna
+/**
+ * Opciones operativas.
+ * 
+ * Esta funcion muestra el menu de opciones operativas y captura la opcion.
+ * 
+ * @param dirM_biblioteca direccion de memoria de la biblioteca
+ * @return ninguna
 */
 void opcionesOperativas(Biblioteca *dirM_biblioteca){
   int opcion = menuOpcionesOperativas();

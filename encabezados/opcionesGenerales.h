@@ -1,15 +1,25 @@
 #ifndef OPCIONESGENERALES_H
 #define OPCIONESGENERALES_H
 
-/*
-Funcion que crea un pdf con los datos del prestamo
-Entradas: 
-  dirM_biblioteca: puntero a la biblioteca
-  prestamo: puntero al prestamo
-  usuario: puntero al usuario
-  libro: puntero al libro
-Salidas:
-  void
+
+/**
+ * @file opcionesGenerales.h
+ * @brief Funciones para gestionar las opciones generales de la biblioteca (busqueda, prestamo, devolucion)
+ * @version 1.0
+ * @date 29/09/2023
+ * @author @Andyporras,@miltonials
+*/
+
+/**
+ * Prestamo en PDF
+ * 
+ * Esta función genera un PDF con los datos del préstamo
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca
+ * @param prestamo Puntero al préstamo
+ * @param usuario Puntero al usuario
+ * @param libro Puntero al libro
+ * @return void
 */
 void prestamoApdf(Biblioteca *dirM_biblioteca, Prestamo *prestamo, Usuario *usuario, Libro *libro)
 {
@@ -41,16 +51,18 @@ void prestamoApdf(Biblioteca *dirM_biblioteca, Prestamo *prestamo, Usuario *usua
   printf("PDF de préstamo creado: %s\n", nombreArchivo);
 }
 
-/*
-Funcion que genera un comprobante de prestamo
-Entradas: 
-  dirM_biblioteca: puntero a la biblioteca
-  usuario: puntero al usuario
-  libro: puntero al libro
-  fechaInicio: puntero a la fecha de inicio
-  fechaFinal: puntero a la fecha final
-Salidas:
-  void
+/**
+ * Generar comprobante
+ * 
+ * Esta función genera un comprobante de préstamo y actualiza los archivos de prestamos, 
+ * catalogo de libros y genera un PDF con los datos del préstamo
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca
+ * @param usuario Puntero al usuario
+ * @param libro Puntero al libro
+ * @param fechaInicio Puntero a la fecha de inicio
+ * @param fechaFinal Puntero a la fecha final
+ * @return void
 */
 void generarComprobante(Biblioteca *dirM_biblioteca, Usuario *usuario, Libro *libro, char *fechaInicio, char *fechaFinal)
 {
@@ -99,12 +111,13 @@ void generarComprobante(Biblioteca *dirM_biblioteca, Usuario *usuario, Libro *li
   }
 }
 
-/*
-Funcion realiza el prestamo de un ejemplar
-Entradas: 
-  dirM_biblioteca: puntero a la biblioteca
-Salidas:
-  void
+/**
+ * Prestamo de ejemplar
+ * 
+ * Esta función realiza el prestamo de un ejemplar y genera un comprobante de prestamo
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca
+ * @return void
 */
 void prestamoEjemplar(Biblioteca *dirM_biblioteca)
 {
@@ -166,13 +179,14 @@ void prestamoEjemplar(Biblioteca *dirM_biblioteca)
   limpiarPantalla();
 }
 
-/*
-Funcion que busca un prestamo por su id
-Entradas: 
-  dirM_biblioteca: puntero a la biblioteca
-  prestamo_id: id del prestamo
-Salidas:
-  Prestamo *: puntero al prestamo
+/**
+ * Existe prestamo
+ * 
+ * Esta función verifica si existe un prestamo en la biblioteca por medio de su id
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca
+ * @param prestamo_id Identificador del prestamo
+ * @return &prestamos[i] Puntero al prestamo si existe o NULL si no existe
 */
 Prestamo *existePrestamo(Biblioteca *dirM_biblioteca, int prestamo_id)
 {
@@ -199,12 +213,13 @@ la fecha de devolución. El sistema calculará el monto asociado al préstamo de
 
 formula: (dias * tarificacion) + (diasTardios * tarificacionTardia)
 */
-/*
-Funcion que realiza la devolucion de un ejemplar
-Entradas: 
-  dirM_biblioteca: puntero a la biblioteca
-Salidas:
-  void
+/**
+ * Devolucion de ejemplar
+ * 
+ * Esta función realiza la devolucion de un ejemplar y genera un comprobante de devolucion
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca
+ * @return void
 */
 void devolucionEjemplar(Biblioteca *dirM_biblioteca)
 {
@@ -281,12 +296,13 @@ void devolucionEjemplar(Biblioteca *dirM_biblioteca)
   limpiarPantalla();
 }
 
-/*
-Funcion que realiza la busqueda simple
-Entradas: 
-  dirM_biblioteca: puntero a la biblioteca
-Salidas:
-  void
+/**
+ * Busqueda simple
+ * 
+ * Esta función realiza la busqueda simple de un ejemplar y muestra sus detalles
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca
+ * @return void
 */
 void busquedaSimple(Biblioteca *dirM_biblioteca)
 {
@@ -326,12 +342,15 @@ void busquedaSimple(Biblioteca *dirM_biblioteca)
 }
 
 // Función auxiliar para verificar si un texto está contenido o coincide exactamente
-/*
-Funcion que verifica si un texto esta contenido o coincide exactamente
-Entradas: 
-  campo: puntero al campo
-  texto: puntero al texto
-  tecnica: tecnica de busqueda
+/**
+ * Contiene texto
+ * 
+ * Esta función verifica si un texto esta contenido o coincide exactamente con otro texto, dependiendo de la tecnica
+ * 
+ * @param campo Puntero al campo
+ * @param texto Puntero al texto
+ * @param tecnica Tecnica de busqueda
+ * @return bool Si cumple o no los criterios
 */
 bool contieneTexto(char *campo, char *texto, char tecnica)
 {
@@ -346,12 +365,13 @@ bool contieneTexto(char *campo, char *texto, char tecnica)
   return false;
 }
 
-/*
-Funcion que solicita la tecnica de busqueda avanzada
-Entradas: 
-  texto: puntero al texto
-Salidas:
-  char: tecnica de busqueda
+/**
+ * Solicitar tecnica de busqueda avanzada
+ * 
+ * Esta función solicita la tecnica de busqueda avanzada
+ * 
+ * @param texto Puntero al texto
+ * @return char Tecnica de busqueda
 */
 char solicitarTecnica_busquedaAvanzada(char *texto)
 {
@@ -366,13 +386,14 @@ char solicitarTecnica_busquedaAvanzada(char *texto)
   return tecnica;
 }
 
-/*
-Funcion que solicita el texto de busqueda avanzada
-Entradas: 
-  texto: puntero al texto
-  campo: puntero al campo
-Salidas:
-  void
+/**
+ * Solicitar texto de busqueda avanzada
+ * 
+ * Esta función solicita el texto de busqueda avanzada
+ * 
+ * @param texto Puntero al texto
+ * @param campo Puntero al campo
+ * @return void
 */
 void solicitarTexto_busquedaAvanzada(char *texto, const char *campo) {
     printf("Ingrese texto para buscar en %s (deje en blanco si no desea buscar en este campo): ", campo);
@@ -391,12 +412,12 @@ void solicitarTexto_busquedaAvanzada(char *texto, const char *campo) {
     texto[i] = '\0';
 }
 
-/*
-Funcion que solicita el operador de busqueda avanzada
-Entradas: 
-  void
-Salidas:
-  char: operador de busqueda
+/**
+ * Solicitar operador de busqueda avanzada
+ * 
+ * Esta función solicita el operador de busqueda avanzada
+ * 
+ * @return char Operador de busqueda
 */
 char solicitarOperador()
 {
@@ -406,28 +427,30 @@ char solicitarOperador()
   return operador;
 }
 
-/*
-Funcion que verifica si cumple los criterios
-Entradas: 
-  ejemplar: puntero al ejemplar
-  texto: puntero al texto
-  tecnica: tecnica de busqueda
-  campo: puntero al campo
-Salidas:
-  bool: si cumple o no los criterios
+/**
+ * Cumple criterios
+ * 
+ * Esta función verifica si cumple los criterios de busqueda avanzada
+ * 
+ * @param ejemplar Puntero al ejemplar
+ * @param texto Puntero al texto
+ * @param tecnica Tecnica de busqueda
+ * @param campo Puntero al campo
+ * @return bool Si cumple o no los criterios
 */
 bool cumpleCriterios(Libro *ejemplar, char *texto, char tecnica, char *campo)
 {
   return (strlen(texto) == 0 || contieneTexto(campo, texto, tecnica));
 }
 
-/*
-Funcion que verifica si cumple el operador de busqueda avanzada
-Entradas: 
-  matches: puntero a los matches
-  operador: operador de busqueda
-Salidas:
-  bool: si cumple o no el operador
+/**
+ * Cumple operador
+ * 
+ * Esta función verifica si cumple el operador de busqueda avanzada
+ * 
+ * @param matches Puntero a los matches
+ * @param operador Operador de busqueda
+ * @return bool Si cumple o no los criterios
 */
 bool cumpleOperador(bool *matches, char operador)
 {
@@ -442,12 +465,13 @@ bool cumpleOperador(bool *matches, char operador)
   return false;
 }
 
-/*
-Funcion que muestra el detalle de un ejemplar
-Entradas: 
-  ejemplar: puntero al ejemplar
-Salidas:
-  void
+/**
+ * Mostrar detalle
+ * 
+ * Esta función muestra el detalle de un ejemplar
+ * 
+ * @param ejemplar Puntero al ejemplar
+ * @return void
 */
 void mostrarDetalle(Libro *ejemplar)
 {
@@ -457,12 +481,13 @@ void mostrarDetalle(Libro *ejemplar)
   printf("\n");
 }
 
-/*
-Funcion que realiza la busqueda avanzada de un ejemplar y muestra sus detalles
-Entradas: 
-  dirM_biblioteca: puntero a la biblioteca
-Salidas:
-  void
+/**
+ * Busqueda avanzada
+ * 
+ * Esta función realiza la busqueda avanzada de un ejemplar y muestra sus detalles
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca
+ * @return void
 */
 void busquedaAvanzada(Biblioteca *dirM_biblioteca)
 {
@@ -503,12 +528,13 @@ void busquedaAvanzada(Biblioteca *dirM_biblioteca)
   }
 }
 
-/*
-Funcion que muestra el menu de opciones generales
-Entradas: 
-  dirM_biblioteca: puntero a la biblioteca
-Salidas:
-  void
+/**
+ * Menu opciones generales
+ * 
+ * Esta función muestra el menu de opciones generales y captura la opcion seleccionada
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca
+ * @return void
 */
 void opcionesGenerales(Biblioteca *dirM_biblioteca)
 {

@@ -1,10 +1,22 @@
 #ifndef ACTUALIZARDATOS_H
 #define ACTUALIZARDATOS_H
 
-/*
-Funcion que actualiza los datos almacenados en los archivos JSON
-Entrada: Puntero a la biblioteca y ruta de los archivos
-Salida: Ninguna
+/**
+ * @file actualizarDatos.h
+ * @brief Funciones para actualizar los datos almacenados en los archivos JSON
+ * @version 1.0
+ * @date 29/09/2023
+ * @author @miltonials
+*/
+
+/**
+ * Actualiza Biblioteca
+ * 
+ * Esta funcion actualiza los datos almacenados en los archivos JSON
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca
+ * @param rutaArchivos Ruta de la carpeta de archivos
+ * @return void
 */
 void actualizarBiblioteca(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   actualizarUsuarios(dirM_biblioteca, rutaArchivos);
@@ -14,10 +26,14 @@ void actualizarBiblioteca(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   printf("📚 Biblioteca actualizada correctamente.\n");
 }
 
-/*
-Funcion que obtiene la ruta de un archivo
-Entrada: Ruta de la carpeta de archivos y nombre del archivo
-Salida: Ruta del archivo
+/**
+ * Obtiene la ruta de actualizacion
+ * 
+ * Esta funcion obtiene la ruta de actualizacion de los archivos JSON
+ * 
+ * @param rutaArchivos Ruta de la carpeta de archivos
+ * @param nombreArchivo Nombre del archivo
+ * @return char* Ruta de actualizacion
 */
 char* obtenerRutaActualizacion(char *rutaArchivos, char *nombreArchivo) {
   char *ruta = malloc(strlen(rutaArchivos) + strlen(nombreArchivo) + 1);
@@ -26,10 +42,14 @@ char* obtenerRutaActualizacion(char *rutaArchivos, char *nombreArchivo) {
   return ruta;
 }
 
-/*
-Funcion que actualiza los usuarios almacenados en el archivo JSON
-Entrada: Puntero a la biblioteca y ruta de los archivos
-Salida: Ninguna
+/**
+ * Actualiza los usuarios
+ * 
+ * Esta funcion actualiza los usuarios almacenados en el archivo JSON
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca
+ * @param rutaArchivos Ruta de la carpeta de archivos
+ * @return void
 */
 void actualizarUsuarios(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   char *ruta = obtenerRutaActualizacion(rutaArchivos, "usuarios.json");
@@ -53,10 +73,14 @@ void actualizarUsuarios(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   fclose(archivo);
 }
 
-/*
-Funcion que actualiza el catalogo almacenado en el archivo JSON
-Entrada: Puntero a la biblioteca y ruta de los archivos
-Salida: Ninguna
+/**
+ * Actualiza el catalogo
+ * 
+ * Esta funcion actualiza el catalogo almacenado en el archivo JSON
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca
+ * @param rutaArchivos Ruta de la carpeta de archivos
+ * @return void
 */
 void actualizarCatalogo(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   char *ruta = obtenerRutaActualizacion(rutaArchivos, "catalogo.json");
@@ -86,10 +110,14 @@ void actualizarCatalogo(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   fclose(archivo);
 }
 
-/*
-Funcion que actualiza los prestamos almacenados en el archivo JSON
-Entrada: Puntero a la biblioteca y ruta de los archivos
-Salida: Ninguna
+/**
+ * Actualiza los prestamos
+ * 
+ * Esta funcion actualiza los prestamos almacenados en el archivo JSON
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca
+ * @param rutaArchivos Ruta de la carpeta de archivos
+ * @return void
 */
 void actualizarPrestamos(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   char *ruta = obtenerRutaActualizacion(rutaArchivos, "prestamos.json");

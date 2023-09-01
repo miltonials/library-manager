@@ -1,6 +1,14 @@
 #ifndef CARGADATOS_H
 #define CARGADATOS_H
 
+/**
+ * @file cargarDatos.h
+ * @brief Funciones para cargar los datos de la biblioteca
+ * @version 1.0
+ * @date 29/09/2023
+ * @author @miltonials
+*/
+
 void cargarBiblioteca(Biblioteca *dirM_biblioteca, char *rutaArchivos);
 void cargarUsuarios2(Biblioteca *dirM_biblioteca);
 void cargarLibros(Biblioteca *dirM_biblioteca);
@@ -12,10 +20,14 @@ void actualizarUsuarios(Biblioteca *dirM_biblioteca, char *rutaArchivos);
 void actualizarCatalogo(Biblioteca *dirM_biblioteca, char *rutaArchivos);
 void actualizarPrestamos(Biblioteca *dirM_biblioteca, char *rutaArchivos);
 
-/*
-Funcion que carga los datos almacenados en los archivos JSON
-Entrada: Puntero a la biblioteca y ruta de los archivos
-Salida: Ninguna
+/**
+ * Cargar biblioteca.
+ * 
+ * Esta funcion carga los datos de la biblioteca desde los archivos JSON.
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca.
+ * @param rutaArchivos Ruta de la carpeta donde se encuentran los archivos JSON.
+ * @return Ninguna.
 */
 void cargarBiblioteca(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   dirM_biblioteca->rutaArchivos = rutaArchivos;
@@ -26,10 +38,12 @@ void cargarBiblioteca(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   printf("📚 Biblioteca cargada correctamente.\n");
 }
 
-/*
-Funcion que carga los usuarios almacenados en el archivo JSON
-Entrada: Puntero a la biblioteca
-Salida: Ninguna
+/**
+ * Cargar usuarios.
+ * 
+ * Esta funcion carga los usuarios desde el archivo JSON.
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca.
 */
 void cargarUsuarios2(Biblioteca *dirM_biblioteca) {
   char *ruta = malloc(strlen(dirM_biblioteca->rutaArchivos) + strlen("usuarios.json") + 1);
@@ -65,10 +79,13 @@ void cargarUsuarios2(Biblioteca *dirM_biblioteca) {
   free(contenidoArchivo);
 }
 
-/*
-Funcion que carga los libros almacenados en el archivo JSON
-Entrada: Puntero a la biblioteca
-Salida: Ninguna
+/**
+ * Cargar libros.
+ * 
+ * Esta funcion carga los libros desde el archivo JSON.
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca.
+ * @return Ninguna.
 */
 void cargarLibros(Biblioteca *dirM_biblioteca) {
   char *ruta = malloc(strlen(dirM_biblioteca->rutaArchivos) + strlen("catalogo.json") + 1);
@@ -114,10 +131,13 @@ void cargarLibros(Biblioteca *dirM_biblioteca) {
   free(contenidoArchivo);
 }
 
-/*
-Funcion que carga los prestamos almacenados en el archivo JSON
-Entrada: Puntero a la biblioteca
-Salida: Ninguna
+/**
+ * Cargar prestamos.
+ * 
+ * Esta funcion carga los prestamos desde el archivo JSON.
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca.
+ * @return Ninguna.
 */
 void cargarPrestamos2(Biblioteca *dirM_biblioteca) {
   char *ruta = malloc(strlen(dirM_biblioteca->rutaArchivos) + strlen("prestamos.json") + 1);
@@ -168,10 +188,13 @@ void cargarPrestamos2(Biblioteca *dirM_biblioteca) {
   free(contenidoArchivo);
 }
 
-/*
-Funcion que muestra un resumen de la biblioteca
-Entrada: Puntero a la biblioteca
-Salida: Ninguna
+/**
+ * Resumen biblioteca.
+ * 
+ * Esta funcion muestra un resumen de la biblioteca.
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca.
+ * @return Ninguna.
 */
 void resumenBiblioteca(Biblioteca *dirM_biblioteca) {
   printf("📚 Biblioteca:\n");

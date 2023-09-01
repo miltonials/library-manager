@@ -1,10 +1,21 @@
 #ifndef GESTIONUSUARIO_H
 #define GESTIONUSUARIO_H
 
-/*
-Funcion que muestra los usuarios registrados en la biblioteca
-Entrada: Puntero a la biblioteca
-Salida: Ninguna
+/**
+ * @file gestionUsuario.h
+ * @brief Funciones para gestionar los usuarios de la biblioteca
+ * @version 1.0
+ * @date 29/09/2023
+ * @author @Andyporras
+*/
+
+/**
+ * Ver usuarios.
+ * 
+ * Funcion que muestra los usuarios registrados en la biblioteca.
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca.
+ * @return Ninguna.
 */
 void verUsuarios(Biblioteca *dirM_biblioteca) {
     int cantidadUsuarios = dirM_biblioteca->cantidadUsuarios;
@@ -20,10 +31,12 @@ void verUsuarios(Biblioteca *dirM_biblioteca) {
     limpiarPantalla();
 }
 
-/*
-Funcion que solicita los datos de un usuario
-Entrada: Ninguna
-Salida: Estructura de tipo Usuario
+/**
+ * Solicitar datos de usuario.
+ * 
+ * Funcion que solicita los datos de un usuario al usuario.
+ * 
+ * @return Una estructura de tipo Usuario con los datos ingresados.
 */
 Usuario solicitarDatosUsuario() {
     Usuario UsuarioNuevo;
@@ -48,10 +61,14 @@ Usuario solicitarDatosUsuario() {
     return UsuarioNuevo;
 }
 
-/*
-Funcion que verifica si un usuario existe en la biblioteca
-Entrada: Puntero a la biblioteca y cedula del usuario
-Salida: Puntero al usuario si existe, NULL si no existe
+/**
+ * Existe usuario.
+ * 
+ * Funcion que verifica si un usuario ya existe en la biblioteca. Si existe, retorna un puntero a la estructura del usuario.
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca.
+ * @param cedula Cedula del usuario a buscar.
+ * @return Puntero a la estructura del usuario si existe, NULL si no existe.
 */
 Usuario *existeUsuario(Biblioteca *dirM_biblioteca, char *cedula) {
     int cantidadUsuarios = dirM_biblioteca->cantidadUsuarios;
@@ -64,10 +81,13 @@ Usuario *existeUsuario(Biblioteca *dirM_biblioteca, char *cedula) {
     return NULL;
 }
 
-/*
-Funcion que registra un usuario en la biblioteca
-Entrada: Puntero a la biblioteca
-Salida: Ninguna
+/**
+ * Registrar usuario.
+ * 
+ * Funcion que registra un usuario en la biblioteca.
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca.
+ * @return Ninguna.
 */
 void registrarUsuario(Biblioteca *dirM_biblioteca){
     Usuario usuarioNuevo = solicitarDatosUsuario();
@@ -84,14 +104,17 @@ void registrarUsuario(Biblioteca *dirM_biblioteca){
     actualizarUsuarios(dirM_biblioteca, dirM_biblioteca->rutaArchivos);
 }
 
-/*
-Funcion que muestra el menu de gestion de usuarios y captura la opcion seleccionada
-Entrada: Ninguna
-Salida: ninguna
+/**
+ * Opciones gestion usuarios.
+ * 
+ * Funcion que muestra el menu de opciones de gestion de usuarios.
+ * 
+ * @param dirM_biblioteca Puntero a la biblioteca.
+ * @return ninguna.
 */
 void opcionGestionUsuarios(Biblioteca *dirM_biblioteca){
     int opcion = menuGestionUsuarios();
-    while (opcion != 4){
+    while (opcion != 3){
         switch (opcion){
             case 1:
                 registrarUsuario(dirM_biblioteca);
@@ -99,13 +122,9 @@ void opcionGestionUsuarios(Biblioteca *dirM_biblioteca){
                 limpiarPantalla();
                 break;
             case 2:
-                // eliminarUsuario();
-                break;
-            case 3:
                 verUsuarios(dirM_biblioteca);
                 break;
-            case 4:
-               //volver();
+            case 3:
                 break;
             default:
                 printf("Opcion invalida.\n");

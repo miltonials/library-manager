@@ -1,6 +1,14 @@
 #ifndef ESTRUCTURAS_H
 #define ESTRUCTURAS_H
 
+/**
+ * @file estructuras.h
+ * @brief Definicion de estructuras
+ * @version 1.0
+ * @date 29/09/2023
+ * @author @Andyporras,@miltonials
+*/
+
 // Definicion de estructuras
 typedef struct {
   char *cedula;

@@ -1,19 +1,28 @@
 #ifndef MENUS_H
 #define MENUS_H
+/**
+ * @file menus.h
+ * @brief Funciones para mostrar los menus del programa
+ * @version 1.0
+ * @date 29/09/2023
+ * @author @Andyporras,@miltonials
+*/
 
-/*
-Funcion que limpia la pantalla de la consola.
-Entradas: ninguna.
-Salidas: ninguna.
+/**
+ * Limpiar pantalla.
+ * 
+ * Funcion que limpia la pantalla de la consola.
 */
 void limpiarPantalla() {
   system("clear");
 }
 
-/*
-Funcion que captura la opcion ingresada por el usuario.
-Entradas: ninguna.
-Salidas: opcion ingresada por el usuario.
+/**
+ * Seleccion de opcion.
+ * 
+ * Funcion que lee la opcion ingresada por el usuario y la valida.
+ * 
+ * @return opcion ingresada por el usuario.
 */
 int seleccionOpcion() {
   int opcion = 0;
@@ -29,10 +38,13 @@ int seleccionOpcion() {
   return opcion;
 }
 
-/*
-Funcion que pausa la ejecucion del programa hasta que el usuario presione una tecla.
-Entradas: mensaje a mostrar al usuario.
-Salidas: ninguna.
+/**
+ * Pausar.
+ * 
+ * Funcion que pausa la ejecucion del programa hasta que el usuario presione una tecla.
+ * 
+ * @param mensaje Mensaje a mostrar al usuario.
+ * @return opcion ingresada por el usuario.
 */
 void pausar(const char* mensaje) {
   printf("%s", mensaje);
@@ -40,10 +52,12 @@ void pausar(const char* mensaje) {
   getchar();
 }
 
-/*
-Funcion que muestra el menu principal.
-Entradas: ninguna.
-Salidas: opcion ingresada por el usuario.
+/**
+ * Mostrar menu principal.
+ * 
+ * Funcion que muestra el menu principal.
+ * 
+ * @return opcion ingresada por el usuario.
 */
 int menuPrincipal() {
   printf("************************************************\n");
@@ -58,10 +72,12 @@ int menuPrincipal() {
   return seleccionOpcion();
 }
 
-/*
-Funcion que muestra el menu de opciones operativas.
-Entradas: ninguna.
-Salidas: opcion ingresada por el usuario.
+/**
+ * Mostrar menu de opciones operativas.
+ * 
+ * Funcion que muestra el menu de opciones operativas.
+ * 
+ * @return opcion ingresada por el usuario.
 */
 int menuOpcionesOperativas() {
   printf("*********************\n");
@@ -79,10 +95,12 @@ int menuOpcionesOperativas() {
   return seleccionOpcion();
 }
 
-/*
-Funcion que muestra el menu de opciones generales.
-Entradas: ninguna.
-Salidas: opcion ingresada por el usuario.
+/**
+ * Mostrar menu de opciones generales.
+ * 
+ * Funcion que muestra el menu de opciones generales.
+ * 
+ * @return opcion ingresada por el usuario.
 */
 int menuOpcionesGenerales() {
   printf("********************\n");
@@ -98,10 +116,12 @@ int menuOpcionesGenerales() {
   return seleccionOpcion();
 }
 
-/*
-Funcion que muestra el menu de gestion de catalogo.
-Entradas: ninguna.
-Salidas: opcion ingresada por el usuario.
+/**
+ * Mostrar menu gestion de catalogo.
+ * 
+ * Funcion que muestra el menu de gestion de catalogo.
+ * 
+ * @return opcion ingresada por el usuario.
 */
 int menuGestionCatalogo(){
   printf("*********************\n");
@@ -116,19 +136,21 @@ int menuGestionCatalogo(){
   return seleccionOpcion();
 }
 
-/*
-Funcion que muestra el menu de gestion de usuarios.
-Entradas: ninguna.
-Salidas: opcion ingresada por el usuario.
+/**
+ * Mostrar menu gestion de usuarios.
+ * 
+ * Funcion que muestra el menu de gestion de usuarios.
+ * 
+ * @return opcion ingresada por el usuario.
 */
 int menuGestionUsuarios(){
   printf("**********************\n");
   printf("*Gestion de Usuarios*\n");
   printf("**********************\n");
   printf("1. Agregar usuario.\n");
-  printf("2. Eliminar usuario.\n");
-  printf("3. Ver usuarios.\n");
-  printf("4. Volver.\n");
+  // printf("2. Eliminar usuario.\n");
+  printf("2. Ver usuarios.\n");
+  printf("3. Volver.\n");
   printf("Ingrese una opcion: ");
   return seleccionOpcion();
 }
@@ -138,10 +160,12 @@ A. Top 3 de producciones (nombre) más prestadas.
 B. Top 3 de usuarios con más préstamos.
 C. Top 5 de mes-año con mayor monto recaudado (según fecha de inicio
 */
-/*
-Funcion que muestra el menu de estadisticas.
-Entradas: ninguna.
-Salidas: opcion ingresada por el usuario.
+/**
+ * Mostrar menu de estadisticas.
+ * 
+ * Funcion que muestra el menu de estadisticas.
+ * 
+ * @return opcion ingresada por el usuario.
 */
 int menuEstadisticas(){
   printf("**********************\n");

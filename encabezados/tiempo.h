@@ -3,6 +3,13 @@
 
 // #include <stdio.h>
 #include <time.h>
+/**
+ * @file tiempo.h
+ * @brief Funciones para gestionar el tiempo
+ * @version 1.0
+ * @date 29/09/2023
+ * @author @Andyporras, @miltonials
+*/
 
 time_t obtenerFechaDeString(const char *fecha);
 int validarRangoFechas(const char *fechaInicio, const char *fechaFinal);
@@ -10,11 +17,13 @@ int formatoFecha(char *fecha);
 int tadiasEnDias(const char *fechaInicio, const char *fechaFinal);
 char *obtenerFechaActual();
 
-/*
-Funcion que retorna la fecha actual del sistema
-entradas: ninguna
-salidas: fecha actual del sistema en formato dd/mm/aaaa
-*/
+/**
+ * Obtener fecha actual.
+ * 
+ * Esta funcion cactura la fecha actual del sistema y la retorna.
+ *
+ * @return fecha actual del sistema. Ejemplo: 01/01/2021
+ */
 char *obtenerFechaActual() {
   time_t fechaActual_time = time(NULL);
   struct tm *fechaActual_tm = localtime(&fechaActual_time);
@@ -23,10 +32,14 @@ char *obtenerFechaActual() {
   return fechaActual;
 }
 
-/*
-Funcion que retorna la cantidad de dias tardias que tiene un prestamo
-entradas: fecha de inicio del prestamo, fecha de fin del prestamo
-salidas: cantidad de dias tardias, int 
+/**
+ * dias de atraso en dias.
+ * 
+ * Esta funcion calcula los dias de atraso en dias de una fecha de entrega.
+ * 
+ * @param fechaEntrega fecha de entrega del libro
+ * @param fechaActual fecha actual del sistema
+ * @return dias de atraso en dias
 */
 int tadiasEnDias(const char *fechaEntrega, const char *fechaActual) {
   time_t fechaEntrega_time = obtenerFechaDeString(fechaEntrega);
@@ -39,10 +52,13 @@ int tadiasEnDias(const char *fechaEntrega, const char *fechaActual) {
   return 0;
 }
 
-/*
-Funcion que retorna la fecha en formato time_t
-entradas: fecha en formato dd/mm/aaaa
-salidas: fecha en formato time_t
+/**
+ * Obtener fecha de string.
+ * 
+ * Esta funcion convierte una fecha en formato dd/mm/aaaa a un time_t. Retorna -1 si la fecha no se pudo analizar correctamente.
+ * 
+ * @param fecha fecha en formato dd/mm/aaaa
+ * @return fecha en formato time_t
 */
 time_t obtenerFechaDeString(const char *fecha) {
   struct tm fecha_tm = {0};  // Inicializar la estructura tm a 0
@@ -64,10 +80,15 @@ time_t obtenerFechaDeString(const char *fecha) {
   return fecha_time;
 }
 
-/*
-Funcion que valida que la fecha de inicio sea menor a la fecha de fin
-entradas: fecha de inicio, fecha de fin
-salidas: 1 si la fecha de inicio es menor a la fecha de fin, 0 en caso contrario
+/**
+ * Validar rango de fechas.
+ * 
+ * Esta funcion valida que la fecha de inicio sea menor a la fecha final.
+ * 
+ * @param fechaInicio fecha de inicio
+ * @param fechaFinal fecha final
+ * 
+ * @return 1 si la fecha de inicio es menor a la fecha final, 0 en caso contrario
 */
 int validarRangoFechas(const char *fechaInicio, const char *fechaFinal) {
   time_t fechaInicio_time = obtenerFechaDeString(fechaInicio);
@@ -80,10 +101,13 @@ int validarRangoFechas(const char *fechaInicio, const char *fechaFinal) {
   return 1;
 }
 
-/*
-Funcion que valida que la fecha tenga el formato correcto
-entradas: fecha en formato dd/mm/aaaa
-salidas: 1 si la fecha tiene el formato correcto, 0 en caso contrario
+/**
+ * Formato fecha.
+ * 
+ * Esta funcion valida que la fecha tenga el formato correcto. Ejemplo: 01/01/2021
+ * 
+ * @param fecha fecha a validar
+ * @return 1 si la fecha tiene el formato correcto, 0 en caso contrario
 */
 int formatoFecha(char *fecha) {
   //fecha con formato: dd/mm/aaaa -> 10 caracteres
@@ -129,10 +153,14 @@ int formatoFecha(char *fecha) {
   return 1;
 }
 
-/*
-Funcion que retorna la diferencia en dias entre dos fechas
-entradas: fecha de inicio, fecha de fin
-salidas: diferencia en dias entre las dos fechas
+/**
+ * Diferencia dias.
+ * 
+ * Esta funcion calcula la diferencia en dias entre dos fechas.
+ * 
+ * @param fechaInicio fecha de inicio
+ * @param fechaFinal fecha final
+ * @return diferencia en dias entre las dos fechas
 */  
 int diferenciaDias(const char *fechaInicio, const char *fechaFinal) {
   time_t fechaInicio_time = obtenerFechaDeString(fechaInicio);

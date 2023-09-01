@@ -1,10 +1,21 @@
 #ifndef ARCHIVOS_H
 #define ARCHIVOS_H
 
-/*
-Funcion que lee el contenido de un archivo
-Entrada: Nombre del archivo
-Salida: Contenido del archivo
+/**
+ * @file archivos.h
+ * @brief Funciones para gestionar archivos de texto
+ * @version 1.0
+ * @date 27/09/2023
+ * @author @miltonials
+*/
+
+/**
+ * Leer archivo.
+ * 
+ * Funcion que lee el contenido de un archivo de texto.
+ * 
+ * @param nombreArchivo Ruta del archivo a leer.
+ * @return Contenido del archivo.
 */
 char* leerArchivo(const char* nombreArchivo) {
     FILE* archivo = fopen(nombreArchivo, "r");
@@ -37,10 +48,14 @@ char* leerArchivo(const char* nombreArchivo) {
     return contenido;
 }
 
-/*
-Funcion que escribe el contenido en un archivo
-Entrada: Ruta del archivo y contenido a escribir
-Salida: 1 si se escribio correctamente, -1 si no se pudo abrir el archivo, -2 si no se pudo escribir el archivo
+/**
+ * Escribir archivo.
+ * 
+ * Funcion que escribe el contenido en un archivo de texto.
+ * 
+ * @param ruta Ruta del archivo a escribir.
+ * @param contenido Contenido a escribir en el archivo.
+ * @return 1 si se escribio correctamente, -1 si no se pudo abrir el archivo, -2 si no se pudo escribir el archivo.
 */
 int escribirArchivo(char* ruta, char* contenido){
     FILE* archivo = fopen(ruta, "w");
@@ -60,10 +75,15 @@ int escribirArchivo(char* ruta, char* contenido){
     return 1;
 }
 
-/*
-Funcion que crea un archivo PDF
-Entrada: Ruta donde se creara el archivo, nombre del archivo y contenido del archivo
-Salida: Ninguna
+/**
+ * Crear PDF.
+ * 
+ * Funcion que crea un archivo PDF.
+ * 
+ * @param ruta Ruta donde se va a crear el archivo PDF.
+ * @param nombreArchivo Nombre del archivo PDF.
+ * @param contenido Contenido del archivo PDF.
+ * @return void
 */
 void crearPDF(const char *ruta, const char *nombreArchivo, const char *contenido) {
     HPDF_Doc pdf = HPDF_New(NULL, NULL);
