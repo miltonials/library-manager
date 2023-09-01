@@ -399,6 +399,7 @@ void top3ProduccionesMasPrestadas(Biblioteca *dirM_biblioteca){
   estadisticasLibros = ordenarLibrosMasPrestados(estadisticasLibros, cantidadLibros);
   int i;
   for (i = 0; i < 3; i++) {
+    printf("Id: %d\n", estadisticasLibros[i].idLibro);
     printf("Titulo: %s\n", estadisticasLibros[i].nombreLibro);
     printf("Cantidad de prestamos: %d\n", estadisticasLibros[i].cantidadPrestamos);
     printf("\n");
@@ -478,6 +479,7 @@ void top3UsuariosMasPrestamos(Biblioteca *dirM_biblioteca){
   estadisticasUsuarios = ordenarUsuariosMasPrestamos(estadisticasUsuarios, cantidadUsuarios);
   int i;
   for (i = 0; i < 3; i++) {
+    printf("Cedula: %s\n", estadisticasUsuarios[i].cedulaUsuario);
     printf("Nombre: %s\n", estadisticasUsuarios[i].nombreUsuario);
     printf("Cantidad de prestamos: %d\n", estadisticasUsuarios[i].cantidadPrestamos);
     printf("\n");
@@ -698,15 +700,18 @@ void menuOpcionesEstadisticas(Biblioteca *dirM_biblioteca){
     switch (opcion) {
     case 1:
       top3ProduccionesMasPrestadas(dirM_biblioteca);
-      pausar("Presione enter para volver al menú...")
+      pausar("Presione enter para volver al menú...");
+      limpiarPantalla();
       break;
     case 2:
       top3UsuariosMasPrestamos(dirM_biblioteca);
-      pausar("Presione enter para volver al menú...")
+      pausar("Presione enter para volver al menú...");
+      limpiarPantalla();
       break;
     case 3:
       top5MesesMayorMontoRecaudado(dirM_biblioteca);
-      pausar("Presione enter para volver al menú...")
+      pausar("Presione enter para volver al menú...");
+      limpiarPantalla();
       break;
     case 4:
       printf("Volver.\n");
