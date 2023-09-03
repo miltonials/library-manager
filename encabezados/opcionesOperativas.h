@@ -201,7 +201,7 @@ void opcionesGestionCatalogo(Biblioteca *dirM_biblioteca)
 {
   int opcion = menuGestionCatalogo();
 
-  while (opcion != 4) {
+  while (opcion != 3) {
     switch (opcion) {
     case 1:
       actualizarCatalogo_txt(dirM_biblioteca);
@@ -276,6 +276,23 @@ void historialPrestamos(Biblioteca *biblioteca) {
     printf("El formato de fecha es incorrecto\n");
   }
 }
+
+void mostrarInfoPrestamo(Prestamo* prestamo, Usuario* usuario, Libro* libro) {
+  //identificador de préstamo, usuario, fecha de entrega, nombre e identificador de ejemplar.
+  printf("Identificador de prestamo: %d\n", prestamo->id);
+  printf("Usuario: %s\n", usuario->nombre);
+  printf("Nombre (id) de ejmplar: %s (%d)\n", libro->titulo, libro->id);
+
+  printf("Fecha establecida para entrega: %s\n", prestamo->fechaFin);
+  if (prestamo->estado != 1){
+    printf("Fecha de entrega por el usuario: %s\n", prestamo->fechaDevolucion);
+  }
+}
+
+void mostrarInfoPrestamoTardio(Prestamo* prestamo, Usuario* usuario, Libro* libro, int diasTardios) {
+  mostrarInfoPrestamo(prestamo, usuario, libro);
+  printf("Dias tardios: %d\n\n", diasTardios);
+}
 /*
 El sistema deberá mostrar los préstamos vencidos y próximos a vencer (préstamos que vencen de 0 a 3 días),
  la información a mostrar por cada préstamo será: identificador de préstamo, usuario,
@@ -290,42 +307,34 @@ fecha de entrega, nombre e identificador de ejemplar. Considera fecha de sistema
 */
 void prestamosVencidos(Biblioteca *biblioteca) {
   Prestamo *prestamos = biblioteca->prestamos;
+  Usuario *usuario = NULL;
+  Libro *libro = NULL;
   int cantidadPrestamos = biblioteca->cantidadPrestamos;
   int i;
   int dias;
+
   for (i = 0; i < cantidadPrestamos; i++) {
-    // printf("fecha de devolucion: %s\n", obtenerFechaActual());
-    if(prestamos[i].fechaDevolucion == NULL) {
+    dias = diferenciaDias(obtenerFechaActual(), prestamos[i].fechaFin);
+    if((dias > 3) && prestamos[i].estado == 1) {
       continue;
     }else{
-      Usuario *usuario = existeUsuario(biblioteca, prestamos[i].cedulaUsuario);
-      Libro *libro = buscarLibro_id(biblioteca, prestamos[i].idLibro);
-      dias = tadiasEnDias(obtenerFechaActual(), prestamos[i].fechaFin);
-      // printf("fecha de devolucion: %s\n", prestamos[i].fechaFin);
-      // printf("fecha actual: %s\n", obtenerFechaActual());
-      // printf("dias: %d\n", dias);
-      if(validarRangoFechas(prestamos[i].fechaFin, obtenerFechaActual()) == 1){
-        if (dias >= 1 ) {
-          
-          printf("Identificador de prestamo: %d\n", prestamos[i].id);
-          printf("Usuario: %s\n", usuario->nombre);
-          printf("Fecha de entrega: %s\n", prestamos[i].fechaFin);
-          printf("Nombre: %s\n", libro->titulo);
-          printf("Dias tardios: %d\n", dias);
-          printf("\n");
+      usuario = existeUsuario(biblioteca, prestamos[i].cedulaUsuario);
+      libro = buscarLibro_id(biblioteca, prestamos[i].idLibro);
+
+      if (prestamos[i].estado == 0) {
+        dias = diferenciaDias(prestamos[i].fechaFin, prestamos[i].fechaDevolucion);
+        if (dias > 0){
+          mostrarInfoPrestamoTardio(&prestamos[i], usuario, libro, dias);
         }
-      }else{
-        // printf("prestamo a vencer\n");
-        dias = diferenciaDias(obtenerFechaActual(), prestamos[i].fechaFin);
-        // printf("dias: %d\n", dias);
-        if (dias >= 0 && dias <= 3) {
-          printf("Prestamo proximo a vencer\n");
-          printf("Identificador de prestamo: %d\n", prestamos[i].id);
-          printf("Usuario: %s\n", usuario->nombre);
-          printf("Fecha de entrega: %s\n", prestamos[i].fechaFin);
-          printf("Nombre: %s\n", libro->titulo);
-          printf("Dias para vencer: %d\n", dias);
-          printf("\n");
+      }
+      else {
+        printf("Prestamo próximo a vencer\n");
+        mostrarInfoPrestamo(&prestamos[i], usuario, libro);
+        if (dias >= 0){
+          printf("Dias para vencer: %d\n\n", dias);
+        }
+        else {
+          printf("Dias vencidos: %d\n\n", dias*-1);
         }
       }
     }
@@ -404,10 +413,7 @@ void top3ProduccionesMasPrestadas(Biblioteca *dirM_biblioteca){
     printf("Cantidad de prestamos: %d\n", estadisticasLibros[i].cantidadPrestamos);
     printf("\n");
   }
-  // Liberar memoria asignada a las estructuras EstadisticasLibro
-  for (int i = 0; i < cantidadLibros; i++) {
-    free(estadisticasLibros[i].nombreLibro);
-  }
+  free(estadisticasLibros);
 }
 /**
  * Listar usuarios mas prestamos.
@@ -484,10 +490,7 @@ void top3UsuariosMasPrestamos(Biblioteca *dirM_biblioteca){
     printf("Cantidad de prestamos: %d\n", estadisticasUsuarios[i].cantidadPrestamos);
     printf("\n");
   }
-  // Liberar memoria asignada a las estructuras EstadisticasUsuario
-  for (int i = 0; i < cantidadUsuarios; i++) {
-    free(estadisticasUsuarios[i].nombreUsuario);
-  }
+  free(estadisticasUsuarios);
 }
 /**
  * Calcular monto recaudado.
@@ -700,26 +703,21 @@ void menuOpcionesEstadisticas(Biblioteca *dirM_biblioteca){
     switch (opcion) {
     case 1:
       top3ProduccionesMasPrestadas(dirM_biblioteca);
-      pausar("Presione enter para volver al menú...");
-      limpiarPantalla();
       break;
     case 2:
       top3UsuariosMasPrestamos(dirM_biblioteca);
-      pausar("Presione enter para volver al menú...");
-      limpiarPantalla();
       break;
     case 3:
       top5MesesMayorMontoRecaudado(dirM_biblioteca);
-      pausar("Presione enter para volver al menú...");
-      limpiarPantalla();
       break;
     case 4:
-      printf("Volver.\n");
       break;
     default:
       printf("Opcion invalida.\n");
       break;
     }
+    pausar("Presione enter para volver al menú...");
+    limpiarPantalla();
     opcion = menuEstadisticas();
   }
 }

@@ -20,6 +20,7 @@ El gran Gatsby|F. Scott Fitzgerald|1925|Novela del jazz|El enigmático Jay Gatsb
 1984|George Orwell|1949|Distopía|El régimen totalitario controla todos los aspectos|4
 El nombre del viento|Patrick Rothfuss|2007|Fantasía épica|Kvothe, un músico y mago talentoso, narra sus aventuras|5
 El retrato de Dorian Gray|Oscar Wilde|1890|Novela gótica|Dorian Gray vende su alma para mantenerse|3
+El señor de las moscas|William Golding|1954|Novela de aventuras|Un grupo de niños queda varado en una isla|3
 El guardián entre el centeno|J.D. Salinger|1951|Novela de aprendizaje|El adolescente Holden Caulfield narra sus|2
 
 El principito|Antoine de Saint-Exupéry|1943|Novela filosófica|Un piloto se encuentra con un niño|1

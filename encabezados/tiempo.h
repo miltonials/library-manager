@@ -166,9 +166,18 @@ int diferenciaDias(const char *fechaInicio, const char *fechaFinal) {
   time_t fechaInicio_time = obtenerFechaDeString(fechaInicio);
   time_t fechaFinal_time = obtenerFechaDeString(fechaFinal);
 
-  int dias = (int) difftime(fechaFinal_time, fechaInicio_time) / (60 * 60 * 24);
+  if (fechaInicio_time == -1 || fechaFinal_time == -1) {
+    // Manejar errores en la conversión de fechas
+    return -1;  // Valor de error
+  }
 
-  return dias;
+  // Calcular la diferencia en segundos entre las dos fechas
+  time_t diferencia_segundos = fechaFinal_time - fechaInicio_time;
+
+  // Convertir la diferencia de segundos a días (86400 segundos por día)
+  int diferencia_dias = diferencia_segundos / 86400;
+
+  return diferencia_dias;
 }
 
 #endif

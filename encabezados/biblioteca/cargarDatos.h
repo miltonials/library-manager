@@ -201,25 +201,37 @@ void resumenBiblioteca(Biblioteca *dirM_biblioteca) {
   printf("  📖 Libros: %d\n", dirM_biblioteca->cantidadLibros);
   printf("  👤 Usuarios: %d\n", dirM_biblioteca->cantidadUsuarios);
   printf("  📚 Prestamos: %d\n", dirM_biblioteca->cantidadPrestamos);
-
-  printf("\n");
-  printf("👤 Usuarios:\n");
+  
+  printf("\n👤 Usuarios:\n");
+  Usuario usuario;
   for (int i = 0; i < dirM_biblioteca->cantidadUsuarios; i++) {
-    //mostrar todos lo datos en una sola linea
-    printf("  %s %s %s\n", dirM_biblioteca->usuarios[i].cedula, dirM_biblioteca->usuarios[i].nombre, dirM_biblioteca->usuarios[i].direccion);
+    usuario = dirM_biblioteca->usuarios[i];
+    printf("  %s %s \n\t %s\n", usuario.cedula, usuario.nombre, usuario.direccion);
   }
 
   printf("\n");
   printf("📖 Libros:\n");
+  Libro libro;
   for (int i = 0; i < dirM_biblioteca->cantidadLibros; i++) {
-    //mostrar todos lo datos en una sola linea
-    printf("%d  %s %s %d %s %s %d\n", dirM_biblioteca->libros[i].id, dirM_biblioteca->libros[i].titulo, dirM_biblioteca->libros[i].autor, dirM_biblioteca->libros[i].anio, dirM_biblioteca->libros[i].genero, dirM_biblioteca->libros[i].resumen, dirM_biblioteca->libros[i].cantidad);
+    libro = dirM_biblioteca->libros[i];
+    printf("  %2d ejemplares disponibles de >>> %s\n", libro.cantidad, libro.titulo);
+    
   }
 
   printf("\n");
   printf("📚 Prestamos:\n");
+  printf("  ID    IDLibro  CedulaUsuario  FechaInicio  FechaFin   Estado\n");
+  Prestamo prestamo;
   for (int i = 0; i < dirM_biblioteca->cantidadPrestamos; i++){
-    printf("  %d %d %s %s %s %d\n", dirM_biblioteca->prestamos[i].id, dirM_biblioteca->prestamos[i].idLibro, dirM_biblioteca->prestamos[i].cedulaUsuario, dirM_biblioteca->prestamos[i].fechaInicio, dirM_biblioteca->prestamos[i].fechaFin, dirM_biblioteca->prestamos[i].estado);
+    prestamo = dirM_biblioteca->prestamos[i];
+    printf("  %2d %7d %13s %15s %11s", prestamo.id, prestamo.idLibro, prestamo.cedulaUsuario, prestamo.fechaInicio, prestamo.fechaFin);
+    
+
+    if (dirM_biblioteca->prestamos[i].estado == 0) {
+      printf(" Inactivo\n");
+    } else {
+      printf(" Activo\n");
+    }
   }
 }
 

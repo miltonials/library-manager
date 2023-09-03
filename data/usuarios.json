@@ -18,5 +18,10 @@
     "cedula": "703010147",
     "nombre": "Andy",
     "direccion": "Paraiso"
+  },
+  {
+    "cedula": "2021091205",
+    "nombre": "Milton Barrera Zepeda",
+    "direccion": "Limon, Liverpool"
   }
 ]

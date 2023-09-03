@@ -66,7 +66,8 @@ int menuPrincipal() {
 
   printf("1. Opciones operativas.\n");
   printf("2. Opciones generales.\n");
-  printf("3. Salir.\n");
+  printf("3. Resumen de la biblioteca.\n");
+  printf("4. Salir.\n");
   printf("Ingrese una opcion: ");
 
   return seleccionOpcion();
@@ -127,7 +128,7 @@ int menuGestionCatalogo(){
   printf("*********************\n");
   printf("*Gestion de Catalogo*\n");
   printf("*********************\n");
-  printf("1. Agregar libro.\n");
+  printf("1. Agregar libros.\n");
   // printf("2. Modificar libro.\n");
   // printf("3. Eliminar libro.\n");
   printf("2. ver Libros.\n");
@@ -168,9 +169,9 @@ C. Top 5 de mes-año con mayor monto recaudado (según fecha de inicio
  * @return opcion ingresada por el usuario.
 */
 int menuEstadisticas(){
-  printf("**********************\n");
-  printf("*Estadisticas*\n");
-  printf("**********************\n");
+  printf("**************\n");
+  printf("*Estadísticas*\n");
+  printf("**************\n");
   printf("1. Top 3 de producciones más prestadas.\n");
   printf("2. Top 3 de usuarios con más préstamos.\n");
   printf("3. Top 5 de mes-año con mayor monto recaudado.\n");

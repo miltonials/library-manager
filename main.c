@@ -22,7 +22,7 @@ int main(){
   int opcion = 0;
   Biblioteca biblioteca;
   cargarBiblioteca(&biblioteca, "./data/");
-  while (opcion != 3)
+  while (opcion != 4)
   {
     opcion = menuPrincipal();
     
@@ -35,6 +35,11 @@ int main(){
         opcionesGenerales(&biblioteca);
         break;
       case 3:
+        resumenBiblioteca(&biblioteca);
+        pausar("Presione enter para volver...");
+        limpiarPantalla();
+        break;
+      case 4:
         printf("👋 Gracias por usar el sistema de gestion de biblioteca.\n");
         break;
       default:
@@ -42,10 +47,5 @@ int main(){
         break;
     }
   }
-  // resumenBiblioteca(&biblioteca);
-  // actualizarBiblioteca(&biblioteca, "./data/");
-
-  // resumenBiblioteca(&biblioteca);
-
   return 0;
 }
