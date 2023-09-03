@@ -10,9 +10,9 @@
 */
 
 void cargarBiblioteca(Biblioteca *dirM_biblioteca, char *rutaArchivos);
-void cargarUsuarios2(Biblioteca *dirM_biblioteca);
+void cargarUsuarios(Biblioteca *dirM_biblioteca);
 void cargarLibros(Biblioteca *dirM_biblioteca);
-void cargarPrestamos2(Biblioteca *dirM_biblioteca);
+void cargarPrestamos(Biblioteca *dirM_biblioteca);
 void resumenBiblioteca(Biblioteca *dirM_biblioteca);
 
 void actualizarBiblioteca(Biblioteca *dirM_biblioteca, char *rutaArchivos);
@@ -31,9 +31,9 @@ void actualizarPrestamos(Biblioteca *dirM_biblioteca, char *rutaArchivos);
 */
 void cargarBiblioteca(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
   dirM_biblioteca->rutaArchivos = rutaArchivos;
-  cargarUsuarios2(dirM_biblioteca);
+  cargarUsuarios(dirM_biblioteca);
   cargarLibros(dirM_biblioteca);
-  cargarPrestamos2(dirM_biblioteca);
+  cargarPrestamos(dirM_biblioteca);
 
   printf("📚 Biblioteca cargada correctamente.\n");
 }
@@ -45,7 +45,7 @@ void cargarBiblioteca(Biblioteca *dirM_biblioteca, char *rutaArchivos) {
  * 
  * @param dirM_biblioteca Puntero a la biblioteca.
 */
-void cargarUsuarios2(Biblioteca *dirM_biblioteca) {
+void cargarUsuarios(Biblioteca *dirM_biblioteca) {
   char *ruta = malloc(strlen(dirM_biblioteca->rutaArchivos) + strlen("usuarios.json") + 1);
   strcpy(ruta, dirM_biblioteca->rutaArchivos);
   strcat(ruta, "usuarios.json");
@@ -60,7 +60,7 @@ void cargarUsuarios2(Biblioteca *dirM_biblioteca) {
 
   json_object *usuarios = json_tokener_parse(contenidoArchivo);
   dirM_biblioteca->cantidadUsuarios = json_object_array_length(usuarios);
-  dirM_biblioteca->usuarios = malloc(sizeof(Usuario) * dirM_biblioteca->cantidadUsuarios);
+  dirM_biblioteca->usuarios = malloc(sizeof(Usuario) * ((dirM_biblioteca->cantidadUsuarios)+1));
 
   for (int i = 0; i < dirM_biblioteca->cantidadUsuarios; i++) {
     json_object *usuario = json_object_array_get_idx(usuarios, i);
@@ -139,7 +139,7 @@ void cargarLibros(Biblioteca *dirM_biblioteca) {
  * @param dirM_biblioteca Puntero a la biblioteca.
  * @return Ninguna.
 */
-void cargarPrestamos2(Biblioteca *dirM_biblioteca) {
+void cargarPrestamos(Biblioteca *dirM_biblioteca) {
   char *ruta = malloc(strlen(dirM_biblioteca->rutaArchivos) + strlen("prestamos.json") + 1);
   strcpy(ruta, dirM_biblioteca->rutaArchivos);
   strcat(ruta, "prestamos.json");
@@ -154,7 +154,7 @@ void cargarPrestamos2(Biblioteca *dirM_biblioteca) {
 
   json_object *prestamos = json_tokener_parse(contenidoArchivo);
   dirM_biblioteca->cantidadPrestamos = json_object_array_length(prestamos);
-  dirM_biblioteca->prestamos = malloc(sizeof(Prestamo) * dirM_biblioteca->cantidadPrestamos);
+  dirM_biblioteca->prestamos = malloc(sizeof(Prestamo) * ((dirM_biblioteca->cantidadPrestamos) + 1));
 
   for (int i = 0; i < dirM_biblioteca->cantidadPrestamos; i++){
     //titulo y cedula son punteros

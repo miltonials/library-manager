@@ -82,8 +82,6 @@ void generarComprobante(Biblioteca *dirM_biblioteca, Usuario *usuario, Libro *li
     // generar comprobante
     Prestamo prestamo;
     prestamo.id = cantidadPrestamos + 1;
-    // prestamo.tituloLibro = malloc(strlen(titulo) + 1);
-    // strcpy(prestamo.idLibro, libro->id);
     prestamo.idLibro = libro->id;
     prestamo.cedulaUsuario = malloc(strlen(usuario->cedula) + 1);
     strcpy(prestamo.cedulaUsuario, usuario->cedula);
@@ -92,8 +90,10 @@ void generarComprobante(Biblioteca *dirM_biblioteca, Usuario *usuario, Libro *li
     prestamo.fechaFin = malloc(strlen(fechaFinal) + 1);
     strcpy(prestamo.fechaFin, fechaFinal);
     prestamo.estado = 1;
+    prestamo.fechaDevolucion = malloc(strlen("") + 1);
+    strcpy(prestamo.fechaDevolucion, "");
 
-    prestamos = realloc(prestamos, sizeof(Prestamo) * (cantidadPrestamos + 1));
+    // prestamos = realloc(prestamos, sizeof(Prestamo) * (cantidadPrestamos + 1));
     prestamos[cantidadPrestamos] = prestamo;
     dirM_biblioteca->prestamos = prestamos;
     dirM_biblioteca->cantidadPrestamos++;
@@ -101,6 +101,7 @@ void generarComprobante(Biblioteca *dirM_biblioteca, Usuario *usuario, Libro *li
     libro->cantidad--;
 
     actualizarPrestamos(dirM_biblioteca, dirM_biblioteca->rutaArchivos);
+    cargarPrestamos(dirM_biblioteca);
     actualizarCatalogo(dirM_biblioteca, dirM_biblioteca->rutaArchivos);
     prestamoApdf(dirM_biblioteca, &prestamo, usuario, libro);
     printf("El libro %s ha sido prestado al usuario %s\n", titulo, usuario->nombre);
@@ -157,17 +158,17 @@ void prestamoEjemplar(Biblioteca *dirM_biblioteca)
         }
         else
         {
-          printf("La fecha de inicio no puede ser mayor a la fecha final\n");
+          printf("La fecha dinal debe ser mayor a la fecha de inicio del préstamo.\n");
         }
       }
       else
       {
-        printf("El formato de fecha es incorrecto\n");
+        printf("El formato de fecha es incorrecto.\n");
       }
     }
     else
     {
-      printf("El libro no existe\n");
+      printf("El libro no existe.\n");
     }
   }
   else
