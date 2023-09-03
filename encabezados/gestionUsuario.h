@@ -92,18 +92,21 @@ Usuario *existeUsuario(Biblioteca *dirM_biblioteca, char *cedula) {
 void registrarUsuario(Biblioteca *dirM_biblioteca){
     Usuario usuarioNuevo = solicitarDatosUsuario();
     Usuario* busquedaUsuario = existeUsuario(dirM_biblioteca, usuarioNuevo.cedula);
-    if (busquedaUsuario == NULL) {
+    if (busquedaUsuario != NULL) {
         //mostrar mensaje de que el usuario ya existe.
         printf("\n× Ya existe un usuario con la cedula %s.\n", usuarioNuevo.cedula);
         return;
     }
     
     int cantidadUsuarios = dirM_biblioteca->cantidadUsuarios;
-    dirM_biblioteca->usuarios = realloc(dirM_biblioteca->usuarios, sizeof(Usuario) * (cantidadUsuarios + 1));
+    // dirM_biblioteca->usuarios = realloc(dirM_biblioteca->usuarios, sizeof(Usuario) * (cantidadUsuarios + 1));
     dirM_biblioteca->usuarios[cantidadUsuarios] = usuarioNuevo;
     dirM_biblioteca->cantidadUsuarios++;
     
     actualizarUsuarios(dirM_biblioteca, dirM_biblioteca->rutaArchivos);
+    cargarUsuarios(dirM_biblioteca);
+
+    printf("\n✓ Usuario registrado correctamente.\n");
 }
 
 /**
