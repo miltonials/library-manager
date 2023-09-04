@@ -382,6 +382,7 @@ EstadisticasLibro *ordenarLibrosMasPrestados(EstadisticasLibro *estadisticasLibr
   int i;
   int j;
   EstadisticasLibro aux;
+  // se ordena la lista de libros por cantidad de prestamos usando el metodo de burbuja
   for (i = 0; i < cantidadLibros; i++) {
     for (j = 0; j < cantidadLibros; j++) {
       if (estadisticasLibros[i].cantidadPrestamos > estadisticasLibros[j].cantidadPrestamos) {

@@ -253,11 +253,15 @@ void devolucionEjemplar(Biblioteca *dirM_biblioteca)
       Libro *libro = buscarLibro_id(dirM_biblioteca, prestamo->idLibro);
       dias = diferenciaDias(prestamo->fechaInicio, fechaDevolucion);
       diasTardios = diferenciaDias(fechaDevolucion, prestamo->fechaFin);
-      if (diasTardios < 0)
+      if (dias < 0)
       {
-        pausar("La fecha de devolución no puede ser menor a la fecha de fin del préstamo.");
+        pausar("La fecha de devolución no puede ser menor a la fecha de inicio del préstamo.");
         limpiarPantalla();
         return;
+      }
+      if (diasTardios < 0)
+      {
+        diasTardios = 0;
       }
       if (dias <= 7)
       {
@@ -547,14 +551,19 @@ void opcionesGenerales(Biblioteca *dirM_biblioteca)
     case 1:
       printf("Busqueda simple.\n");
       busquedaSimple(dirM_biblioteca);
+
       break;
     case 2:
       printf("Busqueda avanzada.\n");
       busquedaAvanzada(dirM_biblioteca);
+      pausar("Presione enter para volver al menú...");
+      limpiarPantalla();
       break;
     case 3:
       printf("Prestamo de ejemplar.\n");
       prestamoEjemplar(dirM_biblioteca);
+      pausar("Presione enter para volver al menú...");
+      limpiarPantalla();
       break;
     case 4:
       printf("Devolucion de ejemplar.\n");
